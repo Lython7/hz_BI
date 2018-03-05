@@ -139,9 +139,6 @@ USE_L10N = True
 
 USE_TZ = False # 选择Fasle使修改TIME_ZONE的时区生效。
 
-
-
-
 # 静态文件配置
 STATIC_URL = '/static/'
 
