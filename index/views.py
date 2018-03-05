@@ -8,7 +8,7 @@ from rest_framework.decorators import api_view
 
 
 # Create your views here.
-def login_page(request):
+def loginPage(request):
     return render(request, 'index/login.html', context={})
 
 def doLogin(request):

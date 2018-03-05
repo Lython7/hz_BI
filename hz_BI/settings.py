@@ -58,6 +58,7 @@ REST_FRAMEWORK = {
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',# 标准username验证登录
     'uprofile.authentication.EmailAuthBackend',# 邮箱作为用户名登录
+    'uprofile.authentication.CellphoneAuthBackend',
 )
 
 MIDDLEWARE = [
