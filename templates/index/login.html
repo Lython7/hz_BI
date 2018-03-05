@@ -5,22 +5,24 @@
     <meta charset="UTF-8">
     <title>登陆</title>
     <link rel="stylesheet" href={% static 'index/css/login.css' %}>
+    <script src={% static 'index/js/rem.js' %} type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
+    <div class="logo">
+        <img src={% static 'index/images/logo.jpg' %} alt="禾中优供">
+    </div>
     <form method="post" action="./auth/" class="box">
-        <div class="username">
-            <label>
-            <span>账号：</span>
-            <input type="text" name="username" autocomplete="off" placeholder="请输入账号">
-        </label>
+        <input type="text" class="info username" name="username" autocomplete="off" placeholder="请输入账号">
+        <input type="password" class="info pwd" name="password" autocomplete="off" placeholder="请输入密码">
+        <div class="forget">
+            <a href="#">忘记密码？</a>
         </div>
-        <div class="pwd">
-            <label>
-                <span>密码：</span>
-                <input type="password" name="password" autocomplete="off" placeholder="请输入密码">
-            </label>
-        </div>
-        <input type="submit" value="登陆">
+        <input type="submit" class="login" value="登陆">
     </form>
+    <div class="error"></div>
+    <div class="register">
+        <a href="" class="tit">没有账号？</a>
+        <input type="button" value="注册">
+    </div>
 </body>
 </html>
