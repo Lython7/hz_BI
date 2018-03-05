@@ -2,7 +2,7 @@ from django.contrib import admin
 
 # Register your models here.
 # 后台django管理名字修改
-admin.site.site_header = "禾中销售管理后台"
+admin.site.site_header = "禾中BI管理后台"
 
 
 class News_center_Admin(admin.ModelAdmin):
