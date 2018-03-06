@@ -26,7 +26,7 @@ def doLogin(request):
             if staff == 0:
                 return render(request, "index/haha.html")
             elif staff == 1:
-                return render(request, "index/jaja.html")
+                return render(request, "yoback/jaja.html")
 
 
     # return render(request, "index/login.html")

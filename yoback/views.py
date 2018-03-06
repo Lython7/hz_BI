@@ -1,7 +1,7 @@
 from django.shortcuts import render
 import xlrd, json
 
-class ExcelToMysql(object):
+class ExcelToJson(object):
     # def __init__(self, host="localhost", user="root", passwd="2531", db="hz_BI"):
     #     # 连接数据库
     #     database = pymysql.connect(host=host, user=user, passwd=passwd, db="hz_BI")
