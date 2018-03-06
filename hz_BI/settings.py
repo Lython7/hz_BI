@@ -31,6 +31,8 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'suit',
+
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -40,8 +42,9 @@ INSTALLED_APPS = [
 
     'rest_framework',
 
-    'index',
-    'uprofile',
+    'index',# bi系统展示的页面
+    'uprofile',# 用户信息拓展
+    'yoback',# 后台 上传excel 读取并写入数据库
 ]
 
 #api框架
@@ -135,8 +138,7 @@ TIME_ZONE = 'Asia/Shanghai' # 上海时区
 
 USE_I18N = True
 
-
-USE_L10N = True
+USE_L10N = False
 
 USE_TZ = False # 选择Fasle使修改TIME_ZONE的时区生效。
 
@@ -154,3 +156,13 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'collect_static') # 部署时需要使用
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
+
+# django-suit 时间bug
+DATETIME_FORMAT = 'Y-m-d H:i:s'
+DATE_FORMAT = 'Y-m-d'
+
+SUIT_CONFIG = {
+    'ADMIN_NAME': '禾中BI后台管理',
+    'LIST_PER_PAGE': 10,
+}
