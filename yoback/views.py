@@ -6,14 +6,16 @@ class ExcelToMysql(object):
     #     # 连接数据库
     #     database = pymysql.connect(host=host, user=user, passwd=passwd, db="hz_BI")
     #     cursor = database.cursor()
-    def __init__(self):
+    def __init__(self, filename, sheetname):
         self.datalist = []
+        self.filename = filename
+        self.sheetname = sheetname
 
-    def readExcel(self, filename, sheetname):
+    def readExcel(self):
         # 获取excelData文件夹中上传了的excel文件
         try:
-            excelFile = xlrd.open_workbook('./excelData/' + filename)
-            sheet = excelFile.sheet_by_name(sheetname)
+            excelFile = xlrd.open_workbook('../media/yoback/excelData/' + self.filename)
+            sheet = excelFile.sheet_by_name(self.sheetname)
             for i in range(1,sheet.nrows):
                 dic = {}
                 for j in range(sheet.ncols):
@@ -28,3 +30,4 @@ class ExcelToMysql(object):
             return jsonstr
         else:
             print('json化失败！！')
+            return None
