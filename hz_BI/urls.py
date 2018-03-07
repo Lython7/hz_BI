@@ -19,6 +19,7 @@ from django.urls import path, include
 
 urlpatterns = [
     url(r'^', include('index.urls')),
+    url(r'^yoback/', include('yoback.urls')),
 
     # path(r'^', include('index.urls')),
 

@@ -13,7 +13,7 @@ class GoodsClassify(models.Model):
     catNo = models.IntegerField(null=False, primary_key=True, verbose_name='分类编码')
     catName = models.CharField(max_length=20, null=False, verbose_name='分类名称')
 
-    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False)  # 编辑人 editable=False default =当前登录的id
+    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='编辑时间', null=False)
     is_delete = models.BooleanField(choices=choices, default=False, null=False, verbose_name='逻辑删除')
 
@@ -40,7 +40,7 @@ class GoodsList(models.Model):
     skuName = models.CharField(max_length=50, null=False, verbose_name='sku名称')
     price = models.CharField(max_length=5, null=False, verbose_name='商品单价')
 
-    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False)  # 编辑人 editable=False default =当前登录的id
+    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='编辑时间', null=False)
     is_delete = models.BooleanField(choices=choices, default=False, null=False, verbose_name='逻辑删除')
 

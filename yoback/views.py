@@ -1,4 +1,8 @@
-from django.shortcuts import render
+import os
+
+import time
+from django.http import HttpResponse
+from django.shortcuts import render, render_to_response
 import xlrd, json
 
 class ExcelToJson(object):
@@ -31,3 +35,23 @@ class ExcelToJson(object):
         else:
             print('json化失败！！')
             return None
+
+
+def upload(request):
+    if request.method == "POST":
+        name = str(request.FILES['xlfile']).split('.')
+        filenm = request.user.username + '-' + name[0] + str(time.strftime("%Y-%m-%d-%Hh%Mm%Ss",time.localtime())) + '.' + name[1]
+        handle_upload_file(request.FILES['xlfile'], filenm)
+        return HttpResponse('Successful')  # 此处简单返回一个成功的消息，在实际应用中可以返回到指定的页面中
+
+    # return render_to_response('course/upload.html')
+
+
+def handle_upload_file(file, filename):
+    path = 'media/yoback/excelData/'  # 上传文件的保存路径，可以自己指定任意的路径
+    if not os.path.exists(path):
+        os.makedirs(path)
+    with open(path + filename, 'wb+') as destination:
+        for chunk in file.chunks():
+            destination.write(chunk)
+

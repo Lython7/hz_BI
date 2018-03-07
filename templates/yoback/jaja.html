@@ -5,10 +5,11 @@
     <title>jaja</title>
 </head>
 <body>
-<form action="../../media/yoback/excelData/">
-    <input type="file">
-    <input type="submit" value="提交">
+<form enctype="multipart/form-data" method='post' action={% url 'upload' %}>
+    {% csrf_token %}
+    <input type="file" name="xlfile" />
+    <input type="submit" value="提交" />
 </form>
-<input type="button" value="写入">
+<input type="button" value="写入" >
 </body>
 </html>
