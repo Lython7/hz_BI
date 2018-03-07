@@ -1,7 +1,8 @@
 import os, time
+from hz_BI.settings import MEDIA_ROOT
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
 import xlrd, json
 from rest_framework import viewsets
@@ -14,23 +15,26 @@ class ExcelToJson(object):
     #     # 连接数据库
     #     database = pymysql.connect(host=host, user=user, passwd=passwd, db="hz_BI")
     #     cursor = database.cursor()
-    def __init__(self, filename, sheetname):
+    def __init__(self, filename, sheetname='商品分类'):
         self.datalist = []
         self.filename = filename
         self.sheetname = sheetname
 
     def readExcel(self):
         # 获取excelData文件夹中上传了的excel文件
-        try:
-            excelFile = xlrd.open_workbook('../media/yoback/excelData/' + self.filename)
-            sheet = excelFile.sheet_by_name(self.sheetname)
-            for i in range(1,sheet.nrows):
-                dic = {}
-                for j in range(sheet.ncols):
-                    dic[sheet.cell(0,j)] = sheet.cell(i,j)
-                self.datalist.append(dic)
-        except:
-            print('excel读取过程中有问题')
+        # try:
+        excelFile = xlrd.open_workbook(os.path.join(MEDIA_ROOT+'/yoback/excelData', self.filename))
+        print(1)
+        sheet = excelFile.sheet_by_name(self.sheetname)
+        # sheet = excelFile.sheet_by_index(self.sheetname)
+        for i in range(sheet.nrows):
+            dic = {}
+            for j in range(sheet.ncols):
+                dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
+            self.datalist.append(dic)
+        return self.datalist
+        # except:
+        #     print('excel读取过程中有问题')
 
     def jsonhandle(self):
         if self.datalist:
@@ -62,8 +66,13 @@ def upload(request):
         name = str(request.FILES['xlfile']).split('.')
         filenm = request.user.username + '-' + name[0] + str(time.strftime("%Y-%m-%d-%Hh%Mm%Ss",time.localtime())) + '.' + name[1]
         handle_upload_file(request.FILES['xlfile'], filenm)
-        return HttpResponse('Successful')  # 此处简单返回一个成功的消息，在实际应用中可以返回到指定的页面中
+        # return HttpResponse('Successful')  # 此处简单返回一个成功的消息，在实际应用中可以返回到指定的页面中
 
+        # 开始读excel
+        data = ExcelToJson(filenm,sheetname='商品分类')
+        datals = data.readExcel()
+
+        return JsonResponse({'data':datals})
     # return render_to_response('course/upload.html')
 
 
