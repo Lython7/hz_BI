@@ -1,13 +1,11 @@
-from django.contrib.admin import AdminSite
 from django.contrib.auth import authenticate, logout, login
-from django.contrib.auth.models import User
+from rest_framework import viewsets
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
-from rest_framework.decorators import api_view
-# import requests
+
+from . import models, serializers
 
 
-# Create your views here.
 def loginPage(request):
     return render(request, 'index/login.html', context={})
 
@@ -37,3 +35,13 @@ def doLogin(request):
 #     logout(request)  # 登出
 #
 #     return redirect("/login")
+
+class GoodsClassifyViewSet(viewsets.ModelViewSet):
+    queryset = models.GoodsClassify.objects.all()
+    serializer_class = serializers.GoodsClassifySerializer
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    # pagination_class = StandardResultsSetPagination
+
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
