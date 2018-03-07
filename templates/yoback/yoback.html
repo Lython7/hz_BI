@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,9 +8,11 @@
 <body>
 <form enctype="multipart/form-data" method='post' action={% url 'upload' %}>
     {% csrf_token %}
-    <input type="file" name="xlfile" />
+    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="xlfile" />
     <input type="submit" value="提交" />
 </form>
-<input type="button" value="写入" >
+<input type="button" value="审核" onclick="">
 </body>
+<script src={% static 'dist/jquery.min.js' %} type="text/javascript" charset="utf-8"></script>
+<script src={% static 'yoback/js/yoback.js' %} type="text/javascript" charset="utf-8"></script>
 </html>
