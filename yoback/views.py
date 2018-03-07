@@ -1,9 +1,13 @@
-import os
+import os, time
 
-import time
+from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse
 from django.shortcuts import render, render_to_response
 import xlrd, json
+from rest_framework import viewsets
+
+from . import serializers, models
+
 
 class ExcelToJson(object):
     # def __init__(self, host="localhost", user="root", passwd="2531", db="hz_BI"):
@@ -36,7 +40,16 @@ class ExcelToJson(object):
             print('json化失败！！')
             return None
 
+class GoodsClassifyViewSet(viewsets.ModelViewSet):
+    queryset = models.GoodsClassify.objects.all()
+    serializer_class = serializers.GoodsClassifySerializer
+    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
+    # pagination_class = StandardResultsSetPagination
 
+    def perform_create(self, serializer):
+        serializer.save(created_by=self.request.user)
+
+@login_required
 def upload(request):
     if request.method == "POST":
         name = str(request.FILES['xlfile']).split('.')

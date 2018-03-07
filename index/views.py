@@ -24,24 +24,15 @@ def doLogin(request):
             if staff == 0:
                 return render(request, "index/haha.html")
             elif staff == 1:
-                return render(request, "yoback/jaja.html")
+                return render(request, "yoback/yoback.html")
 
 
     # return render(request, "index/login.html")
 
 
-# def acc_logout(request):
-#
-#     logout(request)  # 登出
-#
-#     return redirect("/login")
+def acc_logout(request):
 
-class GoodsClassifyViewSet(viewsets.ModelViewSet):
-    queryset = models.GoodsClassify.objects.all()
-    serializer_class = serializers.GoodsClassifySerializer
-    # permission_classes = (permissions.IsAuthenticatedOrReadOnly, )
-    # pagination_class = StandardResultsSetPagination
+    logout(request)  # 登出
 
-    def perform_create(self, serializer):
-        serializer.save(created_by=self.request.user)
+    return redirect("/uauth/")
 

@@ -4,5 +4,5 @@ from . import views
 
 urlpatterns = [
     url(r'^upload/', views.upload, name='upload'),
-
+    # url(r'^write/', views.excelToMysql, name='write'),
 ]
