@@ -50,6 +50,10 @@ class GoodsClassifyViewSet(viewsets.ModelViewSet):
         serializer.save(created_by=self.request.user)
 
 @login_required
+def yoback(request):
+    return render(request, 'yoback/yoback.html')
+
+@login_required
 def upload(request):
     if request.method == "POST":
         name = str(request.FILES['xlfile']).split('.')

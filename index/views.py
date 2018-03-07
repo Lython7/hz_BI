@@ -24,7 +24,7 @@ def doLogin(request):
             if staff == 0:
                 return render(request, "index/haha.html")
             elif staff == 1:
-                return render(request, "yoback/yoback.html")
+                return HttpResponseRedirect("/yoback/yoback")
 
 
     # return render(request, "index/login.html")
