@@ -1,4 +1,5 @@
 from django.contrib.auth import authenticate, logout, login
+from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
@@ -8,6 +9,13 @@ from . import models, serializers
 
 def loginPage(request):
     return render(request, 'index/login.html', context={})
+
+# @login_required
+def index(request):
+    if request.user.is_authenticated:
+        return render(request, 'index/haha.html', context={})
+    else:
+        return HttpResponseRedirect('/')
 
 def doLogin(request):
     if request.method == "POST":
@@ -22,9 +30,9 @@ def doLogin(request):
             login(request, user)
             staff = user.is_staff
             if staff == 0:
-                return render(request, "index/haha.html")
+                return HttpResponseRedirect("/index")
             elif staff == 1:
-                return HttpResponseRedirect("/yoback/yoback")
+                return HttpResponseRedirect("/yoback")
 
 
     # return render(request, "index/login.html")

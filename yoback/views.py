@@ -1,7 +1,7 @@
 import os, time
 
 from django.contrib.auth.decorators import login_required
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, render_to_response
 import xlrd, json
 from rest_framework import viewsets
@@ -49,9 +49,12 @@ class GoodsClassifyViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-@login_required
+# @login_required
 def yoback(request):
-    return render(request, 'yoback/yoback.html')
+    if request.user.is_authenticated:
+        return render(request, 'yoback/yoback.html', context={})
+    else:
+        return HttpResponseRedirect('/')
 
 @login_required
 def upload(request):
