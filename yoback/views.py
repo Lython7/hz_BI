@@ -71,8 +71,11 @@ def upload(request):
         # 开始读excel
         data = ExcelToJson(filenm,sheetname='商品分类')
         datals = data.readExcel()
+        datadic = {'data': datals}
 
-        return JsonResponse({'data':datals})
+        return render(request, 'yoback/excelcheck.html', context={'data': datals})
+        # return JsonResponse({'data':datals})
+
     # return render_to_response('course/upload.html')
 
 
