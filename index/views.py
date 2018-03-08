@@ -12,10 +12,10 @@ def loginPage(request):
 
 # @login_required
 def index(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_staff == 0:
         return render(request, 'index/haha.html', context={})
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/login/')
 
 def doLogin(request):
     if request.method == "POST":
@@ -30,7 +30,7 @@ def doLogin(request):
             login(request, user)
             staff = user.is_staff
             if staff == 0:
-                return HttpResponseRedirect("/index")
+                return HttpResponseRedirect("/")
             elif staff == 1:
                 return HttpResponseRedirect("/yoback")
 

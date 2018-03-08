@@ -55,10 +55,10 @@ class GoodsClassifyViewSet(viewsets.ModelViewSet):
 
 # @login_required
 def yoback(request):
-    if request.user.is_authenticated:
+    if request.user.is_authenticated and request.user.is_staff == 1:
         return render(request, 'yoback/yoback.html', context={})
     else:
-        return HttpResponseRedirect('/')
+        return HttpResponseRedirect('/login/')
 
 @login_required
 def upload(request):
