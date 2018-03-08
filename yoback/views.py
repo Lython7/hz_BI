@@ -17,7 +17,7 @@ class ExcelToJson(object):
     #     cursor = database.cursor()
     def __init__(self, filename):
         self.datadictotal = {}
-        self.datalist = []
+        # self.datalist = []
         self.filename = filename
 
 
@@ -28,12 +28,13 @@ class ExcelToJson(object):
 
 
         for sheet in excelFile.sheets():
+            datalist = []
             for i in range(sheet.nrows):
                 dic = {}
                 for j in range(sheet.ncols):
                     dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
-                self.datalist.append(dic)
-            self.datadictotal[sheet.name] = self.datalist
+                datalist.append(dic)
+            self.datadictotal[sheet.name] = datalist
         return self.datadictotal
         # except:
         #     print('excel读取过程中有问题')

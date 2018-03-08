@@ -6,17 +6,19 @@
 </head>
 <body>
 {% for key,value in datadic.items  %}
-    <p>{{ key }}</p>
+
     <table>
+    <p>{{ key }}</p>
+{#    <p>{{ value }}</p>#}
         {% for i in value %}
         <tr>
-            {% for key,value in i.items %}
-                <td>{{ value }}</td>
+            {% for k,v in i.items %}
+                <td>{{ v }}</td>
             {% endfor %}
         </tr>
         {% endfor %}
-    <p></p><br>
-    </table>
+
+    </table><br>
 {% endfor %}
 
 </body>
