@@ -77,10 +77,12 @@ def upload(request):
         # datadictotal = {'data': datadic}
 
         return render(request, 'yoback/excelcheck.html', context={'datadic':datadic})
+        # return HttpResponseRedirect('yoback/excelcheck/').get_context_data({'datadic':datadic})
         # return JsonResponse({'data':datals})
 
-    # return render_to_response('course/upload.html')
 
+def checkexcel(request):
+    return render(request, 'yoback/excelcheck.html', context={})
 
 def handle_upload_file(file, filename):
     path = 'media/yoback/excelData/'  # 上传文件的保存路径，可以自己指定任意的路径
