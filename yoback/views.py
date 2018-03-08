@@ -15,30 +15,32 @@ class ExcelToJson(object):
     #     # 连接数据库
     #     database = pymysql.connect(host=host, user=user, passwd=passwd, db="hz_BI")
     #     cursor = database.cursor()
-    def __init__(self, filename, sheetname='商品分类'):
+    def __init__(self, filename):
+        self.datadictotal = {}
         self.datalist = []
         self.filename = filename
-        self.sheetname = sheetname
+
 
     def readExcel(self):
         # 获取excelData文件夹中上传了的excel文件
         # try:
         excelFile = xlrd.open_workbook(os.path.join(MEDIA_ROOT+'/yoback/excelData', self.filename))
-        print(1)
-        sheet = excelFile.sheet_by_name(self.sheetname)
-        # sheet = excelFile.sheet_by_index(self.sheetname)
-        for i in range(sheet.nrows):
-            dic = {}
-            for j in range(sheet.ncols):
-                dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
-            self.datalist.append(dic)
-        return self.datalist
+
+
+        for sheet in excelFile.sheets():
+            for i in range(sheet.nrows):
+                dic = {}
+                for j in range(sheet.ncols):
+                    dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
+                self.datalist.append(dic)
+            self.datadictotal[sheet.name] = self.datalist
+        return self.datadictotal
         # except:
         #     print('excel读取过程中有问题')
 
     def jsonhandle(self):
-        if self.datalist:
-            jsonstr = json.dumps(self.datalist)
+        if self.datadictotal:
+            jsonstr = json.dumps(self.datadictotal)
             return jsonstr
         else:
             print('json化失败！！')
@@ -69,11 +71,11 @@ def upload(request):
         # return HttpResponse('Successful')  # 此处简单返回一个成功的消息，在实际应用中可以返回到指定的页面中
 
         # 开始读excel
-        data = ExcelToJson(filenm,sheetname='商品分类')
-        datals = data.readExcel()
-        datadic = {'data': datals}
+        data = ExcelToJson(filenm)
+        datadic = data.readExcel()
+        # datadictotal = {'data': datadic}
 
-        return render(request, 'yoback/excelcheck.html', context={'data': datals})
+        return render(request, 'yoback/excelcheck.html', context={'datadic':datadic})
         # return JsonResponse({'data':datals})
 
     # return render_to_response('course/upload.html')

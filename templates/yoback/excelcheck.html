@@ -5,14 +5,19 @@
     <title>Title</title>
 </head>
 <body>
-<table>
-    {% for i in data %}
-    <tr>
-        {% for key,value in i.items %}
-            <td>{{ value }}</td>
+{% for key,value in datadic.items  %}
+    <p>{{ key }}</p>
+    <table>
+        {% for i in value %}
+        <tr>
+            {% for key,value in i.items %}
+                <td>{{ value }}</td>
+            {% endfor %}
+        </tr>
         {% endfor %}
-    </tr>
-    {% endfor %}
-</table>
+    <p></p><br>
+    </table>
+{% endfor %}
+
 </body>
 </html>
