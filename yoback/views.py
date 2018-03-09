@@ -26,7 +26,6 @@ class ExcelToJson(object):
         # try:
         excelFile = xlrd.open_workbook(os.path.join(MEDIA_ROOT+'/yoback/excelData', self.filename))
 
-
         for sheet in excelFile.sheets():
             datalist = []
             for i in range(sheet.nrows):
