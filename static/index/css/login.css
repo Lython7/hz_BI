@@ -1,61 +1,127 @@
-body{
-    font-size: 0.8rem;
-}
-.logo{
-    text-align: center;
-    padding: 2rem 0;
-}
-.logo img{
-    width: 10rem;
-}
-.box input{
-    display: block;
-}
-.box input.info {
-    font-size: 0.8rem;
-    width: 82%;
-    box-sizing: border-box;
-    border-radius: 0.3rem;
-    height: 1.6rem;
-    line-height: 1.6rem;
-    text-indent: 0.5rem;
-    border: 1px solid #666;
-    margin: 0.4rem auto;
-}
-.box .forget{
-    text-align: right;
-    margin: 0.2rem auto;
-    width: 82%;
-}
-.box input.login{
-    margin: 0 auto;
-    width: 10rem;
-    height: 1.6rem;
-    background-color: #00CC66;
-    border-radius: 0.8rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.2rem;
-    border: none;
-    color: #fff;
-}
 a{
-    text-decoration: none;
-    font-size: 0.6rem;
     color: #9D9D9D;
 }
-.register{
-    padding-top: 2rem;
-    text-align: center;
+@media screen and (max-width:1000px){
+    body{
+        font-size: 0.8rem;
+    }
+    .logo{
+        text-align: center;
+        padding: 2rem 0;
+    }
+    .logo img{
+        width: 10rem;
+    }
+    .box{
+        width: 80%;
+        margin: 0 auto;
+    }
+    .box input.info {
+        font-size: 0.8rem;
+        width: 100%;
+        box-sizing: border-box;
+        border-radius: 0.3rem;
+        height: 1.6rem;
+        line-height: 1.6rem;
+        text-indent: 0.5rem;
+        border: 1px solid #666;
+        margin: 0.4rem auto;
+    }
+    .box .forget{
+        text-align: right;
+        margin: 0.2rem auto;
+        width: 100%;
+    }
+    .box input.login{
+        display: block;
+        margin: 0 auto;
+        width: 10rem;
+        height: 1.6rem;
+        background-color: #00CC66;
+        border-radius: 0.8rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.2rem;
+        border: none;
+        color: #fff;
+    }
+    a{
+        font-size: 0.6rem;
+    }
+    .box .register{
+        padding-top: 2rem;
+        text-align: center;
+    }
+    .box .register input{
+        display: block;
+        margin: 0.3rem auto;
+        width: 10rem;
+        height: 1.6rem;
+        background-color: #fff;
+        border-radius: 0.8rem;
+        font-size: 0.8rem;
+        letter-spacing: 0.2rem;
+        border: 3px solid #00CC66;
+        color: #00CC66;
+    }
 }
-.register input{
-    display: block;
-    margin: 0.3rem auto;
-    width: 10rem;
-    height: 1.6rem;
-    background-color: #fff;
-    border-radius: 0.8rem;
-    font-size: 0.8rem;
-    letter-spacing: 0.2rem;
-    border: 3px solid #00CC66;
-    color: #00CC66;
+
+
+
+@media screen and (min-width:1000px){
+    body{
+        font-size: 16px;
+    }
+    .logo{
+        text-align: left;
+    }
+    .logo img{
+        width: 200px;
+    }
+    .box{
+        width: 320px;
+        margin: 200px auto 0;
+    }
+    .box input{
+        display: block;
+    }
+    .box input.info {
+            width: 100%;
+            box-sizing: border-box;
+            border-radius: 5px;
+            height: 42px;
+            line-height: 26px;
+            text-indent: 6px;
+            border: 1px solid #666;
+            margin: 8px auto;
+    }
+    .box .forget{
+        text-align: right;
+        width: 100%;
+    }
+    .box .forget a{
+        color: #9D9D9D;
+    }
+    .box input.login{
+        display: block;
+        margin: 0 auto;
+        width: 160px;
+        height: 42px;
+        background-color: #00CC66;
+        border-radius: 21px;
+        border: none;
+        color: #fff;
+    }
+    .box .register{
+        text-align: center;
+    }
+    .box .register input{
+        display: block;
+        margin: 0 auto;
+        width: 160px;
+        height: 42px;
+        background-color: #fff;
+        border-radius: 21px;
+        border: 2px solid #00CC66;
+        color: #00CC66;
+    }
 }
