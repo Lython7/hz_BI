@@ -106,7 +106,7 @@ def upload(request):
             print(datadic['商品分类'])
             # 写入数据库
             for i in datadic['商品分类'][1::]:
-                models.GoodsClassify.objects.create(i)
+                models.GoodsClassify.objects.create(catNo= i['catNo'], catName= i['catName'], created_by= request.user)
 
 
 def checkexcel(request):
