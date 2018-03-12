@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,7 +8,7 @@
 <body>
 {% for key,value in datadic.items  %}
 
-    <table>
+    <table border="1" cellspacing="0">
     <p>{{ key }}</p>
 {#    <p>{{ value }}</p>#}
         {% for i in value %}
@@ -19,11 +20,9 @@
         {% endfor %}
 
     </table><br>
-
-
 {% endfor %}
-<button onclick="">确认提交</button>
-
-
+<button onclick="gets()">确认提交</button>
 </body>
+<script src={% static 'dist/jquery.min.js' %} type="text/javascript" charset="utf-8"></script>
+<script src={% static 'yoback/js/excelcheck.js' %} type="text/javascript" charset="utf-8"></script>
 </html>
