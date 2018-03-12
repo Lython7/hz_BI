@@ -1,4 +1,6 @@
 import os, time
+
+
 from hz_BI.settings import MEDIA_ROOT
 from datetime import datetime
 from xlrd import xldate_as_tuple
@@ -67,6 +69,10 @@ class ExcelToJson(object):
             print('json化失败！！')
             return None
 
+
+def checkexcel(request):
+    return render(request, 'yoback/excelcheck.html', context={})
+
 class GoodsClassifyViewSet(viewsets.ModelViewSet):
     queryset = models.GoodsClassify.objects.all()
     serializer_class = serializers.GoodsClassifySerializer
@@ -81,7 +87,7 @@ def yoback(request):
     if request.user.is_authenticated and request.user.is_staff == 1:
         return render(request, 'yoback/yoback.html', context={})
     else:
-        return HttpResponseRedirect('/login/')
+        return HttpResponseRedirect('/login')
 
 @login_required
 def upload(request):
@@ -99,16 +105,19 @@ def upload(request):
         return render(request, 'yoback/excelcheck.html', context={'datadic':datadic})
 
     if request.method == "GET":
+
         filenm = request.session.get('filenm', None)
         if  filenm:
             data = ExcelToJson(filenm)
             datadic = data.readExcel()
-            print(datadic['商品分类'])
+            # print(datadic['商品分类'])
             # 写入数据库
             for i in datadic['商品分类'][1::]:
                 models.GoodsClassify.objects.create(catNo= i['catNo'], catName= i['catName'], created_by= request.user)
 
+            return JsonResponse({'url': '/yoback/'})
+        else:
+            return HttpResponse('上传失败，请重新操作！')
 
-def checkexcel(request):
-    return render(request, 'yoback/excelcheck.html', context={})
+
 

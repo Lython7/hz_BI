@@ -6,16 +6,16 @@ from django.shortcuts import render, redirect
 
 from . import models, serializers
 
-
-def loginPage(request):
-    return render(request, 'index/login.html', context={})
-
 # @login_required
 def index(request):
     if request.user.is_authenticated and request.user.is_staff == 0:
         return render(request, 'index/haha.html', context={})
     else:
         return HttpResponseRedirect('/login/')
+
+def loginPage(request):
+    return render(request, 'index/login.html', context={})
+
 
 def doLogin(request):
     if request.method == "POST":
