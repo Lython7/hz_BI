@@ -1,10 +1,9 @@
-/*
 $.ajax({
     url:'/yoback/check',
     type:'GET', //GET
-    /!*data:{
+    /*data:{
         name:'yang',age:25
-    },*!/
+    },*/
     success:function(data,textStatus,jqXHR){
         console.log(data);
         console.log(textStatus);
@@ -18,4 +17,4 @@ $.ajax({
     complete:function(){
         console.log('结束');
     }
-});*/
+});
