@@ -111,13 +111,42 @@ def upload(request):
             data = ExcelToJson(filenm)
             datadic = data.readExcel()
             # print(datadic['商品分类'])
+
             # 写入数据库
-            for i in datadic['商品分类'][1::]:
-                models.GoodsClassify.objects.create(catNo= i['catNo'], catName= i['catName'], created_by= request.user)
+            # ******************************************************************
+            # ******************************************************************
+            # for i in datadic['商品分类'][1::]:
+            #     models.GoodsClassify.objects.create(catNo= i['catNo'],
+            #                                         catName= i['catname'],
+            #
+            #                                    created_by= request.user)
+            # ******************************************************************
+            # ******************************************************************
+            for i in datadic['商品清单'][1::]:
+                models.GoodsList.objects.create(channel= i['渠道'],
+                                                catNo= i['分类编码'],
+                                                skuNo=i['sku编码'],
+                                                price=i['商品单价'],
+                                                created_by= request.user)
+            # ******************************************************************
+            # ******************************************************************
+            for i in datadic['销售订单'][1::]:
+                models.GoodsList.objects.create(channel= i['渠道'],
+                                                catNo= i['分类编码'],
+                                                skuNo=i['sku编码'],
+                                                price=i['商品单价'],
+                                                created_by= request.user)
+            # ******************************************************************
+            # ******************************************************************
+            for i in datadic['退货订单'][1::]:
+                models.GoodsList.objects.create(channel= i['渠道'],
+                                                catNo= i['分类编码'],
+                                                skuNo=i['sku编码'],
+                                                price=i['商品单价'],
+                                                created_by= request.user)
 
             return JsonResponse({'url': '/yoback/'})
         else:
-            return HttpResponse('上传失败，请重新操作！')
-
+            return JsonResponse({'error': '审核失败，请核查excel内容，重新上传！,请检查是否有新商品需要添加。'})
 
 
