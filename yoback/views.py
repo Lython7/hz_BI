@@ -1,73 +1,13 @@
 import os, time
 
-
-from hz_BI.settings import MEDIA_ROOT
-from datetime import datetime
-from xlrd import xldate_as_tuple
-
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, render_to_response
-import xlrd, json
+
 from rest_framework import viewsets
 
 from . import serializers, models
-
-
-def handle_upload_file(file, filename):
-    path = 'media/yoback/excelData/'  # 上传文件的保存路径，可以自己指定任意的路径
-    if not os.path.exists(path):
-        os.makedirs(path)
-    with open(path + filename, 'wb+') as destination:
-        for chunk in file.chunks():
-            destination.write(chunk)
-
-
-class ExcelToJson(object):
-    # def __init__(self, host="localhost", user="root", passwd="2531", db="hz_BI"):
-    #     # 连接数据库
-    #     database = pymysql.connect(host=host, user=user, passwd=passwd, db="hz_BI")
-    #     cursor = database.cursor()
-    def __init__(self, filename):
-        self.datadictotal = {}
-        # self.datalist = []
-        self.filename = filename
-
-    def readExcel(self):
-        # 获取excelData文件夹中上传了的excel文件
-        # try:
-        excelFile = xlrd.open_workbook(os.path.join(MEDIA_ROOT+'/yoback/excelData', self.filename))
-
-        for sheet in excelFile.sheets():
-            datalist = []
-            for i in range(sheet.nrows):
-                dic = {}
-                for j in range(sheet.ncols):
-                    if sheet.cell(i, j).ctype==3:
-                        # xlrd.xldate.xldate_as_datetime(table.cell(2, 2).value, 1)
-                        x = xlrd.xldate_as_datetime(sheet.cell(i, j).value, 0)
-                        if int(sheet.cell(i, j).value) > 0:
-                            # print(x)
-                            # print(type(x))
-
-                            dic[sheet.cell(0, j).value] = x.strftime('%Y-%d-%m')
-                        else:
-                            dic[sheet.cell(0, j).value] = x.strftime('%H:%M:%S')
-                    else:
-                        dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
-                datalist.append(dic)
-            self.datadictotal[sheet.name] = datalist
-        return self.datadictotal
-        # except:
-        #     print('excel读取过程中有问题')
-
-    def jsonhandle(self):
-        if self.datadictotal:
-            jsonstr = json.dumps(self.datadictotal)
-            return jsonstr
-        else:
-            print('json化失败！！')
-            return None
+from .excelhandle import *
 
 
 def checkexcel(request):
@@ -93,7 +33,7 @@ def yoback(request):
 def upload(request):
     if request.method == "POST":
         name = str(request.FILES['xlfile']).split('.')
-        filenm = request.user.username + '-' + name[0] + str(time.strftime("%Y-%m-%d-%Hh%Mm%Ss",time.localtime())) + '.' + name[1]
+        filenm = request.user.username + '-' + name[0] + '-' + str(time.strftime("%Y-%m-%d-%Hh%Mm%Ss",time.localtime())) + '.' + name[1]
         handle_upload_file(request.FILES['xlfile'], filenm)
         request.session['filenm'] = filenm
 
@@ -110,40 +50,67 @@ def upload(request):
         if  filenm:
             data = ExcelToJson(filenm)
             datadic = data.readExcel()
-            # print(datadic['商品分类'])
 
-            # 写入数据库
-            # ******************************************************************
-            # ******************************************************************
-            # for i in datadic['商品分类'][1::]:
-            #     models.GoodsClassify.objects.create(catNo= i['catNo'],
-            #                                         catName= i['catname'],
-            #
-            #                                    created_by= request.user)
-            # ******************************************************************
-            # ******************************************************************
-            for i in datadic['商品清单'][1::]:
-                models.GoodsList.objects.create(channel= i['渠道'],
-                                                catNo= i['分类编码'],
-                                                skuNo=i['sku编码'],
-                                                price=i['商品单价'],
-                                                created_by= request.user)
-            # ******************************************************************
-            # ******************************************************************
-            for i in datadic['销售订单'][1::]:
-                models.GoodsList.objects.create(channel= i['渠道'],
-                                                catNo= i['分类编码'],
-                                                skuNo=i['sku编码'],
-                                                price=i['商品单价'],
-                                                created_by= request.user)
-            # ******************************************************************
-            # ******************************************************************
-            for i in datadic['退货订单'][1::]:
-                models.GoodsList.objects.create(channel= i['渠道'],
-                                                catNo= i['分类编码'],
-                                                skuNo=i['sku编码'],
-                                                price=i['商品单价'],
-                                                created_by= request.user)
+            # keyName = filenm.split('-')[1]
+            if '商品清单' in filenm:
+                # ******************************************************************
+                # ******************************************************************
+                for i in datadic['商品分类'][1::]:
+                    models.GoodsClassify.objects.create(catNo= i['catNo'],
+                                                        catName= i['catname'],
+                                                        created_by= request.user)
+                # ******************************************************************
+                # ******************************************************************
+
+                for i in datadic['商品清单'][1::]:
+                    models.GoodsList.objects.create(channel= i['渠道'],
+                                                    catNo= models.GoodsClassify.objects.get(catNo=i['分类编码']),
+                                                    skuNo=str(i['sku编码']),
+                                                    skuName=i['sku名称'],
+                                                    price=i['商品单价'],
+                                                    created_by= request.user)
+                # ******************************************************************
+                # ******************************************************************
+            elif '退货' in filenm:
+
+                for i in datadic['退货订单'][1::]:
+                    models.RevokeOrder.objects.create(channel= i['渠道'],
+                                                    rorderdate= i['退货日期'],
+                                                    rordertime=i['退货时间'],
+                                                    rorderNo=i['退货订单号'],
+                                                    orderNo=i['原始订单号'],
+                                                    skuNo=i['sku编码'],
+                                                    ramount=i['退货数量'],
+                                                    price=i['商品单价'],
+                                                    discountprice=i['折扣金额'],
+                                                    revokeprice=i['退货商品金额'],
+                                                    rorderPay=i['退货订单金额'],
+
+                                                    created_by= request.user)
+                # ******************************************************************
+                # ******************************************************************
+            else:
+                try:
+                    for i in datadic['销售订单'][1::]:
+                        models.SaleOrder.objects.create(channel= i['渠道'],
+                                                        orderdate= i['下单日期'],
+                                                        ordertime=i['下单时间'],
+                                                        orderNo=i['订单号'],
+                                                        customer=i['客户姓名'],
+                                                        cuscellphone=i['联系方式'],
+                                                        province=i[r'省/市'],
+                                                        city=i[r'市/区'],
+                                                        skuNo=i['sku编码'],
+                                                        amount=i['数量'],
+                                                        price=i['商品单价'],
+                                                        Sumprice=i['商品总金额'],
+                                                        discountprice=i['折扣金额'],
+                                                        orderPay=i['订单实付金额'],
+                                                        promotion=i['促销活动'],
+                                                        created_by= request.user)
+                except:
+                    print('表不对！')
+
 
             return JsonResponse({'url': '/yoback/'})
         else:

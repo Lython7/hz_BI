@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'index',# bi系统展示的页面
     'uprofile',# 用户信息拓展
     'yoback',# 后台 上传excel 读取并写入数据库
+    'hzyg',# 禾中优供数据库数据读取
 ]
 
 #api框架
@@ -106,6 +107,15 @@ DATABASES = {
         'HOST': '127.0.0.1',
         'PORT': '3306',
         'NAME': 'hz_bi',
+    },
+    # 迁徙备份的数据库，可做查询
+    'hzyg':{
+        'ENGINE': 'django.db.backends.mysql',
+        'USER': 'malin',
+        'PASSWORD': 'hzbl@123@malin',
+        'HOST': '47.92.133.25',
+        'PORT': '3306',
+        'NAME': 'dxh_b2b',
     }
 }
 

@@ -20,6 +20,7 @@ from django.urls import path, include
 urlpatterns = [
     url(r'^', include('index.urls')),
     url(r'^yoback/', include('yoback.urls')),
+    url(r'^hzyg/', include('hzyg.urls')),
 
     # path(r'^', include('index.urls')),
 
