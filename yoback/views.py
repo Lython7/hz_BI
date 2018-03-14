@@ -58,7 +58,7 @@ def upload(request):
                 for i in datadic['商品分类'][1::]:
                     models.GoodsClassify.objects.create(catNo= i['catNo'],
                                                         catName= i['catname'],
-                                                        created_by= request.user)
+                                                        edited_by= request.user)
                 # ******************************************************************
                 # ******************************************************************
 
@@ -68,7 +68,7 @@ def upload(request):
                                                     skuNo=str(i['sku编码']),
                                                     skuName=i['sku名称'],
                                                     price=i['商品单价'],
-                                                    created_by= request.user)
+                                                    edited_by= request.user)
                 # ******************************************************************
                 # ******************************************************************
             elif '退货' in filenm:
@@ -86,7 +86,7 @@ def upload(request):
                                                     revokeprice=i['退货商品金额'],
                                                     rorderPay=i['退货订单金额'],
 
-                                                    created_by= request.user)
+                                                    edited_by= request.user)
                 # ******************************************************************
                 # ******************************************************************
             else:
@@ -107,7 +107,7 @@ def upload(request):
                                                         discountprice=i['折扣金额'],
                                                         orderPay=i['订单实付金额'],
                                                         promotion=i['促销活动'],
-                                                        created_by= request.user)
+                                                        edited_by= request.user)
                 except:
                     print('表不对！')
 

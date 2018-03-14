@@ -7,10 +7,20 @@ class Uprofile(models.Model):
     '''
         如何定义必填项的话，需要先创建好admin用户后，将null改为False，重新迁移数据库，然后后台创建时候，该字段为必填项。
     '''
+    choices = (
+        (1, 'god'),# 上帝权限
+        (2, 'hzyg'),# 禾中优供
+        (3, 'online'),# 电商
+        (4, 'tv'),# 电视
+        (5, 'No authority'),# 无权
+        (6, 'other'),# 其他
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
     uname = models.CharField(max_length=32, null=True, verbose_name='用户姓名')
     ucellphone = models.CharField(max_length=11, null=True, verbose_name='手机号码', unique=True)
+    udepartment = models.CharField(max_length=32, null=True, verbose_name='部门')
     uposition = models.CharField(max_length=32, null=True, verbose_name='工作岗位')
+    upower = models.IntegerField(choices=choices, default=5, verbose_name='操作权限')
 
     class Meta:
         verbose_name = '用户信息拓展表'

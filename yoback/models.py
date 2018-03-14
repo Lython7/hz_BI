@@ -3,7 +3,15 @@ from django.db import models
 # Create your models here.
 class AdjustPrice(models.Model):
     '''商品调价表'''
-    pass
+    adjustdate = models.DateField(verbose_name='调价日期', null=False)
+    adjusttime = models.TimeField(verbose_name='调价时间', null=False)
+    channel = models.CharField(max_length=30, null=False, verbose_name='销售渠道')
+    skuNo = models.DecimalField(max_digits=10, decimal_places=0, null=False, verbose_name='sku编码')
+    skuName = models.CharField(max_length=50, null=False, verbose_name='sku名称')
+    price = models.DecimalField(max_digits=8, decimal_places=2, null=False, verbose_name='商品单价')
+
+    edited_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
+    created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='创建时间', null=False)
 
 class GoodsClassify(models.Model):
     '''
@@ -16,7 +24,7 @@ class GoodsClassify(models.Model):
     catNo = models.CharField(max_length=20, null=False, verbose_name='分类编码', primary_key=True)
     catName = models.CharField(max_length=20, null=False, verbose_name='分类名称')
 
-    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
+    edited_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='创建时间', null=False)
     modified_time = models.DateTimeField(auto_now=True, editable=False, verbose_name='编辑时间', null=False)
     is_delete = models.BooleanField(choices=choices, default=False, null=False, verbose_name='逻辑删除')
@@ -47,7 +55,7 @@ class GoodsList(models.Model):
     # price = models.CharField(max_length=5, null=False, verbose_name='商品单价')
     price = models.DecimalField(max_digits=8, decimal_places=2, null=False, verbose_name='商品单价')
 
-    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
+    edited_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='创建时间', null=False)
     modified_time = models.DateTimeField(auto_now=True, editable=False, verbose_name='编辑时间', null=False)
     is_delete = models.BooleanField(choices=choices, default=False, null=False, verbose_name='逻辑删除')
@@ -87,7 +95,7 @@ class SaleOrder(models.Model):
     orderPay= models.DecimalField(max_digits=8, decimal_places=2, null=False, verbose_name='订单实付金额')
     promotion= models.CharField(max_length=50, null=False, verbose_name='优惠活动')
 
-    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
+    edited_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='创建时间', null=False)
     modified_time = models.DateTimeField(auto_now=True, editable=False, verbose_name='编辑时间', null=False)
     is_delete = models.BooleanField(choices=choices, default=False, null=False, verbose_name='逻辑删除')
@@ -120,7 +128,7 @@ class RevokeOrder(models.Model):
     revokeprice= models.DecimalField(max_digits=8, decimal_places=2, null=False, verbose_name='退货商品金额')
     rorderPay= models.DecimalField(max_digits=8, decimal_places=2, null=False, verbose_name='订单实付金额')
 
-    created_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
+    edited_by = models.ForeignKey('auth.User', verbose_name='编辑人', null=False, on_delete=models.CASCADE)  # 编辑人 editable=False default =当前登录的id
     created_time = models.DateTimeField(auto_now_add=True, editable=False, verbose_name='创建时间', null=False)
     modified_time = models.DateTimeField(auto_now=True, editable=False, verbose_name='编辑时间', null=False)
     is_delete = models.BooleanField(choices=choices, default=False, null=False, verbose_name='逻辑删除')
