@@ -3,15 +3,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>jaja</title>
+    <title>系统后台</title>
+    <link rel="stylesheet" href={% static 'yoback/css/common.css' %}>
+    <link rel="stylesheet" href={% static 'yoback/css/yoback.css' %}>
 </head>
 <body>
-<form enctype="multipart/form-data" method='post' action={% url 'upload' %}>
-    {% csrf_token %}
-    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="xlfile" />
-    <input type="submit" value="提交" />
-</form>
-<input type="button" value="审核" onclick="">
+<div class="titleHead">
+    欢迎回来，
+    <span id="user"></span>
+</div>
+<ul class="nav">
+    
+</ul>
+{#<form enctype="multipart/form-data" method='post' action={% url 'upload' %}>#}
+{#    {% csrf_token %}#}
+{#    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="xlfile" />#}
+{#    <input type="submit" value="提交" />#}
+{#</form>#}
 </body>
 <script src={% static 'dist/jquery.min.js' %} type="text/javascript" charset="utf-8"></script>
 <script src={% static 'yoback/js/yoback.js' %} type="text/javascript" charset="utf-8"></script>
