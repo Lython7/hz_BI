@@ -31,34 +31,32 @@ class ExcelToJson(object):
         self.datadictotal = {}
         # self.datalist = []
         self.filename = filename
-
-    def readExcel(self):
-        # 获取excelData文件夹中上传了的excel文件
-
         today = time.localtime()
         year = str(today.tm_year)
         mon = str(today.tm_mon)
+        self.path = os.path.join(MEDIA_ROOT+'/yoback/excelData/' + year+'/'+mon, self.filename)
+
+    def readExcel(self):
+        # 获取excelData文件夹中上传了的excel文件
         try:
-            excelFile = xlrd.open_workbook(os.path.join(MEDIA_ROOT+'/yoback/excelData/' + year+'/'+mon, self.filename))
+            excelFile = xlrd.open_workbook(self.path)
 
             for sheet in excelFile.sheets():
                 datalist = []
                 for i in range(sheet.nrows):
-                    dic = {}
+                    tmp_dic = {}
                     for j in range(sheet.ncols):
                         if sheet.cell(i, j).ctype==3:
-                            # xlrd.xldate.xldate_as_datetime(table.cell(2, 2).value, 1)
-                            x = xlrd.xldate_as_datetime(sheet.cell(i, j).value, 0)
-                            if int(sheet.cell(i, j).value) > 0:
-                                # print(x)
-                                # print(type(x))
 
-                                dic[sheet.cell(0, j).value] = x.strftime('%Y-%d-%m')
+                            dttime = xlrd.xldate_as_datetime(sheet.cell(i, j).value, 0)
+                            if int(sheet.cell(i, j).value) > 0:
+
+                                tmp_dic[sheet.cell(0, j).value] = dttime.strftime('%Y-%d-%m')
                             else:
-                                dic[sheet.cell(0, j).value] = x.strftime('%H:%M:%S')
+                                tmp_dic[sheet.cell(0, j).value] = dttime.strftime('%H:%M:%S')
                         else:
-                            dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
-                    datalist.append(dic)
+                            tmp_dic[sheet.cell(0, j).value] = sheet.cell(i, j).value
+                    datalist.append(tmp_dic)
                 self.datadictotal[sheet.name] = datalist
             return self.datadictotal
         except:

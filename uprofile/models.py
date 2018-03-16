@@ -26,6 +26,12 @@ class Uprofile(models.Model):
         verbose_name = '用户信息拓展表'
         verbose_name_plural = verbose_name
 
+    def __str__(self):
+        return self.uname
+
+    def __unicode__(self):
+        return self.uname
+
     # 重写save方法，最后判断完成后，调用父类save方法。
     def save(self, *args, **kwargs):
         if not self.pk:

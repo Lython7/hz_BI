@@ -24,11 +24,9 @@ class GoodsClassifySerializer(serializers.ModelSerializer):
         )
 
 
-
-
-class GoodsListSerializer(serializers.ModelSerializer):
+class Online_GoodsListSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.GoodsList
+        model = models.Online_GoodsList
         fields = (
             'id',
             'channel',
@@ -45,9 +43,9 @@ class GoodsListSerializer(serializers.ModelSerializer):
 
 
 
-class SaleOrderSerializer(serializers.ModelSerializer):
+class Online_SaleOrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.SaleOrder
+        model = models.Online_SaleOrder
         fields = (
             'id',
             'channel',
@@ -56,12 +54,79 @@ class SaleOrderSerializer(serializers.ModelSerializer):
             'orderNo',
             'customer',
             'cuscellphone',
-
             'province',
             'city',
-
             'skuNo',
+            'amount',
+            'price',
+            'Sumprice',
+            'discountprice',
+            'orderPay',
+            'promotion',
 
+            'edited_by',
+            # 'created_time',
+            # 'modified_time',
+            'is_delete',
+        )
+
+
+class Online_RevokeOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.Online_RevokeOrder
+        fields = (
+            'id',
+            'channel',
+            'rorderdate',
+            'rordertime',
+            'rorderNo',
+            'orderNo',
+            'skuNo',
+            'ramount',
+            'price',
+            'discountprice',
+            'revokeprice',
+            'rorderPay',
+
+            'edited_by',
+            # 'created_time',
+            # 'modified_time',
+            'is_delete',
+        )
+
+class TV_GoodsListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TV_GoodsList
+        fields = (
+            'id',
+            'channel',
+            'catNo',
+            'skuNo',
+            'skuName',
+            'price',
+
+            'edited_by',
+            # 'created_time',
+            # 'modified_time',
+            'is_delete',
+        )
+
+
+
+class TV_SaleOrderSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = models.TV_SaleOrder
+        fields = (
+            'id',
+            'channel',
+            'orderdate',
+            'ordertime',
+            'orderNo',
+            'customer',
+            'cuscellphone',
+            'province',
+            'city',
+            'skuNo',
             'amount',
             'price',
             'Sumprice',
@@ -77,9 +142,9 @@ class SaleOrderSerializer(serializers.ModelSerializer):
 
 
 
-class RevokeOrderSerializer(serializers.ModelSerializer):
+class TV_RevokeOrderSerializer(serializers.ModelSerializer):
     class Meta:
-        model = models.RevokeOrder
+        model = models.TV_RevokeOrder
         fields = (
             'id',
             'channel',
@@ -88,7 +153,6 @@ class RevokeOrderSerializer(serializers.ModelSerializer):
             'rorderNo',
             'orderNo',
             'skuNo',
-            # skuName = models.CharField(max_length=50, null=False, verbose_name='sku名称')
             'ramount',
             'price',
             'discountprice',
@@ -100,7 +164,6 @@ class RevokeOrderSerializer(serializers.ModelSerializer):
             # 'modified_time',
             'is_delete',
         )
-
 
 
 
