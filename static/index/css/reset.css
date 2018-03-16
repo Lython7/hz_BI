@@ -1,6 +1,120 @@
 body{
     margin: 0;
+    font-size: 16px;
+    font-family: "微软雅黑";
 }
 a{
     text-decoration: none;
+}
+h1,p{
+	margin: 0;
+}
+ul{
+	margin: 0;
+	padding: 0;
+}
+li{
+	list-style: none;
+}
+.fle{
+	display: flex;
+	display: -webkit-box;
+}
+/*公共*/
+.left{
+	float: left;
+}
+.right{
+	float: right;
+}
+.charts{
+	width: 14.8rem;
+	height: 9rem;
+	margin: 0 auto;
+}
+.nav{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 50px;
+	border-top: 1px solid #aaa;
+	font-size: 12px;
+	background-color: #FFFFFF;
+	z-index: 111;
+}
+.nav li{
+	width: 33.3%;
+}
+.nav li.on a{
+	color: #66FF66;
+}
+.nav a{
+	display: block;
+	height: 100%;
+	margin: 0 auto;
+	text-align: center;
+	color: #666;
+}
+.nav i{
+	display: block;
+	width: 22px;
+	height: 22px;
+	margin: 3px auto;
+}
+.nav .home i{
+	background: url(../images/home.png) no-repeat center;
+	background-size: 20px 20px;
+}
+.nav .sort i{
+	background: url(../images/home.png) no-repeat center;
+	background-size: 20px 20px;
+}
+.nav .main i{
+	background: url(../images/main.png) no-repeat center;
+	background-size: 20px 20px;
+}
+.nav span{
+	
+}
+
+h1.tit{
+	text-align: center;
+    font-size: 0.9rem;
+    margin: 0.3rem 0;
+}
+.box{
+	width: 100%;
+	padding: 0 0.6rem 50px;
+	box-sizing: border-box;
+}
+.box .titles{
+	font-size: 12px;
+	border-left: 0.2rem solid #333;
+	padding-left: 0.2rem;
+	margin: 0.2rem 0;
+	overflow: hidden;
+	height: 0.8rem;
+    line-height: 0.8rem;
+}
+.box .titles .right{
+	padding-right: 0.7rem;
+    padding-left: 0.24rem;
+	background: url(../images/select.png) no-repeat center right;
+	background-size: 1rem 1rem;
+	height: 100%;
+}
+.box .titles .right.time1{
+	border-radius: 0.4rem;
+	background-color: #BADAF8;
+	
+}
+.dates input{
+	background: transparent;
+    border: none;
+    outline: none;
+    width: 62px;
+    font-size: 12px;
+    color: #666666;
+    text-align: center;
 }
