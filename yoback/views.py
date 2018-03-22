@@ -36,6 +36,7 @@ def upload(request):
     power = umodels.Uprofile.objects.get(user=request.user).upower
     if power == 1 or power == 3:
         if request.method == "POST":
+
             name = str(request.FILES['xlfile']).split('.')
             filenm = request.user.username + '-' + name[0] + '-' + str(time.strftime("%Y-%m-%d-%Hh%Mm%Ss",time.localtime())) + '.' + name[1]
             handle_upload_file(request.FILES['xlfile'], filenm)

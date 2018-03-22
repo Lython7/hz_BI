@@ -51,7 +51,7 @@ class ExcelToJson(object):
                             dttime = xlrd.xldate_as_datetime(sheet.cell(i, j).value, 0)
                             if int(sheet.cell(i, j).value) > 0:
 
-                                tmp_dic[sheet.cell(0, j).value] = dttime.strftime('%Y-%d-%m')
+                                tmp_dic[sheet.cell(0, j).value] = dttime.strftime('%Y-%m-%d')
                             else:
                                 tmp_dic[sheet.cell(0, j).value] = dttime.strftime('%H:%M:%S')
                         else:
