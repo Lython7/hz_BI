@@ -22,6 +22,7 @@ urlpatterns = [
     url(r'^yoback/', include('yoback.urls')),
     url(r'^hzyg/', include('hzyg.urls')),
 
+
     # path(r'^', include('index.urls')),
 
     path('admin/', admin.site.urls),

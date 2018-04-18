@@ -13,6 +13,9 @@ def index(request):
     else:
         return HttpResponseRedirect('/login/')
 
+def register(request):
+    return render(request, 'index/register.html', context={})
+
 def loginPage(request):
     return render(request, 'index/login.html', context={})
 
@@ -36,6 +39,9 @@ def doLogin(request):
 
 
     # return render(request, "index/login.html")
+
+def sendEmail():
+    pass
 
 
 def acc_logout(request):

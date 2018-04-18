@@ -7,20 +7,28 @@ class Uprofile(models.Model):
     '''
         如何定义必填项的话，需要先创建好admin用户后，将null改为False，重新迁移数据库，然后后台创建时候，该字段为必填项。
     '''
+
     choices = (
-        (1, 'god'),# 上帝权限
-        (2, 'hzyg'),# 禾中优供
-        (3, 'online'),# 电商
-        (4, 'tv'),# 电视
-        (5, 'No authority'),# 无权
-        (6, 'other'),# 其他
+        (1, '前端登录 总经理 查看权限'),
+        (2, '前端登录 大区经理 查看权限'),
+        (3, '前端登录 部门经理 查看权限'),
+        (4, '前端登录 招商人员 查看权限'),
+        (5, '前端登录 数据分析人员 查看权限'),
+        (6, '前端登录 其他人员 查看权限'),
+
+        (100, '后台登录 上帝权限'),# 上帝权限
+        (101, '后台登录 禾中优供 数据维护权限'),# 禾中优供
+        (102, '后台登录 电商平台 数据维护权限'),# 电商
+        (103, '后台登录 电视购物 数据维护权限'),# 电视
+        (104, '后台登录 后台管理'),# 无权
     )
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
     uname = models.CharField(max_length=32, null=True, verbose_name='用户姓名')
     ucellphone = models.CharField(max_length=11, null=True, verbose_name='手机号码', unique=True)
-    udepartment = models.CharField(max_length=32, null=True, verbose_name='部门')
-    uposition = models.CharField(max_length=32, null=True, verbose_name='工作岗位')
-    upower = models.IntegerField(choices=choices, default=5, verbose_name='操作权限')
+    upower = models.IntegerField(choices=choices, default=5, verbose_name='用户角色')
+
+    udepartment = models.CharField(max_length=32, null=True, verbose_name='部门', help_text='')
+    uposition = models.CharField(max_length=64, null=True, verbose_name='工作岗位')
 
     class Meta:
         verbose_name = '用户信息拓展表'
