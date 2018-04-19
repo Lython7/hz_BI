@@ -1,5 +1,5 @@
-// var url_='http://127.0.0.1:8000/';
-/*function subs() {
+/*var url_='http://127.0.0.1:8000/';
+function subs() {
     var formData = new FormData($('#form1')[0]);
 			$.ajax({
 				url: url_+'uauth/',
