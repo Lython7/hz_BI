@@ -18,6 +18,8 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
+    path('admin/', admin.site.urls),
+
     url(r'^', include('index.urls')),
     url(r'^yoback/', include('yoback.urls')),
     url(r'^hzyg/', include('hzyg.urls')),
@@ -25,5 +27,4 @@ urlpatterns = [
 
     # path(r'^', include('index.urls')),
 
-    path('admin/', admin.site.urls),
 ]

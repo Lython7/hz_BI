@@ -22,13 +22,23 @@ class Uprofile(models.Model):
         (103, '后台登录 电视购物 数据维护权限'),# 电视
         (104, '后台登录 后台管理'),# 无权
     )
+
+    check_choices = (
+        (1, '已审核'),
+        (0, '待审核'),
+        (-1, '审核未通过'),
+        (-2, '已删除'),
+    )
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
     uname = models.CharField(max_length=32, null=True, verbose_name='用户姓名')
-    ucellphone = models.CharField(max_length=11, null=True, verbose_name='手机号码', unique=True)
-    upower = models.IntegerField(choices=choices, default=5, verbose_name='用户角色')
+    ucellphone = models.CharField(max_length=11, null=False, verbose_name='手机号码', unique=True)
+    # uemail = models.CharField(max_length=32, null=False, unique=True, verbose_name='企业邮箱')
+    # udepartment = models.CharField(max_length=32, null=True, verbose_name='部门', help_text='')
+    # uposition = models.CharField(max_length=64, null=True, verbose_name='工作岗位')
 
-    udepartment = models.CharField(max_length=32, null=True, verbose_name='部门', help_text='')
-    uposition = models.CharField(max_length=64, null=True, verbose_name='工作岗位')
+    upower = models.IntegerField(choices=choices, default=5, verbose_name='用户角色', help_text='权限设定')
+    ustatus = models.IntegerField(choices=check_choices, default=0, verbose_name='用户状态')
+
 
     class Meta:
         verbose_name = '用户信息拓展表'
@@ -55,6 +65,14 @@ def create_user_profile(sender, instance, created, **kwargs):
     if created:
         profile = Uprofile()
         profile.user = instance
-        profile.save()
+
+        if profile.user_id == 1:
+            profile.uname = 'admin'
+            profile.ucellphone = '18999999999'
+            profile.upower = 100
+            profile.ustatus = 1
+            profile.save()
+        else:
+            profile.save()
 
 post_save.connect(create_user_profile, sender=User)

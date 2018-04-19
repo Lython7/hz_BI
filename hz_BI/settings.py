@@ -31,7 +31,7 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
-    'suit',
+    # 'suit',
 
     'django.contrib.admin',
     'django.contrib.auth',
@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'uprofile',# 用户信息拓展
     'yoback',# 后台 上传excel 读取并写入数据库
     'hzyg',# 禾中优供数据库数据读取
+    'yotools',# 辅助工具 短信验证
 ]
 
 #api框架
@@ -104,7 +105,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.mysql',
         'USER': 'root',
         'PASSWORD': '2531',
-        'HOST': '127.0.0.1',
+        'HOST': '192.168.117.110',
         'PORT': '3306',
         'NAME': 'hz_bi',
     },

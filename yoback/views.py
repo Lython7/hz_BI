@@ -23,7 +23,7 @@ class GoodsClassifyViewSet(viewsets.ModelViewSet):
     def perform_create(self, serializer):
         serializer.save(created_by=self.request.user)
 
-# @login_required
+@login_required
 def yoback(request):
     if request.user.is_authenticated and request.user.is_staff == 1:
         return render(request, 'yoback/yoback.html', context={})

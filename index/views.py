@@ -4,6 +4,7 @@ from rest_framework import viewsets
 from django.http import HttpResponse, HttpResponseRedirect
 from django.shortcuts import render, redirect
 
+from uprofile.models import Uprofile
 from . import models, serializers
 
 # @login_required
@@ -19,6 +20,10 @@ def register(request):
 def loginPage(request):
     return render(request, 'index/login.html', context={})
 
+# @login_required
+def resetpwdPage(request):
+    return render(request, 'index/resetpwd.html', context={})
+
 
 def doLogin(request):
     if request.method == "POST":
@@ -27,18 +32,19 @@ def doLogin(request):
 
         user = authenticate(username=username,password=password)  # 类型为<class 'django.contrib.auth.models.User'>
 
-        # print(type(models.Customer.objects.get(name="赵凡")))
-        # print(user,type(user))
         if user:
-            login(request, user)
-            staff = user.is_staff
-            if staff == 0:
-                return HttpResponseRedirect("/")
-            elif staff == 1:
-                return HttpResponseRedirect("/yoback")
+            if password == 'qwer1234':
+                # 该密码为默认密码 进入修改密码页面
+                return HttpResponseRedirect("/resetpwd")
+            else:
+                login(request, user)
+                ustatus = Uprofile.objects.get(user=user).ustatus
+                if ustatus < 100:
+                    return HttpResponseRedirect("/")
+                elif ustatus >= 100:
+                    return HttpResponseRedirect("/yoback")
 
 
-    # return render(request, "index/login.html")
 
 def sendEmail():
     pass
