@@ -4,3 +4,94 @@
     font-weight: bold;
     text-align: center;
 }
+.box{
+    width: 100%;
+}
+.box .nav{
+    float: left;
+    width: 180px;
+    text-align: center;
+    border-right: 2px solid #ababab;
+}
+.box .nav .tit{
+    height: 70px;
+    line-height: 70px;
+    border-bottom: 1px solid #c4c4c4;
+}
+.box .nav li{
+    height: 70px;
+    line-height: 70px;
+    border-bottom: 1px solid #c4c4c4;
+}
+.box .wrap{
+    padding-left: 182px;
+}
+.wrap .head{
+    width: 100%;
+    border-bottom: 1px solid #c4c4c4;
+    overflow: hidden;
+}
+.wrap .menu{
+    height: 70px;
+    text-align: center;
+    line-height: 70px;
+}
+.wrap .menu{
+    float: left;
+}
+.wrap .menu li{
+    float: left;
+    height: 100%;
+    width: 120px;
+    border-right: 1px solid #c4c4c4;
+}
+.wrap .menu li.active,
+.nav li.active{
+    background-color: #9D9D9D;
+    color: #fff;
+}
+.wrap .userinfo{
+    float: right;
+    height: 70px;
+    line-height: 70px;
+}
+.wrap .userinfo a{
+    padding-left: 4px;
+}
+.wrap .con{
+    padding: 10px;
+}
+.wrap .con .set{
+    padding: 30px 20px;
+    text-align: center;
+    height: 30px;
+    line-height: 30px;
+    overflow: hidden;
+}
+.wrap .set .datechoose{
+    float: left;
+    border: 1px solid #ddd;
+    height: 30px;
+}
+.wrap .set .item{
+    float: right;
+    border-left: 1px solid #ddd;
+    border-top: 1px solid #ddd;
+}
+.wrap .set .item li{
+    float: left;
+    width: 48px;
+    height: 30px;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+}
+.wrap .con table{
+    width: 100%;
+}
+.wrap .con table th{
+    color: red;
+}
+.wrap .con table tr td:first-child{
+    color: red;
+    text-align: center;
+}

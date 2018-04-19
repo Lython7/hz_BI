@@ -8,13 +8,66 @@
     <link rel="stylesheet" href={% static 'yoback/css/yoback.css' %}>
 </head>
 <body>
-<div class="titleHead">
-    欢迎回来，
-    <span id="user"></span>
+<div class="box">
+    <!--左侧导航-->
+    <div class="nav">
+        <div class="tit">数据维护</div>
+        <ul>
+            <li class="active" val="">销售订单</li>
+            <li val="">退货订单</li>
+            <li val="">商品列表</li>
+            <li val="">调价单</li>
+            <li val="">渠道列表</li>
+        </ul>
+    </div>
+    <!--右侧栏目-->
+    <div class="wrap">
+        <!--上方头部-->
+        <div class="head">
+            <ul class="menu">
+                <li class="active" val="">电商</li>
+                <li val="">电视</li>
+            </ul>
+            <div class="userinfo">
+                <div class="user"></div>
+                <a href="javascript:;">退出</a>
+            </div>
+        </div>
+        <!--主体-->
+        <div class="con">
+            <div class="set">
+                <div class="datechoose">选择日期</div>
+                <ul class="item">
+                    <li>新增</li>
+                    <li>模板</li>
+                    <li>导入</li>
+                    <li>导出</li>
+                </ul>
+            </div>
+            <table cellspacing="0" border="1">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th>1</th>
+                        <th>1</th>
+                        <th>1</th>
+                        <th>1</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>修改</td>
+                        <td>修改</td>
+                        <td>我水电费健康了</td>
+                        <td>我水健康了</td>
+                        <td>我水电</td>
+                        <td>我水电费康了</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
 </div>
-<ul class="nav">
-    
-</ul>
 {#<form enctype="multipart/form-data" method='post' action={% url 'upload' %}>#}
 {#    {% csrf_token %}#}
 {#    <input type="file" accept="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel" name="xlfile" />#}
