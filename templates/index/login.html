@@ -25,12 +25,10 @@
             <input type="submit" class="login" value="登录">
         </form>
         <div class="error"></div>
-        <div class="register">
-            <a href="" class="tit">没有账号？</a>
-{#            <input type="button" value="注册">#}
-            <a class="tit" href={% url 'register' %}>注册</a>
-
-        </div>
+        {% comment %}<div class="register">
+            <span href="" class="titl">没有账号？</span>
+            <a class="reg" href={% url 'register' %}>注册</a>
+        </div>{% endcomment %}
     </div>
 </body>
 </html>
