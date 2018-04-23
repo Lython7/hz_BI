@@ -1,12 +1,15 @@
+import json
+
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
 from rest_framework import viewsets
-from django.http import HttpResponse, HttpResponseRedirect
+from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 
 from uprofile.models import Uprofile
 from . import models, serializers
 from yotools.views import SMSClient
+from dysms_python import demo_sms_send
 
 # @login_required
 def index(request):
@@ -32,14 +35,16 @@ def doLogin(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
 
-        user = authenticate(username=username,password=password)  # 类型为<class 'django.contrib.auth.models.User'>
-
+        try:
+            user = authenticate(username=username,password=password)  # 类型为<class 'django.contrib.auth.models.User'>
+        except:
+            return JsonResponse({'resuld': 'faild'})
         if user:
             if password == 'qwer1234':
                 # 该密码为默认密码 进入修改密码页面
                 # 发送验证码
                 cellphone = Uprofile.objects.get(user=user).ucellphone
-                SMSClient.send_sms(cellphone)
+                demo_sms_send.send_sms(cellphone)
                 return HttpResponseRedirect("/resetpwd")
             else:
                 login(request, user)

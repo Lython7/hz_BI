@@ -23,7 +23,15 @@ class EmailAuthBackend(object):
 class CellphoneAuthBackend(object):
     def authenticate(self, username=None, password=None):
         try:
-            user = User.objects.get(pk=Uprofile.objects.get(ucellphone=int(username)).pk)
+            if len(username) == 11:
+                try:
+                    cellphone = int(username)
+                    user = User.objects.get(pk=Uprofile.objects.get(ucellphone=cellphone).pk)
+                except User.DoesNotExist:
+                    return None
+            else:
+                return None# 账号密码错误
+
             if user.check_password(password):
                 return user
             return None
