@@ -9,8 +9,8 @@ from django.shortcuts import render, redirect
 from uprofile.models import Uprofile
 from yotools.models import SMSCode
 from . import models, serializers
-from yotools.views import SMSClient
-from dysms_python import demo_sms_send
+
+# from dysms_python import demo_sms_send
 
 # @login_required
 def index(request):
@@ -47,12 +47,12 @@ def doLogin(request):
                 cellphone = Uprofile.objects.get(user=user).ucellphone
                 request.session['cellphone'] = cellphone
                 request.session.set_expiry(600)
-                resp = demo_sms_send.send_sms(cellphone)
-                timeflag = resp['timeflag']
-                code = resp['code']
-                print(resp['Code'])
-                if 'OK' == resp.get('Code'):
-                    SMSCode.objects.update_or_create(phone_number=cellphone, code=code, stutas=1, timeflag=timeflag)
+                # resp = demo_sms_send.send_sms(cellphone)
+                # timeflag = resp['timeflag']
+                # code = resp['code']
+                # print(resp['Code'])
+                # if 'OK' == resp.get('Code'):
+                #     SMSCode.objects.update_or_create(phone_number=cellphone, code=code, stutas=1, timeflag=timeflag)
                 return HttpResponseRedirect("/resetpwd")
             else:
                 login(request, user)
