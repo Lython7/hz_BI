@@ -21,7 +21,7 @@
 </div>
 </body>
 <script>
-    var baseUrl = 'http://192.168.117.110:8000/';
+    var baseUrl = 'http://127.0.0.1:8000/';
     var verification=document.getElementById("verification"),
         newPwd=document.getElementById("newPwd"),
         newConfirm=document.getElementById("newConfirm"),
@@ -50,8 +50,8 @@
             url: baseUrl + 'profile/resetpwd/',
             type: 'POST',
             data: {
-                verification: verification.value,
-                newPwd: newPwd.value
+                code: verification.value,
+                passwd: newPwd.value
             },
             {#            headers: {'Authorization': sessionStorage.token},#}
             success: function(data) {
