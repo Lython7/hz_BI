@@ -23,6 +23,7 @@ urlpatterns = [
     url(r'^', include('index.urls')),
     url(r'^yoback/', include('yoback.urls')),
     url(r'^yotools/', include('yotools.urls')),
+    url(r'^profile/', include('uprofile.urls')),
 
 
     url(r'^hzyg/', include('hzyg.urls')),

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="dataSourceStorageLocal">
+    <data-source name="Django default" uuid="f9b9657d-5783-459c-8269-bad2d9438ba7">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <first-sync>true</first-sync>
+      <user-name>root</user-name>
+    </data-source>
+    <data-source name="Django hzyg" uuid="460847e8-699b-4f7d-9aaa-7c889496c4f0">
+      <database-info product="" version="" jdbc-version="" driver-name="" driver-version="" />
+      <user-name>malin</user-name>
+    </data-source>
+  </component>
+</project>
