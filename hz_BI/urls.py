@@ -20,13 +20,12 @@ from django.urls import path, include
 urlpatterns = [
     path('admin/', admin.site.urls),
     url(r'^profile/', include('uprofile.urls')),
-
-    url(r'^', include('index.urls')),
     url(r'^yoback/', include('yoback.urls')),
     url(r'^yotools/', include('yotools.urls')),
-
-
     url(r'^hzyg/', include('hzyg.urls')),
+
+    url(r'^', include('index.urls')),
+
 
 
     # path(r'^', include('index.urls')),
