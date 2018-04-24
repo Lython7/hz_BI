@@ -27,7 +27,7 @@ def loginPage(request):
 
 # @login_required
 def resetpwdPage(request):
-    print(request.session['cellphone'])
+    # print(request.session['cellphone'])
     return render(request, 'index/resetpwd.html', context={})
 
 
@@ -50,6 +50,7 @@ def doLogin(request):
                 resp = demo_sms_send.send_sms(cellphone)
                 timeflag = resp['timeflag']
                 code = resp['code']
+                print(resp['Code'])
                 if 'OK' == resp.get('Code'):
                     SMSCode.objects.update_or_create(phone_number=cellphone, code=code, stutas=1, timeflag=timeflag)
                 return HttpResponseRedirect("/resetpwd")

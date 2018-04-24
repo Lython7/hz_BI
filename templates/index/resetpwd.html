@@ -7,20 +7,22 @@
     <link rel="stylesheet" type="text/css" href={% static 'index/css/reset.css' %}>
     <link rel="stylesheet" type="text/css" href={% static 'index/css/resetpwd.css' %}>
     <script src={% static 'index/js/rem.js' %} type="text/javascript" charset="utf-8"></script>
+    <script src={% static 'dist/jquery.min.js' %} type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
-    <div class="wrap">
-        <h2>修改密码</h2>
-        <input id="verification" type="text" placeholder="请输入短信验证码">
-        <input id="newPwd" type="password" placeholder="请输入新密码">
-        <input id="newConfirm" type="password" placeholder="请确认信密码">
-        <input id="sub" type="button" value="确认" onclick="sub()">
-        <div id="error"></div>
-        <div class="info">首次登录请修改密码！</div>
-    </div>
+<div class="wrap">
+    <h2>修改密码</h2>
+    <input id="verification" type="text" placeholder="请输入短信验证码">
+    <input id="newPwd" type="password" placeholder="请输入新密码">
+    <input id="newConfirm" type="password" placeholder="请确认信密码">
+    <input id="sub" type="button" value="确认" onclick="sub()">
+    <div id="error"></div>
+    <div class="info">首次登录请修改密码！</div>
+</div>
 </body>
 <script>
-    var verification=document.getElementById("form1"),
+    var baseUrl = 'http://192.168.117.110:8000/';
+    var verification=document.getElementById("verification"),
         newPwd=document.getElementById("newPwd"),
         newConfirm=document.getElementById("newConfirm"),
         errInfo=document.getElementById("error");
@@ -45,12 +47,13 @@
             return;
         }
         $.ajax({
-            url: baseUrl + '/investment/check/',
+            url: baseUrl + 'profile/resetpwd/',
             type: 'POST',
             data: {
-
+                verification: verification.value,
+                newPwd: newPwd.value
             },
-{#            headers: {'Authorization': sessionStorage.token},#}
+            {#            headers: {'Authorization': sessionStorage.token},#}
             success: function(data) {
                 console.log(data);
             },
