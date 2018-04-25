@@ -58,7 +58,5 @@ function callback(res) {
         errInfo('验证码已超时，请重新登录！');
     }else if (res==='used'){
         errInfo('改验证码已失效，请重新登录！')
-    }else if (res==='success'){
-        location.href='';
     }
 }

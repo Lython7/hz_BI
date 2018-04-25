@@ -1,5 +1,5 @@
 from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.views.decorators.csrf import csrf_exempt
 
 from uprofile.models import Uprofile
@@ -22,13 +22,13 @@ def resetit(request):
         code = request.POST.get('code', None)
         passwd = request.POST.get('passwd', None)
         query = SMSCode.objects.filter(cellphone=cellphone).last()
-        print(query.code)
-        timefront = request.GET.get('timeflag')
-        # try:
-        #     res = verify_code(code, timefront, query)
-        # except:
-        #     res = 'faild'
-        res = verify_code(code, timefront, query)
+        # print(query.code)
+        timefront = request.POST.get('timeflag')
+        try:
+            res = verify_code(code, timefront, query)
+        except:
+            res = 'failed'
+        # res = verify_code(code, timefront, query)
 
         if res == 'ok':
             user = Uprofile.objects.get(ucellphone=cellphone).user
@@ -40,11 +40,11 @@ def resetit(request):
             if request.user.is_authenticated:
                 ustatus = Uprofile.objects.get(user=user).ustatus
                 if ustatus < 100:
-                    return HttpResponseRedirect("/")
+                    return JsonResponse({'res': 'success', 'page': 'front'})
                 elif ustatus >= 100:
-                    return HttpResponseRedirect("/yoback")
+                    return JsonResponse({'res': 'success', 'page': 'back'})
             else:
-                return HttpResponseRedirect('/login/')
+                return JsonResponse({'res': 'failed'})
         else:
             return JsonResponse({'res': res})
 

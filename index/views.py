@@ -2,7 +2,6 @@ import json
 
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
-from django.views.decorators.csrf import csrf_exempt
 from rest_framework import viewsets
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
@@ -13,7 +12,7 @@ from . import models, serializers
 
 # from dysms_python import demo_sms_send
 
-@login_required
+
 def index(request):
     if request.user.is_authenticated:
         return render(request, 'index/index.html', context={})
@@ -31,7 +30,7 @@ def resetpwdPage(request):
     # print(request.session['cellphone'])
     return render(request, 'index/resetpwd.html', context={})
 
-@csrf_exempt
+
 def doLogin(request):
     if request.method == "POST":
         username = request.POST.get("username")
@@ -42,7 +41,7 @@ def doLogin(request):
         except:
             return JsonResponse({'resuld': 'faild'})
         if user:
-            if password == 'qwer1234':
+            if password == 'qwer1234' or username == 'lz':
                 # 该密码为默认密码 进入修改密码页面
                 # 发送验证码
                 cellphone = Uprofile.objects.get(user=user).ucellphone
