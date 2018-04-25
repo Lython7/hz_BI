@@ -40,9 +40,9 @@ def resetit(request):
             if request.user.is_authenticated:
                 ustatus = Uprofile.objects.get(user=user).ustatus
                 if ustatus < 100:
-                    return JsonResponse({'res': 'success', 'page': 'front'})
+                    return JsonResponse({'res': 'success1', 'page': 'front'})
                 elif ustatus >= 100:
-                    return JsonResponse({'res': 'success', 'page': 'back'})
+                    return JsonResponse({'res': 'success2', 'page': 'back'})
             else:
                 return JsonResponse({'res': 'failed'})
         else:
