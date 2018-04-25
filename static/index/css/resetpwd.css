@@ -67,4 +67,9 @@
         width: 80%;
         margin: 16px auto;
     }
+    #error{
+        color: red;
+        text-align: center;
+        padding: 10px 0;
+    }
 }
