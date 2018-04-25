@@ -7,7 +7,7 @@ from django.db import models
 
 class SMSCode(models.Model):
     choices = ((1, '有效'),(2, '失效'),)
-    phone_number = models.CharField(max_length=11)
+    cellphone = models.CharField(max_length=11)
     code = models.CharField(max_length=6)
     timestamp = models.DateTimeField(auto_now=True)
     stutas = models.IntegerField(choices=choices)
