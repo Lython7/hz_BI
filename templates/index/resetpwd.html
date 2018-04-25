@@ -12,57 +12,13 @@
 <body>
 <div class="wrap">
     <h2>修改密码</h2>
-    <input id="verification" type="text" placeholder="请输入短信验证码">
-    <input id="newPwd" type="password" placeholder="请输入新密码">
-    <input id="newConfirm" type="password" placeholder="请确认信密码">
+    <input id="verification" type="text" placeholder="请输入6位短信验证码">
+    <input id="newPwd" type="password" placeholder="请输入6~20位新密码">
+    <input id="newConfirm" type="password" placeholder="请二次确认密码">
     <input id="sub" type="button" value="确认" onclick="sub()">
     <div id="error"></div>
     <div class="info">首次登录请修改密码！</div>
 </div>
 </body>
-<script>
-    var baseUrl = 'http://127.0.0.1:8000/';
-    var verification=document.getElementById("verification"),
-        newPwd=document.getElementById("newPwd"),
-        newConfirm=document.getElementById("newConfirm"),
-        errInfo=document.getElementById("error");
-    function errorInfo(ht) {
-        errInfo.innerHTML=ht;
-    }
-    function sub() {
-        if (!verification.value){
-            errorInfo('请填写验证码！');
-            return;
-        }
-        if (!newPwd.value){
-            errorInfo('请填写密码！');
-            return;
-        }
-        if (!newConfirm.value){
-            errorInfo('请填写确认密码！');
-            return;
-        }
-        if (newPwd.value!==newConfirm.value){
-            errorInfo('2次输入的密码不一致，请重新输入！');
-            return;
-        }
-        $.ajax({
-            url: baseUrl + 'profile/resetpwd/',
-            type: 'POST',
-            data: {
-                code: verification.value,
-                passwd: newPwd.value
-            },
-            {#            headers: {'Authorization': sessionStorage.token},#}
-            success: function(data) {
-                console.log(data);
-            },
-            error: function(xhr, textStatus) {
-                alert('加载失败，请稍后再试！');
-                console.log(xhr);
-                console.log(textStatus);
-            }
-        });
-    }
-</script>
+<script src={% static 'index/js/resetpwd.js' %} type="text/javascript" charset="utf-8"></script>
 </html>
