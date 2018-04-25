@@ -33,10 +33,10 @@ def resetit(request):
         if res == 'ok':
             user = Uprofile.objects.get(ucellphone=cellphone).user
             user.set_password(passwd)
-
+            user.save()
             user1 = authenticate(username=cellphone,password=passwd)
 
-            login(request, user1)
+            login(request, user1, backend='uprofile.authentication.CellphoneAuthBackend')
             if request.user.is_authenticated:
                 ustatus = Uprofile.objects.get(user=user).ustatus
                 if ustatus < 100:

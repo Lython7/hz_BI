@@ -15,7 +15,7 @@ from . import models, serializers
 # @login_required
 def index(request):
     if request.user.is_authenticated and request.user.is_staff == 0:
-        return render(request, 'index/haha.html', context={})
+        return render(request, 'index/index.html', context={})
     else:
         return HttpResponseRedirect('/login/')
 
