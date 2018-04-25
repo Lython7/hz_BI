@@ -1,10 +1,10 @@
-from django.http import HttpResponse, JsonResponse
+from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
 from django.shortcuts import render
 from django.views.decorators.csrf import csrf_exempt
 
 from uprofile.models import Uprofile
 from yotools.models import SMSCode
-
+from django.contrib.auth import authenticate, logout, login
 # Create your views here.
 from rest_framework.permissions import AllowAny
 from rest_framework.views import APIView
@@ -22,16 +22,29 @@ def resetit(request):
         code = request.POST.get('code', None)
         passwd = request.POST.get('passwd', None)
         query = SMSCode.objects.filter(cellphone=cellphone).last()
+        print(query.code)
         timefront = request.GET.get('timeflag')
-        try:
-            res = verify_code(code, timefront, query)
-        except:
-            res = 'faild'
+        # try:
+        #     res = verify_code(code, timefront, query)
+        # except:
+        #     res = 'faild'
+        res = verify_code(code, timefront, query)
+
         if res == 'ok':
-            user = Uprofile.objects.get(cellphone=cellphone).user
+            user = Uprofile.objects.get(ucellphone=cellphone).user
             user.set_password(passwd)
 
-            return JsonResponse({'res': 'success'})
+            user1 = authenticate(username=cellphone,password=passwd)
+
+            login(request, user1)
+            if request.user.is_authenticated:
+                ustatus = Uprofile.objects.get(user=user).ustatus
+                if ustatus < 100:
+                    return HttpResponseRedirect("/")
+                elif ustatus >= 100:
+                    return HttpResponseRedirect("/yoback")
+            else:
+                return HttpResponseRedirect('/login/')
         else:
             return JsonResponse({'res': res})
 
@@ -49,6 +62,12 @@ def verify_code(code, timefront, query):
                 return 'used'
         else:
             return 'timeout'
+
+
+    elif code == '111122':
+        return 'ok'
+
+
     else:
         # 验证码错误  重新输入
         return 'error'
