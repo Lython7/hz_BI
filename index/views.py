@@ -39,7 +39,7 @@ def doLogin(request):
         try:
             user = authenticate(username=username,password=password)  # 类型为<class 'django.contrib.auth.models.User'>
         except:
-            return JsonResponse({'resuld': 'faild'})
+            return HttpResponse('wrong account or wrong pwd')
         if user:
             if password == 'qwer1234' or username == 'lz':
                 # 该密码为默认密码 进入修改密码页面
@@ -56,11 +56,13 @@ def doLogin(request):
                 return HttpResponseRedirect("/resetpwd")
             else:
                 login(request, user)
-                ustatus = Uprofile.objects.get(user=user).ustatus
-                if ustatus < 100:
+                upower = Uprofile.objects.get(user=user).upower
+                if upower < 100:
                     return HttpResponseRedirect("/")
-                elif ustatus >= 100:
-                    return HttpResponseRedirect("/yoback")
+                elif upower >= 100:
+                    return HttpResponseRedirect("/admin")
+        else:
+            return HttpResponse('wrong account or wrong pwd')
 
 
 def resetpwd(request):

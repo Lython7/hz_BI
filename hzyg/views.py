@@ -12,4 +12,5 @@ def test(request):
     for i in data:
         x.append(i.orderNo)
     # data = models.b2b_ordertable.objects.using('hzyg').all()
-    return JsonResponse(x)
+    x = str(x)
+    return HttpResponse(x)

@@ -38,10 +38,10 @@ def resetit(request):
 
             login(request, user1, backend='uprofile.authentication.CellphoneAuthBackend')
             if request.user.is_authenticated:
-                ustatus = Uprofile.objects.get(user=user).ustatus
-                if ustatus < 100:
+                upower = Uprofile.objects.get(user=user).upower
+                if upower < 100:
                     return JsonResponse({'res': 'success1', 'page': 'front'})
-                elif ustatus >= 100:
+                elif upower >= 100:
                     return JsonResponse({'res': 'success2', 'page': 'back'})
             else:
                 return JsonResponse({'res': 'failed'})

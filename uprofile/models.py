@@ -7,20 +7,22 @@ class Uprofile(models.Model):
     '''
         如何定义必填项的话，需要先创建好admin用户后，将null改为False，重新迁移数据库，然后后台创建时候，该字段为必填项。
     '''
-
-    choices = (
+    choices_t = (
         (1, '前端登录 总经理 查看权限'),
-        (2, '前端登录 大区经理 查看权限'),
-        (3, '前端登录 部门经理 查看权限'),
-        (4, '前端登录 招商人员 查看权限'),
-        (5, '前端登录 数据分析人员 查看权限'),
-        (6, '前端登录 其他人员 查看权限'),
+        (2, '前端登录 副总经理 查看权限'),
+        (3, '前端登录 大区经理 查看权限'),
+        (4, '前端登录 产品部经理 查看权限'),
+        (5, '前端登录 北京招商部经理 查看权限'),
+        (6, '前端登录 北京招商部主管 查看权限'),
+        (7, '前端登录 北京招商部专员 查看权限'),
+        (8, '前端登录 直营事业部经理 查看权限'),
+        (9, '前端登录 电视直销部经理 查看权限'),
+        (10, '前端登录 电子商务部经理 查看权限'),
+        (11, '前端登录 数据分析人员 查看权限'),
+        (12, '前端登录 其他人员 查看权限'),
 
         (100, '后台登录 上帝权限'),# 上帝权限
-        (101, '后台登录 禾中优供 数据维护权限'),# 禾中优供
-        (102, '后台登录 电商平台 数据维护权限'),# 电商
-        (103, '后台登录 电视购物 数据维护权限'),# 电视
-        (104, '后台登录 后台管理'),# 无权
+        (101, '后台登录 后台管理'),# 无权
     )
 
     check_choices = (
@@ -32,11 +34,7 @@ class Uprofile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
     uname = models.CharField(max_length=32, null=True, verbose_name='用户姓名')
     ucellphone = models.CharField(max_length=11, null=False, verbose_name='手机号码', unique=True)
-    # uemail = models.CharField(max_length=32, null=False, unique=True, verbose_name='企业邮箱')
-    # udepartment = models.CharField(max_length=32, null=True, verbose_name='部门', help_text='')
-    # uposition = models.CharField(max_length=64, null=True, verbose_name='工作岗位')
-
-    upower = models.IntegerField(choices=choices, default=5, verbose_name='用户角色', help_text='权限设定')
+    upower = models.IntegerField(choices=choices_t, default=12, verbose_name='用户角色', help_text='权限设定')
     ustatus = models.IntegerField(choices=check_choices, default=0, verbose_name='用户状态')
 
 
@@ -61,6 +59,8 @@ class Uprofile(models.Model):
         super(Uprofile, self).save(*args, **kwargs)
 
 
+
+
 def create_user_profile(sender, instance, created, **kwargs):
     if created:
         profile = Uprofile()
@@ -74,5 +74,62 @@ def create_user_profile(sender, instance, created, **kwargs):
             profile.save()
         else:
             profile.save()
+            # 此处需要根据权限 save配置权限表格
 
 post_save.connect(create_user_profile, sender=User)
+
+
+class Permissions_F1(object):
+    '''权限数据库，前端页面展示获取展示块内容'''
+
+    choices = (
+        (1, '有查看权限'),
+        (0, '无查看权限'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
+    today_income = models.IntegerField(choices=choices, default=0, verbose_name='今日营收')
+    sales_amount = models.IntegerField(choices=choices, default=0, verbose_name='销售额')
+    new_customer_count = models.IntegerField(choices=choices, default=0, verbose_name='新增客户数')
+    ordered_customer_count = models.IntegerField(choices=choices, default=0, verbose_name='下单客户数')
+    order_amount = models.IntegerField(choices=choices, default=0, verbose_name='订单数量')
+    channel_total = models.IntegerField(choices=choices, default=0, verbose_name='本月各渠道销售额')
+    sales_trend = models.IntegerField(choices=choices, default=0, verbose_name='道销趋势')
+    classify_sale_status = models.IntegerField(choices=choices, default=0, verbose_name='本月商品分类销售额')
+    regional_sales_amount = models.IntegerField(choices=choices, default=0, verbose_name='本月区域销售额')
+    B2Bsalesman_TOP3 = models.IntegerField(choices=choices, default=0, verbose_name='本月B2B销售人员TOP3')
+
+    class Meta:
+        verbose_name = '用户权限配置表-总览'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.user
+
+    def __unicode__(self):
+        return self.user
+
+class Permissions_F2(object):
+    '''权限数据库，前端页面展示获取展示块内容'''
+
+    choices = (
+        (1, '有查看权限'),
+        (0, '无查看权限'),
+    )
+    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
+    #     upower = models.IntegerField(choices=choices_t, default=5, verbose_name='用户角色', help_text='权限设定')
+
+    channel_total = models.IntegerField(choices=choices, default=0, verbose_name='各渠道销售额')
+    sales_trend = models.IntegerField(choices=choices, default=0, verbose_name='道销趋势')
+    goofs_count = models.IntegerField(choices=choices, default=0, verbose_name='商品统计')
+    regional_count = models.IntegerField(choices=choices, default=0, verbose_name='区域统计')
+
+
+    class Meta:
+        verbose_name = '用户权限配置表-探索'
+        verbose_name_plural = verbose_name
+
+    def __str__(self):
+        return self.user
+
+    def __unicode__(self):
+        return self.user
