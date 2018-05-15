@@ -18,3 +18,4 @@ function subs() {
 				}
 			});
 }*/
+// location.href='../resetpwd/';
