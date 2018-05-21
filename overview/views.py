@@ -1,4 +1,4 @@
-from django.db.models import Sum
+from django.db.models import Sum, Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from hzyg.models import *
@@ -141,3 +141,53 @@ def order_count(request, *args):
     res['year_ratio'] = str(int((int(res['order_year'])-order_lastyear)/order_lastyear*100))+'%'
     return JsonResponse(res)
 
+
+def channal_salesamount_month(request, *args):
+    '''本月各渠道销售额'''
+    year = args[0]
+    month = args[1]
+    res = {}
+    query = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=month) # 当月
+    query1 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=year, createDate__month=month) # 当月
+
+    b2b_1 = query.aggregate(Sum('amount'))['amount__sum']# all
+    b2b_2 = query1.aggregate(Sum('amount'))['amount__sum'] # pos
+
+    agriculture = query.filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单')).aggregate(Sum('amount'))['amount__sum'] # 农业
+    online = query.filter(Q(orderStoreName='京东九河泉仓库') | Q(orderStoreName='京东官方直营店') | Q(orderStoreName='民生银行仓库')).aggregate(Sum('amount'))['amount__sum'] # 电商
+    television = query.filter(orderStoreName='电视购物仓库').aggregate(Sum('amount'))['amount__sum']# 电视
+    taste = query.filter(orderStoreName='禾中味道官方直营店').aggregate(Sum('amount'))['amount__sum']# 禾中味道
+    direct_store = query.filter(orderStoreName='直营门店').aggregate(Sum('amount'))['amount__sum']# 直营店
+
+    if agriculture == None:
+        agriculture = 0
+    if online == None:
+        online = 0
+    if television == None:
+        television = 0
+    if taste == None:
+        taste = 0
+    if direct_store == None:
+        direct_store = 0
+    if b2b_1 == None:
+        b2b_1 = 0
+    if b2b_2 == None:
+        b2b_2 = 0
+
+    b2b_all = b2b_1 - (agriculture + online + television + taste + direct_store) + b2b_2
+    res['b2b'] = int(b2b_all)
+    res['agriculture'] = int(agriculture)
+    res['online'] = int(online)
+    res['television'] = int(television)
+    res['taste'] = int(taste)
+    return JsonResponse(res)
+
+
+def sales_trend(request):
+    '''销售趋势'''
+    pass
+
+
+def classify_amount_month(request, *args):
+    '''当月分类销售额'''
+    pass
