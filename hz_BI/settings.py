@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'yoback',# 后台 上传excel 读取并写入数据库
     'hzyg',# 禾中优供数据库数据读取
     'yotools',# 辅助工具 短信验证
+    'overview',# 前端首页总览页面视图等
 ]
 
 #api框架

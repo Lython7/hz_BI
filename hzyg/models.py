@@ -2,7 +2,7 @@ from django.db import models
 
 # Create your models here.
 class b2b_goodstable(models.Model):
-    createDate = models.DateField(verbose_name='创建日期')
+    createDate = models.DateTimeField(verbose_name='创建日期')
     organName = models.CharField(max_length=64, verbose_name='机构名称')
     orderStore = models.CharField(max_length=16, verbose_name='订单店铺')
     orderStoreName = models.CharField(max_length=64, verbose_name='订单归属门店名称')
@@ -28,7 +28,7 @@ class b2b_goodstable(models.Model):
 
 
 class b2b_ordertable(models.Model):
-    createDate = models.DateField(verbose_name='创建日期')
+    createDate = models.DateTimeField(verbose_name='创建日期')
     organName = models.CharField(max_length=64, verbose_name='机构名称')
     orderStore = models.CharField(max_length=16, verbose_name='订单店铺')
     orderStoreName = models.CharField(max_length=64, verbose_name='订单归属门店名称')
@@ -38,6 +38,7 @@ class b2b_ordertable(models.Model):
     # orderNo2 = models.CharField(max_length=32, verbose_name='单据编号2')
     # orderNo3 = models.CharField(max_length=32, verbose_name='单据编号3')
     realPayAmount = models.DecimalField(max_digits=16, decimal_places=5, verbose_name='客户实际支付的金额')
+    coupon = models.DecimalField(max_digits=26, decimal_places=9)
     amount = models.DecimalField(max_digits=22, decimal_places=5, verbose_name='数量')
     memberPin = models.CharField(max_length=64, verbose_name='会员用户名')
     regionName = models.CharField(max_length=254, default='', verbose_name='地区名称')
@@ -51,7 +52,7 @@ class b2b_ordertable(models.Model):
 
 
 class b2b_posgoods(models.Model):
-    createDate = models.DateField(verbose_name='创建日期')
+    createDate = models.DateTimeField(verbose_name='创建日期')
     orderStore = models.IntegerField(verbose_name='订单店铺')
     orderStoreName = models.CharField(max_length=40, verbose_name='订单归属门店名称')
     organCode = models.IntegerField()
@@ -84,7 +85,7 @@ class b2b_storeb2b(models.Model):
     recomm_username = models.CharField(max_length=64)
     sales_username = models.CharField(max_length=32)
     sales_cell = models.CharField(max_length=16)
-    create_dt = models.DateField()
+    created_dt = models.DateTimeField()
 
     class Meta:
         db_table = 'b2b_storeb2b'

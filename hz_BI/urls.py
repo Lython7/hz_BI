@@ -22,7 +22,8 @@ urlpatterns = [
     url(r'^profile/', include('uprofile.urls')),
     url(r'^yoback/', include('yoback.urls')),
     url(r'^yotools/', include('yotools.urls')),
-    url(r'^hzyg/', include('hzyg.urls')),
+    url(r'^dtapi/', include('hzyg.urls')),
+    url(r'^views/', include('overview.urls')),
 
     url(r'^', include('index.urls')),
 
