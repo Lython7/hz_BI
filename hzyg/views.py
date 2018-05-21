@@ -14,3 +14,5 @@ def test(request):
     # data = models.b2b_ordertable.objects.using('hzyg').all()
     x = str(x)
     return HttpResponse(x)
+
+

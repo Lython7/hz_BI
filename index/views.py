@@ -12,12 +12,20 @@ from . import models, serializers
 
 # from dysms_python import demo_sms_send
 
+# 正式使用
+# def index(request):
+#     try:
+#         if request.user.is_authenticated and Uprofile.objects.get(user=request.user).upower<100:
+#             return render(request, 'index/index.html', context={})
+#         else:
+#             return HttpResponseRedirect('/login/')
+#     except:
+#         return HttpResponseRedirect('/login/')
 
+# 暂时使用
 def index(request):
-    if request.user.is_authenticated:
-        return render(request, 'index/index.html', context={})
-    else:
-        return HttpResponseRedirect('/login/')
+    return render(request, 'index/index.html', context={})
+
 
 def register(request):
     return render(request, 'index/register.html', context={})
