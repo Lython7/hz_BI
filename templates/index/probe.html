@@ -1,0 +1,82 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>探索</title>
+    {% include 'index/head.html' %}
+    <link rel="stylesheet" type="text/css" href={% static 'index/css/probe.css' %}/>
+</head>
+<body>
+{% include 'index/nav.html' %}
+
+<div class="container">
+			<h1>探索</h1>
+			<div class="filter">
+				<div class="filter-list clearfix">
+					<span>渠道</span>
+					<select name="">
+						<option value="">全部</option>
+					</select>
+				</div>
+				<div class="filter-list clearfix">
+					<span>日期</span>
+					<select name="">
+						<option value="">本月</option>
+					</select>
+					<div id="data-show">2017.2.15~2018.3.5</div>
+				</div>
+				<div class="filter-list clearfix">
+					<span>区域</span>
+					<select name="">
+						<option value="">全部</option>
+					</select>
+				</div>
+				<div class="filter-list clearfix">
+					<span>配送中心</span>
+					<select name="">
+						<option value="">全部</option>
+					</select>
+				</div>
+			</div>
+			<div class="channelSaleroom">
+				<div class="title">各渠道销售额</div>
+				<ul class="rev-show clearfix">
+					<li>
+						<span>订单金额：</span>
+						<span id="order-amount">123131</span>
+					</li>
+					<li>
+						<span>下单客户数：</span>
+						<span id="">345234</span>
+					</li>
+					<li>
+						<span>订单数量：</span>
+						<span id="">4234</span>
+					</li>
+					<li>
+						<span>新增客户数：</span>
+						<span id="">755</span>
+					</li>
+				</ul>
+				<!--折线图-->
+				<div id="channelSaleroom"></div>
+			</div>
+			<div class="salesTrend">
+				<div class="title">销售趋势</div>
+				<div id="salesTrend"></div>
+			</div>
+			<!--本月商品分类销售额-->
+			<div class="categorySaleroom">
+				<div class="title">商品统计</div>
+				<!--环饼-->
+				<div id="categoryPie"></div>
+			</div>
+			<div class="categorySaleroom">
+				<div class="title">区域统计</div>
+				<div id="saleBar"></div>
+			</div>
+		</div>
+</body>
+<script src={% static 'index/js/probe.js' %} type="text/javascript" charset="utf-8"></script>
+</html>

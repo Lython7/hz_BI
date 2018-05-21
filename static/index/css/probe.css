@@ -1,0 +1,32 @@
+.filter{
+	padding: 10px 0;
+}
+.filter .filter-list{
+	height: 24px;
+}
+.filter-list span,
+.filter-list select,
+.filter-list #data-show{
+	float: left;
+}
+.filter-list span{
+	width: 2rem;
+}
+.filter-list #data-show{
+	padding-left: 0.2rem;
+}
+
+
+.channelSaleroom .rev-show{
+	padding: 2px 0 0 4px;
+}
+.channelSaleroom .rev-show li{
+	float: left;
+    width: 50%;
+    font-size: 12px;
+    padding: 2px 0;
+}
+#channelSaleroom,#salesTrend,#categoryPie,#saleBar{
+	width: 100%;
+	height: 200px;
+}
