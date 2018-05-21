@@ -48,6 +48,8 @@ INSTALLED_APPS = [
     'hzyg',# 禾中优供数据库数据读取
     'yotools',# 辅助工具 短信验证
     'overview',# 前端首页总览页面视图等
+    'explore',# 前端首页 探索
+    'mine',# 前端首页 我的
 ]
 
 #api框架

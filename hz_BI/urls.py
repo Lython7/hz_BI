@@ -24,6 +24,8 @@ urlpatterns = [
     url(r'^yotools/', include('yotools.urls')),
     url(r'^dtapi/', include('hzyg.urls')),
     url(r'^views/', include('overview.urls')),
+    url(r'^explore/', include('explore.urls')),
+    url(r'^mine/', include('mine.urls')),
 
     url(r'^', include('index.urls')),
 

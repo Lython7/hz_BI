@@ -26,6 +26,11 @@ from . import models, serializers
 def index(request):
     return render(request, 'index/index.html', context={})
 
+def classifyct(request):
+    return render(request, 'index/classifyct.html', context={})
+
+def ranking(request):
+    return render(request, 'index/ranking.html', context={})
 
 def register(request):
     return render(request, 'index/register.html', context={})
