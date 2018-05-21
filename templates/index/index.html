@@ -1,10 +1,147 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>jaja</title>
+    <title>总览</title>
+    {% include 'index/head.html' %}
+    <link rel="stylesheet" type="text/css" href={% static 'index/css/index.css' %}/>
 </head>
 <body>
-前台页面
+{% include 'index/nav.html' %}
+<div class="container">
+			<h1>总览</h1>
+			<!--今日营收-->
+			<div class="revenueToday">
+				<div class="title">今日营收</div>
+				<ul class="rev-show clearfix">
+					<li>
+						<span>订单金额：</span>
+						<span id="order-amount">123131</span>
+					</li>
+					<li>
+						<span>下单客户数：</span>
+						<span id="">345234</span>
+					</li>
+					<li>
+						<span>订单数量：</span>
+						<span id="">4234</span>
+					</li>
+					<li>
+						<span>新增客户数：</span>
+						<span id="">755</span>
+					</li>
+				</ul>
+				<!--折线图-->
+				<div id="revenueToday"></div>
+			</div>
+			<!--仪表盘百分比-->
+			<div class="gauge-p">
+				<div class="title">销售额</div>
+				<div class="data-show clearfix">
+					<!--仪表盘-->
+					<div class="chart-left" id="sale"></div>
+					<div class="con-right">
+						<div class="current-month">
+							本月
+							<span class="gauge-datas">256</span>
+						</div>
+						<ul class="than clearfix">
+							<li>上月<span>7,520</span></li>
+							<li>上月环比<span>7%</span></li>
+							<li>本年<span>47,890</span></li>
+							<li>同比去年<span>7%</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="gauge-p">
+				<div class="title">新增客户数</div>
+				<div class="data-show clearfix">
+					<!--仪表盘-->
+					<div class="chart-left" id="clientAdd"></div>
+					<div class="con-right">
+						<div class="current-month">
+							本月
+							<span class="gauge-datas">256</span>
+						</div>
+						<ul class="than clearfix">
+							<li>上月<span>7,520</span></li>
+							<li>上月环比<span>7%</span></li>
+							<li>本年<span>47,890</span></li>
+							<li>同比去年<span>7%</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="gauge-p">
+				<div class="title">下单客户数</div>
+				<div class="data-show clearfix">
+					<!--仪表盘-->
+					<div class="chart-left" id="orderClientCounts"></div>
+					<div class="con-right">
+						<div class="current-month">
+							本月
+							<span class="gauge-datas">256</span>
+						</div>
+						<ul class="than clearfix">
+							<li>上月<span>7,520</span></li>
+							<li>上月环比<span>7%</span></li>
+							<li>本年<span>47,890</span></li>
+							<li>同比去年<span>7%</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<div class="gauge-p">
+				<div class="title">订单数量</div>
+				<div class="data-show clearfix">
+					<!--仪表盘-->
+					<div class="chart-left" id="orderCounts"></div>
+					<div class="con-right">
+						<div class="current-month">
+							本月
+							<span class="gauge-datas">256</span>
+						</div>
+						<ul class="than clearfix">
+							<li>上月<span>7,520</span></li>
+							<li>上月环比<span>7%</span></li>
+							<li>本年<span>47,890</span></li>
+							<li>同比去年<span>7%</span></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<!--本月渠道销售额-->
+			<div class="channelSaleroom">
+				<div class="title">本月各渠道销售额</div>
+				<!--柱状图-->
+				<div id="channelOrder"></div>
+			</div>
+			<!--销售趋势-->
+			<div class="salesTrend">
+				<div class="title">销售趋势</div>
+				<div id="salesTrend"></div>
+			</div>
+			<!--本月商品分类销售额-->
+			<div class="categorySaleroom">
+				<div class="title">本月商品分类销售额</div>
+				<!--环饼-->
+				<div id="categoryPie"></div>
+			</div>
+			<!--本月区域销售额-->
+			<div class="categorySaleroom">
+				<div class="title">本月区域销售额</div>
+				<!--横向bar-->
+				<div id="saleBar"></div>
+			</div>
+			<!--本月B2B销售人员TOP3-->
+			<div class="salesRank">
+				<div class="title">本月B2B销售人员TOP3<a href="" class="more">更多</a></div>
+				<!--横向bar-->
+				<div id="salesRank"></div>
+			</div>
+		</div>
 </body>
+<script src={% static 'index/js/index.js' %} type="text/javascript" charset="utf-8"></script>
 </html>

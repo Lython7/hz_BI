@@ -1,0 +1,54 @@
+#revenueToday,
+#channelOrder,
+#salesTrend,
+/*#sale,*/
+#categoryPie{
+	width: 100%;
+	height: 200px;
+}
+#saleBar{
+	width: 100%;
+	height: 270px;
+}
+#salesRank{
+	width: 100%;
+	height: 180px;
+}
+.revenueToday .rev-show{
+	padding: 2px 0 0 4px;
+}
+.revenueToday .rev-show li{
+	float: left;
+    width: 50%;
+    font-size: 12px;
+    padding: 2px 0;
+}
+.data-show{
+	height: 80px;
+}
+.chart-left{
+	float: left;
+	width: 25%;
+	height: 100%;
+}
+.con-right{
+	float: right;
+	width: 70%;
+}
+.current-month{
+	text-align: center;
+	padding-bottom: 4px;
+}
+.current-month span{
+	font-size: 22px;
+	color: red;
+}
+.con-right .than li{
+	float: left;
+	width: 50%;
+	line-height: 22px;
+}
+.con-right .than span{
+	color: red;
+	padding-left: 0.15rem;
+}

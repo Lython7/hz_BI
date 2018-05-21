@@ -21,68 +21,6 @@ li{
 	display: -webkit-box;
 }
 /*公共*/
-.left{
-	float: left;
-}
-.right{
-	float: right;
-}
-.charts{
-	width: 14.8rem;
-	height: 9rem;
-	margin: 0 auto;
-}
-.nav{
-	position: fixed;
-	left: 0;
-	bottom: 0;
-	width: 100%;
-	height: 50px;
-	border-top: 1px solid #aaa;
-	font-size: 12px;
-	background-color: #FFFFFF;
-	z-index: 111;
-}
-.nav li{
-	width: 33.3%;
-}
-.nav li.on a{
-	color: #66FF66;
-}
-.nav a{
-	display: block;
-	height: 100%;
-	margin: 0 auto;
-	text-align: center;
-	color: #666;
-}
-.nav i{
-	display: block;
-	width: 22px;
-	height: 22px;
-	margin: 3px auto;
-}
-.nav .home i{
-	background: url(../images/home.png) no-repeat center;
-	background-size: 20px 20px;
-}
-.nav .sort i{
-	background: url(../images/home.png) no-repeat center;
-	background-size: 20px 20px;
-}
-.nav .main i{
-	background: url(../images/main.png) no-repeat center;
-	background-size: 20px 20px;
-}
-.nav span{
-	
-}
-
-h1.tit{
-	text-align: center;
-    font-size: 0.9rem;
-    margin: 0.3rem 0;
-}
 .box{
 	width: 100%;
 	padding: 0 0.6rem 50px;
@@ -109,14 +47,79 @@ h1.tit{
 	background-color: #BADAF8;
 	
 }
-.dates input{
-	background: transparent;
-    border: none;
-    outline: none;
-    width: 62px;
-    font-size: 12px;
-    color: #666666;
-    text-align: center;
+
+
+
+
+body {
+	font-family: "微软雅黑";
+	padding-bottom: 50px;
+	color: #333;
+}
+.navList{
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	height: 49px;
+	border-top: 1px solid #E1E1E1;
+	background-color: #FFFFFF;
+	z-index: 10;
+}
+.navList li{
+	float: left;
+	width: 33.3%;
+	height: 100%;
+	text-align: center;
+}
+.navList li a{
+	font-size: 12px;
+	display: block;
+	width: 2rem;
+	color: #333;
+	margin: 0 auto;
+	height: 100%;
+}
+.navList a.active{
+	color: #78C82F;
+}
+.navList li span{
+	padding: 4px 0 2px;
+    font-size: 22px;
+    display: block;
+}
+.clearfix {
+	*zoom: 1;
 }
 
+.clearfix:after {
+	content: "";
+	display: block;
+	clear: both;
+}
+
+.container {
+	padding: 0.5rem;
+	font-size: 14px;
+	overflow: hidden;
+}
+
+.container h1 {
+	font-size: 14px;
+	text-align: center;
+	padding-bottom: 10px;
+}
+
+.container .title {
+	padding-left: 5px;
+	margin-bottom: 4px;
+	border-left: 3px solid #2E2E2E;
+	line-height: 14px;
+}
+.container .title a.more{
+	float: right;
+	color: #214CC5;
+    font-size: 12px;
+    padding: 1px 2px;
+}
 
