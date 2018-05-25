@@ -1,0 +1,88 @@
+.navList{
+	margin: 0;
+}
+
+#tabOne {
+	width: 50%;
+	overflow: hidden;
+}
+
+#tabOne img {
+	max-width: 100%;
+}
+
+#tabTwo {
+	width: 50%;
+	overflow: hidden;
+}
+
+#tabTwo img {
+	max-width: 100%;
+}
+
+.table {
+	/*font-size: 1.7rem;*/
+	text-align: center;
+}
+
+.danger th {
+	text-align: center;
+}
+
+.final {
+	color: red;
+}
+
+.table-responsive tbody tr td img {
+	max-width: 30%;
+}
+
+#barBottom {
+	color: red;
+	text-align: center;
+}
+
+.dates_choose,
+#conDateShow {
+	text-align: center;
+	font-size: 0.7rem;
+}
+
+#dateBtn {
+	font-size: 0.6rem;
+}
+
+
+body{
+	padding-top: 44px;
+}
+.header{
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	height: 44px;
+	width: 100%;
+	background-color: #FFF;
+}
+.header h1{
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 44px;
+	text-align: center;
+}
+.header .back{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.header .back span{
+	color: #333333;
+    height: 44px;
+    width: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+}

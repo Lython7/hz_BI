@@ -1,0 +1,82 @@
+.header h1{
+	font-weight: normal;
+	font-size: 14px;
+	line-height: 44px;
+	text-align: center;
+}
+.header .back{
+	position: absolute;
+	left: 0;
+	top: 0;
+}
+.header .back span{
+	color: #333333;
+    height: 44px;
+    width: 44px;
+    line-height: 44px;
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    display: block;
+}
+
+.tit-head{
+	position: relative;
+}
+.time-choose{
+	position: absolute;
+	top: 0;
+	right: 0;
+	font-size: 12px;
+	line-height: 14px;
+}
+.time-choose span{
+	float: left;
+}
+.time-choose #time-btn{
+	background-color: #44C0FF;
+    border-radius: 12px;
+    color: #fff;
+    padding: 1px 8px;
+}
+.time-choose #time-show{
+    padding: 1px 0.5rem;
+}
+
+.data-show{
+	padding-top: 12px;
+}
+.data-show .data-list{
+	float: left;
+	width: 50%;
+    line-height: 26px;
+    text-align: center;
+}
+#ranking{
+	padding-top: 8px;
+}
+#ranking li{
+	height: 36px;
+    line-height: 36px;
+    border-bottom: 1px solid #E1E1E1;
+}
+#ranking li span{
+	float: left;
+}
+#ranking .sale-index{
+	width: 20%;
+	text-align: center;
+}
+#ranking .sale-name{
+	width: 40%;
+}
+#ranking .sale-counts{
+	width: 38%;
+	text-align: right;
+	color: #4FBC3D;
+}
+
+#categoryPie{
+	width: 100%;
+	height: 200px;
+}

@@ -4,7 +4,7 @@ navIndex(1);
 
 var channel = document.getElementById("channelSaleroom");
 
-function channelSaleroom(dom, data) {
+function channelSaleroom(dom, data, dataZoomData) {
 	var channelSaleroom = echarts.init(dom);
 	channelSaleroom.setOption({
 		xAxis: {
@@ -27,10 +27,11 @@ function channelSaleroom(dom, data) {
 		}]
 	})
 }
-channelSaleroom(channel,{
-	x:['B2B', '电商', '电视'],
-	y:[120, 200, 150]
-})
+channelSaleroom(channel,
+	{
+		x:['B2B', '电商', '电视'],
+		y:[120, 200, 150]
+	});
 
 function lineChart(dom, data, col) {
 	var lineChart = echarts.init(dom);
@@ -135,7 +136,8 @@ categoryPie.setOption({
 });
 
 var saleBar = document.getElementById("saleBar");
-channelSaleroom(saleBar,{
-	x:['北京', '华北区', '东北区', '北方区', '西北区', '西南区', '华南区', '华东区', '中原区'],
-	y:[120, 200, 150, 80, 70, 90, 110, 130, 356]
-});
+channelSaleroom(saleBar,
+	{
+		x:['北京', '华北区', '东北区', '北方区', '西北区', '西南区', '华南区', '华东区', '中原区'],
+		y:[120, 200, 150, 80, 70, 90, 110, 130, 356]
+	});
