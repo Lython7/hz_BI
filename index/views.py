@@ -7,10 +7,12 @@ from rest_framework import viewsets
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 
+from overview.models import Show_overview
 from uprofile.models import Uprofile
 from yotools.models import SMSCode
 from . import models, serializers
-from uprofile.models import Permissions_F1
+# from uprofile.models import Permissions_F1
+from permissions.models import *
 
 # from dysms_python import demo_sms_send
 
@@ -74,9 +76,12 @@ def doLogin(request):
             else:
                 login(request, user)
                 # 将USER相关权限写入session
-                request.session['permissions'] = model_to_dict(Permissions_F1.objects.get(user=user))
+                try:
+                    request.session['settings'] = model_to_dict(Show_overview.objects.get(user=user))
                 # request.session.set_expiry(60000)
-                print(request.session['permissions'])
+                except:
+                    request.session['settings'] = {}
+                print(request.session['settings'])
                 uposition = Uprofile.objects.get(user=user).uposition
                 if uposition < 100:
                     return HttpResponseRedirect("/")

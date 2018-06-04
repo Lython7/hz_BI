@@ -79,85 +79,85 @@ def create_user_profile(sender, instance, created, **kwargs):
 post_save.connect(create_user_profile, sender=User)
 
 
-class Permissions_F1(models.Model):
-    '''权限数据库，前端页面展示获取展示块内容'''
-
-    choices = (
-        (1, '有查看权限'),
-        (0, '无查看权限'),
-    )
-
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户', primary_key=True)
-
-    income_choices = (
-        (1, '全国数据'),
-        (2, '大区数据'),
-        (3, '电商数据'),
-        (4, '电视数据'),
-
-        (5, 'B2B全部数据'),
-
-        (11, 'B2B北京数据'),
-        (12, 'B2B华北数据'),
-        (13, 'B2B双鸭山数据'),
-        (14, 'B2B东北数据'),
-        (15, 'B2B华南数据'),
-        (16, 'B2B西南数据'),
-        (17, 'B2B北方数据'),
-        (18, 'B2B华东数据'),
-        (19, 'B2B西北数据'),
-        (20, 'B2B中原数据'),
-
-
-        (6, '直营店数据'),
-        (7, '禾中农业数据'),
-        (8, '禾中味道数据'),
-        (0, '无查看权限'),
-    )
-    today_income = models.IntegerField(choices=income_choices, default=0, verbose_name='今日营收')
-
-    sales_amount = models.IntegerField(choices=choices, default=0, verbose_name='销售额')
-    new_customer_count = models.IntegerField(choices=choices, default=0, verbose_name='新增客户数')
-    ordered_customer_count = models.IntegerField(choices=choices, default=0, verbose_name='下单客户数')
-    order_amount = models.IntegerField(choices=choices, default=0, verbose_name='订单数量')
-    channel_total = models.IntegerField(choices=choices, default=0, verbose_name='本月各渠道销售额')
-    sales_trend = models.IntegerField(choices=choices, default=0, verbose_name='道销趋势')
-    classify_sale_status = models.IntegerField(choices=choices, default=0, verbose_name='本月商品分类销售额')
-    regional_sales_amount = models.IntegerField(choices=choices, default=0, verbose_name='本月区域销售额')
-    B2Bsalesman_TOP3 = models.IntegerField(choices=choices, default=0, verbose_name='本月B2B销售人员TOP3')
-
-    class Meta:
-        verbose_name = '用户权限配置表'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return str(self.user)
-
-    def __unicode__(self):
-        return str(self.user)
-
-class Permissions_F2(object):
-    '''权限数据库，前端页面展示获取展示块内容'''
-
-    choices = (
-        (1, '有查看权限'),
-        (0, '无查看权限'),
-    )
-    user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
-    #     upower = models.IntegerField(choices=choices_t, default=5, verbose_name='用户角色', help_text='权限设定')
-
-    channel_total = models.IntegerField(choices=choices, default=0, verbose_name='各渠道销售额')
-    sales_trend = models.IntegerField(choices=choices, default=0, verbose_name='道销趋势')
-    goofs_count = models.IntegerField(choices=choices, default=0, verbose_name='商品统计')
-    regional_count = models.IntegerField(choices=choices, default=0, verbose_name='区域统计')
-
-
-    class Meta:
-        verbose_name = '用户权限配置表-探索'
-        verbose_name_plural = verbose_name
-
-    def __str__(self):
-        return self.user
-
-    def __unicode__(self):
-        return self.user
+# class Permissions_F1(models.Model):
+#     '''权限数据库，前端页面展示获取展示块内容'''
+#
+#     choices = (
+#         (1, '有查看权限'),
+#         (0, '无查看权限'),
+#     )
+#
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户', primary_key=True)
+#
+#     income_choices = (
+#         (1, '全国数据'),
+#         (2, '大区数据'),
+#         (3, '电商数据'),
+#         (4, '电视数据'),
+#
+#         (5, 'B2B全部数据'),
+#
+#         (11, 'B2B北京数据'),
+#         (12, 'B2B华北数据'),
+#         (13, 'B2B双鸭山数据'),
+#         (14, 'B2B东北数据'),
+#         (15, 'B2B华南数据'),
+#         (16, 'B2B西南数据'),
+#         (17, 'B2B北方数据'),
+#         (18, 'B2B华东数据'),
+#         (19, 'B2B西北数据'),
+#         (20, 'B2B中原数据'),
+#
+#
+#         (6, '直营店数据'),
+#         (7, '禾中农业数据'),
+#         (8, '禾中味道数据'),
+#         (0, '无查看权限'),
+#     )
+#     today_income = models.IntegerField(choices=income_choices, default=0, verbose_name='今日营收')
+#
+#     sales_amount = models.IntegerField(choices=choices, default=0, verbose_name='销售额')
+#     new_customer_count = models.IntegerField(choices=choices, default=0, verbose_name='新增客户数')
+#     ordered_customer_count = models.IntegerField(choices=choices, default=0, verbose_name='下单客户数')
+#     order_amount = models.IntegerField(choices=choices, default=0, verbose_name='订单数量')
+#     channel_total = models.IntegerField(choices=choices, default=0, verbose_name='本月各渠道销售额')
+#     sales_trend = models.IntegerField(choices=choices, default=0, verbose_name='道销趋势')
+#     classify_sale_status = models.IntegerField(choices=choices, default=0, verbose_name='本月商品分类销售额')
+#     regional_sales_amount = models.IntegerField(choices=choices, default=0, verbose_name='本月区域销售额')
+#     B2Bsalesman_TOP3 = models.IntegerField(choices=choices, default=0, verbose_name='本月B2B销售人员TOP3')
+#
+#     class Meta:
+#         verbose_name = '用户权限配置表'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return str(self.user)
+#
+#     def __unicode__(self):
+#         return str(self.user)
+#
+# class Permissions_F2(object):
+#     '''权限数据库，前端页面展示获取展示块内容'''
+#
+#     choices = (
+#         (1, '有查看权限'),
+#         (0, '无查看权限'),
+#     )
+#     user = models.OneToOneField(User, on_delete=models.CASCADE, verbose_name='用户')
+#     #     upower = models.IntegerField(choices=choices_t, default=5, verbose_name='用户角色', help_text='权限设定')
+#
+#     channel_total = models.IntegerField(choices=choices, default=0, verbose_name='各渠道销售额')
+#     sales_trend = models.IntegerField(choices=choices, default=0, verbose_name='道销趋势')
+#     goofs_count = models.IntegerField(choices=choices, default=0, verbose_name='商品统计')
+#     regional_count = models.IntegerField(choices=choices, default=0, verbose_name='区域统计')
+#
+#
+#     class Meta:
+#         verbose_name = '用户权限配置表-探索'
+#         verbose_name_plural = verbose_name
+#
+#     def __str__(self):
+#         return self.user
+#
+#     def __unicode__(self):
+#         return self.user

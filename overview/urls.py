@@ -5,6 +5,7 @@ from . import views
 
 urlpatterns = [
     url(r'^incometoday/', views.today_income, name='income_today'), # 今日营收
+    url(r'^salesamount/', views.sales_amount, name='sales_amount'), # 销售额
 
 
 

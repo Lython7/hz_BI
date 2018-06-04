@@ -14,6 +14,7 @@ class b2b_goodstable(models.Model):
     skuName = models.CharField(max_length=100)
     skuNum = models.DecimalField(max_digits=16, decimal_places=5, verbose_name='skuNum')
     realSkuNum = models.DecimalField(max_digits=22, decimal_places=5, verbose_name='realSkuNum')
+    saleUnit = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=19, decimal_places=2, verbose_name='数量')
     memberPin = models.CharField(max_length=64, verbose_name='会员用户名')
     regionName = models.CharField(max_length=254, default='', verbose_name='地区名称')
@@ -62,6 +63,7 @@ class b2b_posgoods(models.Model):
     skuCode = models.CharField(max_length=40)
     skuName = models.CharField(max_length=40)
     skuNum = models.DecimalField(max_digits=22, decimal_places=5)
+    saleUnit = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=22, decimal_places=5, verbose_name='数量')
     realPayAmount = models.DecimalField(max_digits=22, decimal_places=5)
 

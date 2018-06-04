@@ -16,4 +16,4 @@ class UserAdmin(BaseUserAdmin):
 admin.site.unregister(User)
 admin.site.register(User, UserAdmin)
 admin.site.register(Uprofile)
-admin.site.register(Permissions_F1)
+# admin.site.register(Permissions_F1)
