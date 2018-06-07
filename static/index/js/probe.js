@@ -2,6 +2,7 @@ navIndex(1);
 
 
 
+
 var channel = document.getElementById("channelSaleroom");
 
 function channelSaleroom(dom, data, dataZoomData) {
