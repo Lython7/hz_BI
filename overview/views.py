@@ -183,47 +183,29 @@ def order_count(request):
 
 
 
-
-def order_count(request, *args):
-    '''订单数量'''
-    year = args[0]
-    month = args[1]
+# 本月各渠道销售额
+@login_required(login_url='/login/')
+@order_count_which
+def channal_salesamount_month(request):
     res = {}
-    query = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=month) # 当月
-    if month == '01':
-        query1 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=str(int(year)-1), createDate__month=12)
-    else:
-        query1 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=str(int(month)-1))
-    # 本月
-    res['order_month'] = str(len(query))
-    res['order_lastmonth'] = str(len(query1))
-    res['ratio'] = str(int(int(res['order_month'])/int(res['order_lastmonth'])*100)) + '%'
-    res['month_ratio'] = str(int((int(res['order_month'])-int(res['order_lastmonth']))/int(res['order_lastmonth'])*100)) + '%'
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['channal_salesamount_month']
+    except:
+        return JsonResponse({'res': '没有权限'})
 
-    query2 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year) # 当年
-    query3 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=str(int(year)-1)) # 去年
-    res['order_year'] = str(len(query2))
-    order_lastyear = len(query3)
-    res['year_ratio'] = str(int((int(res['order_year'])-order_lastyear)/order_lastyear*100))+'%'
-    return JsonResponse(res)
+    queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+
+    b2b_1 = queryset_list_month[0].aggregate(Sum('amount'))['amount__sum']# all
+    b2b_2 = queryset_list_month[1].aggregate(Sum('amount'))['amount__sum'] # pos
 
 
-def channal_salesamount_month(request, *args):
-    '''本月各渠道销售额'''
-    year = args[0]
-    month = args[1]
-    res = {}
-    query = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=month) # 当月
-    query1 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=year, createDate__month=month) # 当月
-
-    b2b_1 = query.aggregate(Sum('amount'))['amount__sum']# all
-    b2b_2 = query1.aggregate(Sum('amount'))['amount__sum'] # pos
-
-    agriculture = query.filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单')).aggregate(Sum('amount'))['amount__sum'] # 农业
-    online = query.filter(Q(orderStoreName='京东九河泉仓库') | Q(orderStoreName='京东官方直营店') | Q(orderStoreName='民生银行仓库')).aggregate(Sum('amount'))['amount__sum'] # 电商
-    television = query.filter(orderStoreName='电视购物仓库').aggregate(Sum('amount'))['amount__sum']# 电视
-    taste = query.filter(orderStoreName='禾中味道官方直营店').aggregate(Sum('amount'))['amount__sum']# 禾中味道
-    direct_store = query.filter(orderStoreName='直营门店').aggregate(Sum('amount'))['amount__sum']# 直营店
+    agriculture = queryset_list_month[0].filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单')).aggregate(Sum('amount'))['amount__sum'] # 农业
+    online = queryset_list_month[0].filter(Q(orderStoreName='京东九河泉仓库') | Q(orderStoreName='京东官方直营店') | Q(orderStoreName='民生银行仓库')).aggregate(Sum('amount'))['amount__sum'] # 电商
+    television = queryset_list_month[0].filter(orderStoreName='电视购物仓库').aggregate(Sum('amount'))['amount__sum']# 电视
+    taste = queryset_list_month[0].filter(orderStoreName='禾中味道官方直营店').aggregate(Sum('amount'))['amount__sum']# 禾中味道
+    direct_store = queryset_list_month[0].filter(orderStoreName='直营门店').aggregate(Sum('amount'))['amount__sum']# 直营店
 
     if agriculture == None:
         agriculture = 0
@@ -249,8 +231,17 @@ def channal_salesamount_month(request, *args):
     return JsonResponse(res)
 
 
+
 def sales_trend(request):
     '''销售趋势'''
+    res = {}
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['channal_salesamount_month']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
     pass
 
 
