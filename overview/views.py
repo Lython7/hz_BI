@@ -1,125 +1,191 @@
+from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q
-from django.http import HttpResponse, JsonResponse
-from django.shortcuts import render
+
 from hzyg.models import *
+from permissions.decorator import *
+
+from .assistant import incomeDay
 
 
-def income(request, *args):
-    '''今日营收图，根据不同区域人员，展现不同数据'''
-    year = args[0]
-    month = args[1]
-    day = args[2]
-    if args[3] == '':
-        hour = 23
-    else:
-        hour = int(args[3])
+
+# @login_required(login_url='/login/')
+@tdincome_which
+def today_income(request):
+    # 今日营收
     res = {}
-    # date = year + '-' +month + '-' + day
-    if day == '':
-        if month == '':
-            # 取当年收入总和
-            pass
 
-        else:
-            # 取当月收入总和
-            query1 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=month)
-            query3 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=year, createDate__month=month)
-            res['order_amount_month'] = str(int(query1.aggregate(Sum('amount'))['amount__sum']+query3.aggregate(Sum('amount'))['amount__sum']))########
-            # 取上月总收入
-            if month == '01':
-                query2 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=str(int(year)-1), createDate__month='12')
-                query4 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=str(int(year)-1), createDate__month='12')
+    # 获取时间  日期
+    incometd = incomeDay()
+    _dtnow = incometd._get_today()        # ['2018', '05', '12', '04']
 
-            else:
-                query2 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=str(int(month)-1))
-                query4 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=year, createDate__month=str(int(month)-1))
-            res['order_amount_lastmonth'] = str(int(query2.aggregate(Sum('amount'))['amount__sum']+query4.aggregate(Sum('amount'))['amount__sum']))########
-            res['month_ratio'] = str(int((float(res['order_amount_month'])-float(res['order_amount_lastmonth']))/float(res['order_amount_lastmonth']) * 100))+r'%' ##########
-            res['ratio'] = str(int(float(res['order_amount_month'])/float(res['order_amount_lastmonth']) * 100))+r'%'
-            # 取当年总收入
-            query5 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year)
-            query6 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=year)
-            res['order_amount_year'] = str(int(query5.aggregate(Sum('amount'))['amount__sum']+query6.aggregate(Sum('amount'))['amount__sum']))########
-            # 取上年总收入
-            query7 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=str(int(year)-1))
-            query8 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=str(int(year)-1))
-            order_amount_lastyear = str(int(query7.aggregate(Sum('amount'))['amount__sum']+query8.aggregate(Sum('amount'))['amount__sum']))
-            res['year_ratio'] = str(int((float(res['order_amount_year'])-float(order_amount_lastyear))/float(order_amount_lastyear) * 100))+r'%' #####
-            return JsonResponse(res)
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['today_income']
+    except:
+        return JsonResponse({'res': '没有权限'})
 
-    else:
-        # 取当日收入总和
-        query1 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=month, createDate__day=day)
-        query3 = b2b_posgoods.objects.using('hzyg').filter(createDate__year=year, createDate__month=month, createDate__day=day)
-        res['order_count'] = str(len(query1)+len(query3)) ###################################
-        res['order_amount'] = str(int(query1.aggregate(Sum('amount'))['amount__sum']+query3.aggregate(Sum('amount'))['amount__sum'])) ###################################
-        res['ordered_cust_count'] = str(len(query1.values('memberPin').distinct())) ###################################
+    # 得到querysetlist
+    queryset_list = incometd._get_queryset_list(request, _dtnow[0], _dtnow[1], _dtnow[2], _settings)
 
-        query2 = b2b_storeb2b.objects.using('hzyg').filter(created_dt__year=year, created_dt__month=month, created_dt__day=day)
-        res['newreg_count'] = str(len(query2)) ###################################
-        print(res)
-        # 获取每小时数据
-        res['hours_data'] = []
-        for i in range(0,hour+1):
-            q1 = query1.filter(createDate__hour=i).aggregate(Sum('amount'))['amount__sum']
-            q2 = query3.filter(createDate__hour=i).aggregate(Sum('amount'))['amount__sum']
-            if q1 == None:
-                q1 = 0
-            if q2 == None:
-                q2 = 0
-            res['hours_data'].append(int(q1 + q2))
+    # 进一步 获取数据
+    b2b_order = 0 if queryset_list[0].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[0].aggregate(Sum('amount'))['amount__sum']
+    b2b_pos =  0 if queryset_list[1].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[1].aggregate(Sum('amount'))['amount__sum']
+
+    res['order_count'] = str(len(queryset_list[0])+len(queryset_list[1])) ###################################
+    res['order_amount'] = str(int(b2b_order+b2b_pos)) ###################################
+    res['ordered_cust_count'] = str(len(queryset_list[0].values('memberPin').distinct())) ###################################
+    res['newreg_count'] = str(len(queryset_list[2])) ###################################
+
+    # 获取每小时数据
+    res['hours_data'] = []
+    for i in range(0,int(_dtnow[3])+1):
+        q1 = 0 if queryset_list[0].filter(createDate__hour=i).aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[0].filter(createDate__hour=i).aggregate(Sum('amount'))['amount__sum']
+        q2 = 0 if queryset_list[1].filter(createDate__hour=i).aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[1].filter(createDate__hour=i).aggregate(Sum('amount'))['amount__sum']
+        res['hours_data'].append(int(q1 + q2))
 
     return JsonResponse(res)
 
-
-def store_count(request, *args):
-    '''新增客户数'''
-    year = args[0]
-    month = args[1]
+@login_required(login_url='/login/')
+@sales_amount_which
+def sales_amount(request):
+    # 销售额表
     res = {}
-    query = b2b_storeb2b.objects.using('hzyg').filter(created_dt__year=year, created_dt__month=month) # 当月
-    if month == '01':
-        query1 = b2b_storeb2b.objects.using('hzyg').filter(created_dt__year=str(int(year)-1), created_dt__month=12)
+
+    # 获取日期
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['sales_amount']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
+
+    queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+    if __date[1] == '01':
+        queryset_list_lastmonth = incometd._get_queryset_list(request, str(int(__date[0])-1), '12', None, _settings)
     else:
-        query1 = b2b_storeb2b.objects.using('hzyg').filter(created_dt__year=year, created_dt__month=str(int(month)-1))
-    res['store_reg_month'] = str(len(query))
-    res['store_reg_lastmonth'] = str(len(query1))
+        queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
+
+    b2b_order = 0 if queryset_list_month[0].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list_month[0].aggregate(Sum('amount'))['amount__sum']
+    b2b_pos =  0 if queryset_list_month[1].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list_month[1].aggregate(Sum('amount'))['amount__sum']
+    res['order_amount_month'] = str(int(b2b_pos+b2b_order))########
+
+    res['order_amount_lastmonth'] = str(int(queryset_list_lastmonth[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_lastmonth[1].aggregate(Sum('amount'))['amount__sum']))########
+    res['month_ratio'] = str(int((float(res['order_amount_month'])-float(res['order_amount_lastmonth']))/float(res['order_amount_lastmonth']) * 100))+r'%' ##########
+    res['ratio'] = str(int(float(res['order_amount_month'])/float(res['order_amount_lastmonth']) * 100))+r'%'
+
+
+    queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+
+    res['order_amount_year'] = str(int(queryset_list_year[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_year[1].aggregate(Sum('amount'))['amount__sum']))########
+    order_amount_lastyear = str(int(queryset_list_lastyear[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_lastyear[1].aggregate(Sum('amount'))['amount__sum']))
+    res['year_ratio'] = str(int((float(res['order_amount_year'])-float(order_amount_lastyear))/float(order_amount_lastyear) * 100))+r'%' #####
+
+    return JsonResponse(res)
+
+    # 新增客户数
+@login_required(login_url='/login/')
+@store_count_which
+def store_count(request):
+    res = {}
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['store_count']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
+    queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+    if __date[1] == '01':
+        queryset_list_lastmonth = incometd._get_queryset_list(request, str(int(__date[0])-1), '12', None, _settings)
+    else:
+        queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
+    res['store_reg_month'] = str(len(queryset_list_month[2]))
+    res['store_reg_lastmonth'] = str(len(queryset_list_lastmonth[2]))
     res['ratio'] = str(int(int(res['store_reg_month'])/int(res['store_reg_lastmonth'])*100)) + '%'
     res['month_ratio'] = str(int((int(res['store_reg_month'])-int(res['store_reg_lastmonth']))/int(res['store_reg_lastmonth'])*100)) + '%'
 
-    query2 = b2b_storeb2b.objects.using('hzyg').filter(created_dt__year=year) # 当年
-    query3 = b2b_storeb2b.objects.using('hzyg').filter(created_dt__year=str(int(year)-1)) # 去年
-    res['store_reg_year'] = str(len(query2))
-    store_reg_lastyear = len(query3)
+    queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+    res['store_reg_year'] = str(len(queryset_list_year[2]))
+    store_reg_lastyear = len(queryset_list_lastyear[2])
     res['year_ratio'] = str(int((int(res['store_reg_year'])-store_reg_lastyear)/store_reg_lastyear*100))+'%'
+
     return JsonResponse(res)
 
-def ordered_store_count(request, *args):
-    '''新增客户数'''
-    year = args[0]
-    month = args[1]
+
+    # 下单客户数
+@login_required(login_url='/login/')
+@orderstore_count_which
+def orderstore_count(request):
     res = {}
-    query = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=month) # 当月
-    if month == '01':
-        query1 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=str(int(year)-1), createDate__month=12)
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['orderstore_count']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
+    queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+    if __date[1] == '01':
+        queryset_list_lastmonth = incometd._get_queryset_list(request, str(int(__date[0])-1), '12', None, _settings)
     else:
-        query1 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year, createDate__month=str(int(month)-1))
-    # 本月
-    res['odstore_count_month'] = str(len(query.values('memberPin').distinct()))
-    res['odstore_count_lastmonth'] = str(len(query1.values('memberPin').distinct()))
+        queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
+
+    queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+
+    res['odstore_count_month'] = str(len(queryset_list_month[0].values('memberPin').distinct()))
+    res['odstore_count_lastmonth'] = str(len(queryset_list_lastmonth[0].values('memberPin').distinct()))
     res['ratio'] = str(int(int(res['odstore_count_month'])/int(res['odstore_count_lastmonth'])*100)) + '%'
     res['month_ratio'] = str(int((int(res['odstore_count_month'])-int(res['odstore_count_lastmonth']))/int(res['odstore_count_lastmonth'])*100)) + '%'
 
-    query2 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year) # 当年
-    query3 = b2b_ordertable.objects.using('hzyg').filter(createDate__year=str(int(year)-1)) # 去年
-    res['odstore_count_year'] = str(len(query2.values('memberPin').distinct()))
-    odstore_count_lastyear = len(query3.values('memberPin').distinct())
+    res['odstore_count_year'] = str(len(queryset_list_year[0].values('memberPin').distinct()))
+    odstore_count_lastyear = len(queryset_list_lastyear[0].values('memberPin').distinct())
     res['year_ratio'] = str(int((int(res['odstore_count_year'])-odstore_count_lastyear)/odstore_count_lastyear*100))+'%'
+
+    return JsonResponse(res)
+
+    # 订单数量
+@login_required(login_url='/login/')
+@order_count_which
+def order_count(request):
+    res = {}
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['order_count']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
+    queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+    if __date[1] == '01':
+        queryset_list_lastmonth = incometd._get_queryset_list(request, str(int(__date[0])-1), '12', None, _settings)
+    else:
+        queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
+
+    queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+
+    res['order_month'] = str(len(queryset_list_month[0]))
+    res['order_lastmonth'] = str(len(queryset_list_lastmonth[0]))
+    res['ratio'] = str(int(int(res['order_month'])/int(res['order_lastmonth'])*100)) + '%'
+    res['month_ratio'] = str(int((int(res['order_month'])-int(res['order_lastmonth']))/int(res['order_lastmonth'])*100)) + '%'
+
+    res['order_year'] = str(len(queryset_list_year[0]))
+    order_lastyear = len(queryset_list_lastyear[0])
+    res['year_ratio'] = str(int((int(res['order_year'])-order_lastyear)/order_lastyear*100))+'%'
     return JsonResponse(res)
 
 
+
+
 def order_count(request, *args):
-    '''新增客户数'''
+    '''订单数量'''
     year = args[0]
     month = args[1]
     res = {}
@@ -175,11 +241,11 @@ def channal_salesamount_month(request, *args):
         b2b_2 = 0
 
     b2b_all = b2b_1 - (agriculture + online + television + taste + direct_store) + b2b_2
-    res['b2b'] = int(b2b_all)
-    res['agriculture'] = int(agriculture)
-    res['online'] = int(online)
-    res['television'] = int(television)
-    res['taste'] = int(taste)
+    res['b2b'] = str(int(b2b_all))
+    res['agriculture'] = str(int(agriculture))
+    res['online'] = str(int(online))
+    res['television'] = str(int(television))
+    res['taste'] = str(int(taste))
     return JsonResponse(res)
 
 

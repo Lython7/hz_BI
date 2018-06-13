@@ -1,8 +1,63 @@
+
 navIndex(0);
 
 
-var revenueToday = document.getElementById("revenueToday"),
-	salesTrend = document.getElementById("salesTrend");
+ajax('GET', './views/incometoday/', null, function (res) {
+	var data = JSON.parse(res);
+	var order_amount=document.getElementById("order_amount"), // 订单金额
+		ordered_cust_count=document.getElementById("ordered_cust_count"), // 下单客户数
+		order_count=document.getElementById("order_count"), // 订单数量
+		newreg_count=document.getElementById("newreg_count"), // 新增客户数
+		revenueToday=document.getElementById("revenueToday"); // 今日营收echarts dom
+	order_amount.innerHTML=data.order_amount;
+	ordered_cust_count.innerHTML=data.ordered_cust_count;
+	order_count.innerHTML=data.order_count;
+	newreg_count.innerHTML=data.newreg_count;
+
+	var arr={
+		x:[],
+		y:[]
+	}
+	var len=data.hours_data.length;
+	for(var i=0; i<len; i++){
+		arr.x.push(i);
+		arr.y.push(data.hours_data[i]);
+	}
+	if (arr.x.length>7){
+		arr.dataZoom={
+						start:0,
+						end:7
+					}
+	}
+	lineChart(revenueToday, arr, '#C66E6B');
+});
+ajax('GET', './views/salesamount/', null, function (res) {
+	var data =JSON.parse(res);
+	var sale = document.getElementById("sale"),
+		order_amount_month = document.getElementById("order_amount_month"),
+		order_amount_lastmonth = document.getElementById("order_amount_lastmonth"),
+		month_ratio = document.getElementById("month_ratio"),
+		order_amount_year = document.getElementById("order_amount_year"),
+		year_ratio = document.getElementById("year_ratio");
+	gauge(sale, parseFloat(data.ratio));
+	order_amount_month.innerHTML=data.order_amount_month;
+	order_amount_lastmonth.innerHTML=data.order_amount_lastmonth;
+	month_ratio.innerHTML=data.month_ratio;
+	order_amount_year.innerHTML=data.order_amount_year;
+	year_ratio.innerHTML=data.year_ratio;
+	order_amount_lastmonth.innerHTML=data.order_amount_lastmonth;
+});
+var clientAdd = document.getElementById("clientAdd"),
+	orderClientCounts = document.getElementById("orderClientCounts"),
+	orderCounts = document.getElementById("orderCounts");
+gauge(sale, 50);
+gauge(clientAdd, 60);
+gauge(orderClientCounts, 45);
+gauge(orderCounts, 72);
+
+
+
+var salesTrend = document.getElementById("salesTrend");
 
 function lineChart(dom, data, col) {
 	var dataZoomData = {
@@ -45,14 +100,7 @@ function lineChart(dom, data, col) {
 		}]
 	})
 }
-var todayData = {
-	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330],
-	dataZoom: {
-		start:0,
-		end:7
-	}
-}
+
 var towData = {
 	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
 	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330],
@@ -61,7 +109,7 @@ var towData = {
 		end:5
 	}
 }
-lineChart(revenueToday, todayData, '#C66E6B');
+
 lineChart(salesTrend, towData, '#8DB9BE');
 
 var channelOrder = echarts.init(document.getElementById("channelOrder"));
@@ -128,14 +176,7 @@ function gauge(dom, data) {
 		}]
 	})
 }
-var sale = document.getElementById("sale"),
-	clientAdd = document.getElementById("clientAdd"),
-	orderClientCounts = document.getElementById("orderClientCounts"),
-	orderCounts = document.getElementById("orderCounts");
-gauge(sale, 50);
-gauge(clientAdd, 60);
-gauge(orderClientCounts, 45);
-gauge(orderCounts, 72);
+
 
 function rowBar(dom, data) {
 	var chart = echarts.init(dom);

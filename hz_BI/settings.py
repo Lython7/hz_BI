@@ -50,6 +50,7 @@ INSTALLED_APPS = [
     'overview',# 前端首页总览页面视图等
     'explore',# 前端首页 探索
     'mine',# 前端首页 我的
+    'permissions',# 权限设定
 ]
 
 #api框架
@@ -110,7 +111,7 @@ DATABASES = {
         'PASSWORD': '2531',
         'HOST': '192.168.117.110',
         'PORT': '3306',
-        'NAME': 'hz_bi',
+        'NAME': 'bi',
     },
     # 迁徙备份的数据库，可做查询
     'hzyg':{
@@ -123,7 +124,8 @@ DATABASES = {
     }
 }
 
-SESSION_COOKIE_AGE = 60 * 2 # 2分钟
+SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 # 一周
+# SESSION_COOKIE_AGE = 30 # 30s
 SESSION_SAVE_EVERY_REQUEST = True
 SESSION_EXPIRE_AT_BROWSER_CLOSE = True # 关闭浏览器，则COOKIE失效
 

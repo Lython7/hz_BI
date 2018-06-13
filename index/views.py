@@ -2,29 +2,34 @@ import json
 
 from django.contrib.auth import authenticate, logout, login
 from django.contrib.auth.decorators import login_required
+from django.forms import model_to_dict
 from rest_framework import viewsets
 from django.http import HttpResponse, HttpResponseRedirect, JsonResponse
 from django.shortcuts import render, redirect
 
+from overview.models import Show_overview
 from uprofile.models import Uprofile
 from yotools.models import SMSCode
 from . import models, serializers
+# from uprofile.models import Permissions_F1
+from permissions.models import *
 
 # from dysms_python import demo_sms_send
 
 # 正式使用
-# def index(request):
-#     try:
-#         if request.user.is_authenticated and Uprofile.objects.get(user=request.user).upower<100:
-#             return render(request, 'index/index.html', context={})
-#         else:
-#             return HttpResponseRedirect('/login/')
-#     except:
-#         return HttpResponseRedirect('/login/')
 
-# 暂时使用
 def index(request):
-    return render(request, 'index/index.html', context={})
+    try:
+        if request.user.is_authenticated and Uprofile.objects.get(user=request.user).uposition<100:
+            return render(request, 'index/index.html', context={})
+        else:
+            return HttpResponseRedirect('/login/')
+    except:
+        return HttpResponseRedirect('/login/')
+
+# # 暂时使用
+# def index(request):
+#     return render(request, 'index/index.html', context={})
 
 def classifyct(request):
     return render(request, 'index/classifyct.html', context={})
@@ -50,7 +55,8 @@ def doLogin(request):
         password = request.POST.get("password")
 
         try:
-            user = authenticate(username=username,password=password)  # 类型为<class 'django.contrib.auth.models.User'>
+            user = authenticate(username=username,password=password)# 类型为<class 'django.contrib.auth.models.User'>
+
         except:
             return HttpResponse('wrong account or wrong pwd')
         if user:
@@ -59,7 +65,7 @@ def doLogin(request):
                 # 发送验证码
                 cellphone = Uprofile.objects.get(user=user).ucellphone
                 request.session['cellphone'] = cellphone
-                request.session.set_expiry(600)
+
                 # resp = demo_sms_send.send_sms(cellphone)
                 # timeflag = resp['timeflag']
                 # code = resp['code']
@@ -69,10 +75,17 @@ def doLogin(request):
                 return HttpResponseRedirect("/resetpwd")
             else:
                 login(request, user)
-                upower = Uprofile.objects.get(user=user).upower
-                if upower < 100:
+                # 将USER相关权限写入session
+                try:
+                    request.session['settings'] = model_to_dict(Show_overview.objects.get(user=user))
+                # request.session.set_expiry(60000)
+                except:
+                    request.session['settings'] = {}
+                print(request.session['settings'])
+                uposition = Uprofile.objects.get(user=user).uposition
+                if uposition < 100:
                     return HttpResponseRedirect("/")
-                elif upower >= 100:
+                elif uposition >= 100:
                     return HttpResponseRedirect("/admin")
         else:
             return HttpResponse('wrong account or wrong pwd')
