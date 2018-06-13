@@ -117,7 +117,7 @@ def store_count_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).store_count]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P3.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -156,7 +156,7 @@ def orderstore_count_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).orderstore_count]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P4.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -195,7 +195,7 @@ def order_count_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).order_count]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P5.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -234,7 +234,7 @@ def channal_salesamount_month_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).channal_salesamount_month]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P6.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -273,7 +273,7 @@ def sales_trend_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).sales_trend]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P7.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -312,7 +312,7 @@ def classify_amount_month_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).classify_amount_month]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P8.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -351,7 +351,7 @@ def area_salesamount_month_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).area_salesamount_month]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P9.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:
@@ -390,7 +390,7 @@ def B2B_TOP3_month_which(func):
         }
 
         datashow = choices[Show_overview.objects.get(user=request.user).B2B_TOP3_month]
-        queryset = Permissions_P2.objects.get(user=request.user)
+        queryset = Permissions_P10.objects.get(user=request.user)
         datadic = model_to_dict(queryset)
         # print(datadic)
         if datadic[datashow] == 1:

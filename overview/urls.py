@@ -6,6 +6,11 @@ from . import views
 urlpatterns = [
     url(r'^incometoday/', views.today_income, name='income_today'), # 今日营收
     url(r'^salesamount/', views.sales_amount, name='sales_amount'), # 销售额
+    url(r'^storecount/', views.store_count, name='store_count'), # 新增客户数
+    url(r'^orderstorecount/', views.orderstore_count, name='orderstore_count'), # 下单客户数
+    url(r'^ordercount/', views.order_count, name='order_count'), # 订单数量
+
+    url(r'^channal_salesamount_month/', views.channal_salesamount_month, name='channal_salesamount_month'), # 本月各渠道销售额
 
 
 

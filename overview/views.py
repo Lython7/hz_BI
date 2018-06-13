@@ -97,6 +97,8 @@ def store_count(request):
     except:
         return JsonResponse({'res': '没有权限'})
 
+    # __date[0] = '05'
+
     queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
     if __date[1] == '01':
         queryset_list_lastmonth = incometd._get_queryset_list(request, str(int(__date[0])-1), '12', None, _settings)
@@ -185,7 +187,7 @@ def order_count(request):
 
 # 本月各渠道销售额
 @login_required(login_url='/login/')
-@order_count_which
+@channal_salesamount_month_which
 def channal_salesamount_month(request):
     res = {}
     incometd = incomeDay()
@@ -231,7 +233,8 @@ def channal_salesamount_month(request):
     return JsonResponse(res)
 
 
-
+@login_required(login_url='/login/')
+@sales_trend_which
 def sales_trend(request):
     '''销售趋势'''
     res = {}
@@ -242,7 +245,25 @@ def sales_trend(request):
     except:
         return JsonResponse({'res': '没有权限'})
 
-    pass
+    queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+    tmp_ls = []
+    tmp_ls.append(queryset_list_month)
+    while len(tmp_ls) < 12:
+        month_l = int(__date[1])
+        if month_l-1 > 0:
+            tmp_ls.append(incometd._get_queryset_list(request, __date[0], str(month_l-1), None, _settings))
+        else:
+            month_l=13
+            __date[0] = str(int(__date[0])-1)
+            # tmp_ls.append(incometd._get_queryset_list(request, str(int(__date[0])-1), str(int(__date[1])-1), None, _settings))
+
+        month_l = month_l - 1
+
+    for tmp in tmp_ls:
+        pass
+
+
+
 
 
 def classify_amount_month(request, *args):
