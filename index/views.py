@@ -81,7 +81,7 @@ def doLogin(request):
                 # request.session.set_expiry(60000)
                 except:
                     request.session['settings'] = {}
-                print(request.session['settings'])
+                # print(request.session['settings'])
                 uposition = Uprofile.objects.get(user=user).uposition
                 if uposition < 100:
                     return HttpResponseRedirect("/")

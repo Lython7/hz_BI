@@ -9,10 +9,10 @@ ajax('GET', './views/incometoday/', null, function (res) {
 		order_count=document.getElementById("order_count"), // 订单数量
 		newreg_count=document.getElementById("newreg_count"), // 新增客户数
 		revenueToday=document.getElementById("revenueToday"); // 今日营收echarts dom
-	order_amount.innerHTML=data.order_amount;
-	ordered_cust_count.innerHTML=data.ordered_cust_count;
-	order_count.innerHTML=data.order_count;
-	newreg_count.innerHTML=data.newreg_count;
+	order_amount.innerHTML=outputdollars(data.order_amount);
+	ordered_cust_count.innerHTML=outputdollars(data.ordered_cust_count);
+	order_count.innerHTML=outputdollars(data.order_count);
+	newreg_count.innerHTML=outputdollars(data.newreg_count);
 
 	var arr={
 		x:[],
@@ -34,28 +34,117 @@ ajax('GET', './views/incometoday/', null, function (res) {
 ajax('GET', './views/salesamount/', null, function (res) {
 	var data =JSON.parse(res);
 	var sale = document.getElementById("sale"),
-		order_amount_month = document.getElementById("order_amount_month"),
-		order_amount_lastmonth = document.getElementById("order_amount_lastmonth"),
-		month_ratio = document.getElementById("month_ratio"),
-		order_amount_year = document.getElementById("order_amount_year"),
-		year_ratio = document.getElementById("year_ratio");
+		order_amount_month = document.getElementById("sale_order_amount_month"),
+		order_amount_lastmonth = document.getElementById("sale_order_amount_lastmonth"),
+		month_ratio = document.getElementById("sale_month_ratio"),
+		order_amount_year = document.getElementById("sale_order_amount_year"),
+		year_ratio = document.getElementById("sale_year_ratio");
 	gauge(sale, parseFloat(data.ratio));
-	order_amount_month.innerHTML=data.order_amount_month;
-	order_amount_lastmonth.innerHTML=data.order_amount_lastmonth;
+	order_amount_month.innerHTML=outputdollars(data.order_amount_month);
+	order_amount_lastmonth.innerHTML=outputdollars(data.order_amount_lastmonth);
 	month_ratio.innerHTML=data.month_ratio;
-	order_amount_year.innerHTML=data.order_amount_year;
+	order_amount_year.innerHTML=outputdollars(data.order_amount_year);
 	year_ratio.innerHTML=data.year_ratio;
-	order_amount_lastmonth.innerHTML=data.order_amount_lastmonth;
 });
-var clientAdd = document.getElementById("clientAdd"),
-	orderClientCounts = document.getElementById("orderClientCounts"),
-	orderCounts = document.getElementById("orderCounts");
-gauge(sale, 50);
-gauge(clientAdd, 60);
-gauge(orderClientCounts, 45);
-gauge(orderCounts, 72);
+ajax('GET', './views/storecount/', null, function (res) {
+	var data =JSON.parse(res);
+	var clientAdd = document.getElementById("clientAdd"),
+		store_reg_month = document.getElementById("store_reg_month"),
+		store_reg_lastmonth = document.getElementById("store_reg_lastmonth"),
+		month_ratio = document.getElementById("month_ratio"),
+		store_reg_year = document.getElementById("store_reg_year"),
+		year_ratio = document.getElementById("year_ratio");
+	gauge(clientAdd, parseFloat(data.ratio));
+	store_reg_month.innerHTML=outputdollars(data.store_reg_month);
+	store_reg_lastmonth.innerHTML=outputdollars(data.store_reg_lastmonth);
+	month_ratio.innerHTML=data.month_ratio;
+	store_reg_year.innerHTML=outputdollars(data.store_reg_year);
+	year_ratio.innerHTML=data.year_ratio;
+});
+ajax('GET', './views/orderstorecount/', null, function (res) {
+	var data =JSON.parse(res);
+	var orderClientCounts = document.getElementById("orderClientCounts"),
+		orderClient_odstore_count_month = document.getElementById("orderClient_odstore_count_month"),
+		orderClient_odstore_count_lastmonth = document.getElementById("orderClient_odstore_count_lastmonth"),
+		orderClient_month_ratio = document.getElementById("orderClient_month_ratio"),
+		orderClient_odstore_count_year = document.getElementById("orderClient_odstore_count_year"),
+		orderClient_year_ratio = document.getElementById("orderClient_year_ratio");
+	gauge(orderClientCounts, parseFloat(data.ratio));
+	orderClient_odstore_count_month.innerHTML=outputdollars(data.odstore_count_month);
+	orderClient_odstore_count_lastmonth.innerHTML=outputdollars(data.odstore_count_lastmonth);
+	orderClient_month_ratio.innerHTML=data.month_ratio;
+	orderClient_odstore_count_year.innerHTML=outputdollars(data.odstore_count_year);
+	orderClient_year_ratio.innerHTML=data.year_ratio;
+});
+ajax('GET', './views/ordercount/', null, function (res) {
+	var data =JSON.parse(res);
+	var orderCounts = document.getElementById("orderCounts"),
+		orderCounts_order_month = document.getElementById("orderCounts_order_month"),
+		orderCounts_order_lastmonth = document.getElementById("orderCounts_order_lastmonth"),
+		orderCounts_month_ratio = document.getElementById("orderCounts_month_ratio"),
+		orderCounts_order_year = document.getElementById("orderCounts_order_year"),
+		orderCounts_year_ratio = document.getElementById("orderCounts_year_ratio");
+	gauge(orderCounts, parseFloat(data.ratio));
+	orderCounts_order_month.innerHTML=outputdollars(data.order_month);
+	orderCounts_order_lastmonth.innerHTML=outputdollars(data.order_lastmonth);
+	orderCounts_month_ratio.innerHTML=data.month_ratio;
+	orderCounts_order_year.innerHTML=outputdollars(data.order_year);
+	orderCounts_year_ratio.innerHTML=data.year_ratio;
+});
+ajax('GET', './views/channal_salesamount_month/', null, function (res) {
+	var data=JSON.parse(res);
+	var channels=document.getElementById("channelOrder");
+	var datas={
+		x:[],
+		y:[]
+	};
+	function switchs(data){
+			switch (data){
+				case 'b2b':
+					return 'B2B';
+					break;
+				case 'agriculture':
+					return '农业';
+					break;
+				case 'online':
+					return '线上';
+					break;
+				case 'television':
+					return '电视';
+					break;
+				case 'taste':
+					return '禾中味道';
+					break;
+				default:
+					return data;
+					break;
+			}
+	}
+	for (var item in data){
+		datas.x.push(switchs(item));
+		datas.y.push(data[item]);
+	}
+	channelOrder(channels,datas);
+});
 
-
+function outputdollars(number) {
+	number+='';
+	if(number.length <= 3){ // 不足3位数
+		return number === '' ? '0' : number;
+	}else {
+		var mod = number.length % 3; // 有多少位非3倍数的
+		var output = (mod === 0 ? '' : (number.substring(0, mod))); // 前面非3倍数的数位金钱
+		var len = Math.floor(number.length / 3); // 有几个3的倍数
+		for(i = 0; i < len; i++) {
+			if(mod===0 && i === 0){ // 第一次拼接且number是3的整数倍
+				output += number.substring(mod + 3 * i, mod + 3 * i + 3);
+			}else{
+				output += ',' + number.substring(mod + 3 * i, mod + 3 * i + 3);
+			}
+		}
+		return(output);
+	}
+}
 
 var salesTrend = document.getElementById("salesTrend");
 
@@ -112,28 +201,36 @@ var towData = {
 
 lineChart(salesTrend, towData, '#8DB9BE');
 
-var channelOrder = echarts.init(document.getElementById("channelOrder"));
-var option = {
-	xAxis: {
-		type: 'category',
-		data: ['B2B', '电商', '电视']
-	},
-	yAxis: {
-		type: 'value'
-	},
-	series: [{
-		data: [120, 200, 150],
-		itemStyle: { // 让折线图的每个折点都显示对应数值
-			normal: {
-				label: {
-					show: true
+
+
+function channelOrder(dom, data) {
+	var channelOrder = echarts.init(dom);
+	channelOrder.setOption({
+		xAxis: {
+			type: 'category',
+			axisLabel: {
+				rotate: 30
+			},
+			data: data.x
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				formatter: function(val){
+					return val/10000+'W';
 				}
 			}
 		},
-		type: 'bar'
-	}]
-};
-channelOrder.setOption(option);
+		series: [{
+			data: data.y,
+			label: { // 让折线图的每个折点都显示对应数值
+				show: true,
+				position: 'top'
+			},
+			type: 'bar'
+		}]
+	});
+}
 
 function gauge(dom, data) {
 	var mychart = echarts.init(dom);
