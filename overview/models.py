@@ -43,7 +43,7 @@ class Show_overview(models.Model):
     B2B_TOP3_month = models.IntegerField(choices=income_choices, default=0, verbose_name='本月B2B销售人员TOP3')
 
     class Meta:
-        verbose_name = '今日营收显示选择'
+        verbose_name = '总览-显示选择'
         verbose_name_plural = verbose_name
 
     def __str__(self):

@@ -3,7 +3,7 @@ from django.db.models import Sum, Q
 
 from hzyg.models import *
 from permissions.decorator import *
-
+from collections import Counter
 from .assistant import incomeDay
 
 
@@ -15,7 +15,7 @@ def today_income(request):
     res = {}
 
     # 获取时间  日期
-    incometd = incomeDay()
+    incometd = incomeDay()o
     _dtnow = incometd._get_today()        # ['2018', '05', '12', '04']
 
     try: # 获取 显示哪个
@@ -30,7 +30,7 @@ def today_income(request):
     b2b_order = 0 if queryset_list[0].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[0].aggregate(Sum('amount'))['amount__sum']
     b2b_pos =  0 if queryset_list[1].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[1].aggregate(Sum('amount'))['amount__sum']
 
-    res['order_count'] = str(len(queryset_list[0])+len(queryset_list[1])) ###################################
+    res['order_count'] = str(len(queryset_list[0])+len(queryset_list[1].values('orderN').distinct())) ###################################
     res['order_amount'] = str(int(b2b_order+b2b_pos)) ###################################
     res['ordered_cust_count'] = str(len(queryset_list[0].values('memberPin').distinct())) ###################################
     res['newreg_count'] = str(len(queryset_list[2])) ###################################
@@ -85,6 +85,7 @@ def sales_amount(request):
     return JsonResponse(res)
 
     # 新增客户数
+
 @login_required(login_url='/login/')
 @store_count_which
 def store_count(request):
@@ -119,6 +120,7 @@ def store_count(request):
 
 
     # 下单客户数
+
 @login_required(login_url='/login/')
 @orderstore_count_which
 def orderstore_count(request):
@@ -152,6 +154,7 @@ def orderstore_count(request):
     return JsonResponse(res)
 
     # 订单数量
+
 @login_required(login_url='/login/')
 @order_count_which
 def order_count(request):
@@ -232,7 +235,7 @@ def channal_salesamount_month(request):
     res['taste'] = str(int(taste))
     return JsonResponse(res)
 
-
+# 销售趋势
 @login_required(login_url='/login/')
 @sales_trend_which
 def sales_trend(request):
@@ -248,8 +251,9 @@ def sales_trend(request):
     queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
     tmp_ls = []
     tmp_ls.append(queryset_list_month)
+    month_l = int(__date[1])
     while len(tmp_ls) < 12:
-        month_l = int(__date[1])
+
         if month_l-1 > 0:
             tmp_ls.append(incometd._get_queryset_list(request, __date[0], str(month_l-1), None, _settings))
         else:
@@ -259,13 +263,74 @@ def sales_trend(request):
 
         month_l = month_l - 1
 
+    data = []
     for tmp in tmp_ls:
-        pass
+        b2b_order = 0 if tmp[0].aggregate(Sum('amount'))['amount__sum'] == None else tmp[0].aggregate(Sum('amount'))['amount__sum']
+        b2b_pos =  0 if tmp[1].aggregate(Sum('amount'))['amount__sum'] == None else tmp[1].aggregate(Sum('amount'))['amount__sum']
+        data.append(str(int(b2b_pos+b2b_order)))
+    res['data'] = data.reverse()
+    # print(res)
+    return JsonResponse(res)
 
 
 
 
-
-def classify_amount_month(request, *args):
+@login_required(login_url='/login/')
+@classify_amount_month_which
+def classify_amount_month(request):
     '''当月分类销售额'''
+    res = {}
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['channal_salesamount_month']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
+    classify_data_goods = list(b2b_goodstable.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1]).values('secondIcatName').annotate(Sum('amount')))
+    classify_data_pos = list(b2b_posgoods.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1]).values('secondIcatName').annotate(Sum('amount')))
+
+
+    data_dict_goods = {}
+    for i in classify_data_goods:
+        data_dict_goods[i['secondIcatName']] = int(i['amount__sum'])
+
+    data_dict_pos = {}
+    for i in  classify_data_pos:
+        data_dict_pos[i['secondIcatName']] = int(i['amount__sum'])
+
+    X, Y = Counter(data_dict_goods), Counter(data_dict_pos)
+
+    res['data'] = dict(X + Y)
+
+    return JsonResponse(res)
+
+# 本月区域销售额
+@login_required(login_url='/login/')
+@area_salesamount_month_which
+def region_amount_month(request):
+    res = {}
+    incometd = incomeDay()
+    __date = incometd._get_month()        # ['2018', '05']
+    try: # 获取 显示哪个
+        _settings = incometd._get_settings(request)['channal_salesamount_month']
+    except:
+        return JsonResponse({'res': '没有权限'})
+
+    classify_data = b2b_goodstable.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1]).values('secondIcatName').annotate(Sum('amount'))
+
+    res['data'] = list(classify_data)
+
+    return JsonResponse(res)
+
+# 本月B2B销售人员TOP3
+@login_required(login_url='/login/')
+@B2B_TOP3_month_which
+def b2b_top3_month(request):
     pass
+
+
+
+
+
+
