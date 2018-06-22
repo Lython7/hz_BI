@@ -8,7 +8,7 @@ from .assistant import incomeDay
 
 
 
-@login_required(login_url='/login/')
+# @login_required(login_url='/login/')
 @tdincome_which
 def today_income(request):
     # 今日营收
