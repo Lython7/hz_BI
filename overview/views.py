@@ -1,12 +1,22 @@
+import json
+import operator
+
 from django.contrib.auth.decorators import login_required
-from django.db.models import Sum, Q
+from django.db.models import Sum, Q, Count
+from django.http import HttpResponse
+from django.shortcuts import render
 
 from hzyg.models import *
+from investment.models import sale_upload
 from permissions.decorator import *
 from collections import Counter
 from .assistant import incomeDay
 
+def ranking(request):
+    return render(request, 'index/ranking.html', context={})
 
+def goodscount(request):
+    return render(request, 'index/goodscount.html', context={})
 
 # @login_required(login_url='/login/')
 @tdincome_which
@@ -15,7 +25,7 @@ def today_income(request):
     res = {}
 
     # 获取时间  日期
-    incometd = incomeDay()o
+    incometd = incomeDay()
     _dtnow = incometd._get_today()        # ['2018', '05', '12', '04']
 
     try: # 获取 显示哪个
@@ -317,19 +327,153 @@ def region_amount_month(request):
     except:
         return JsonResponse({'res': '没有权限'})
 
-    classify_data = b2b_goodstable.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1]).values('secondIcatName').annotate(Sum('amount'))
+    # classify_data = b2b_goodstable.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1]).values('secondIcatName').annotate(Sum('amount'))
+    #
+    # res['data'] = list(classify_data)
+    dianshang = incometd._get_queryset_list(request, __date[0], __date[1], None, 2)
+    dianshang_order = 0 if dianshang[0].aggregate(Sum('amount'))['amount__sum'] == None else dianshang[0].aggregate(Sum('amount'))['amount__sum']
+    dianshang_pos =  0 if dianshang[1].aggregate(Sum('amount'))['amount__sum'] == None else dianshang[1].aggregate(Sum('amount'))['amount__sum']
+    res['dianshang'] = int(dianshang_order+dianshang_pos)########
 
-    res['data'] = list(classify_data)
+    dianshi = incometd._get_queryset_list(request, __date[0], __date[1], None, 3)
+    dianshi_order = 0 if dianshi[0].aggregate(Sum('amount'))['amount__sum'] == None else dianshi[0].aggregate(Sum('amount'))['amount__sum']
+    dianshi_pos =  0 if dianshi[1].aggregate(Sum('amount'))['amount__sum'] == None else dianshi[1].aggregate(Sum('amount'))['amount__sum']
+    res['dianshi'] = int(dianshi_order+dianshi_pos)########
 
-    return JsonResponse(res)
+    b2bbeijing = incometd._get_queryset_list(request, __date[0], __date[1], None, 5)
+    b2bbeijing_order = 0 if b2bbeijing[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeijing[0].aggregate(Sum('amount'))['amount__sum']
+    b2bbeijing_pos =  0 if b2bbeijing[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeijing[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bbeijing'] = int(b2bbeijing_order+b2bbeijing_pos)########
+
+
+    b2bhuabei = incometd._get_queryset_list(request, __date[0], __date[1], None, 6)
+    b2bhuabei_order = 0 if b2bhuabei[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuabei[0].aggregate(Sum('amount'))['amount__sum']
+    b2bhuabei_pos =  0 if b2bhuabei[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuabei[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bhuabei'] = int(b2bhuabei_order+b2bhuabei_pos)########
+
+    b2bshuangyashan = incometd._get_queryset_list(request, __date[0], __date[1], None, 7)
+    b2bshuangyashan_order = 0 if b2bshuangyashan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bshuangyashan[0].aggregate(Sum('amount'))['amount__sum']
+    b2bshuangyashan_pos =  0 if b2bshuangyashan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bshuangyashan[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bshuangyashan'] = int(b2bshuangyashan_order+b2bshuangyashan_pos)########
+
+    b2bdongbei = incometd._get_queryset_list(request, __date[0], __date[1], None, 8)
+    b2bdongbei_order = 0 if b2bdongbei[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bdongbei[0].aggregate(Sum('amount'))['amount__sum']
+    b2bdongbei_pos =  0 if b2bdongbei[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bdongbei[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bdongbei'] = int(b2bdongbei_order+b2bdongbei_pos)########
+
+    b2bhuanan = incometd._get_queryset_list(request, __date[0], __date[1], None, 9)
+    b2bhuanan_order = 0 if b2bhuanan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuanan[0].aggregate(Sum('amount'))['amount__sum']
+    b2bhuanan_pos =  0 if b2bhuanan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuanan[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bhuanan'] = int(b2bhuanan_order+b2bhuanan_pos)########
+
+    b2bxinan = incometd._get_queryset_list(request, __date[0], __date[1], None, 10)
+    b2bxinan_order = 0 if b2bxinan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bxinan[0].aggregate(Sum('amount'))['amount__sum']
+    b2bxinan_pos =  0 if b2bxinan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bxinan[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bxinan'] = int(b2bxinan_order+b2bxinan_pos)########
+
+    b2bbeifang = incometd._get_queryset_list(request, __date[0], __date[1], None, 11)
+    b2bbeifang_order = 0 if b2bbeifang[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeifang[0].aggregate(Sum('amount'))['amount__sum']
+    b2bbeifang_pos =  0 if b2bbeifang[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeifang[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bbeifang'] = int(b2bbeifang_order+b2bbeifang_pos)########
+
+    b2bhuadong = incometd._get_queryset_list(request, __date[0], __date[1], None, 12)
+    b2bhuadong_order = 0 if b2bhuadong[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuadong[0].aggregate(Sum('amount'))['amount__sum']
+    b2bhuadong_pos =  0 if b2bhuadong[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuadong[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bhuadong'] = int(b2bhuadong_order+b2bhuadong_pos)########
+
+    b2bxibei = incometd._get_queryset_list(request, __date[0], __date[1], None, 13)
+    b2bxibei_order = 0 if b2bxibei[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bxibei[0].aggregate(Sum('amount'))['amount__sum']
+    b2bxibei_pos =  0 if b2bxibei[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bxibei[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bxibei'] = int(b2bxibei_order+b2bxibei_pos)########
+
+    b2bzhongyuan = incometd._get_queryset_list(request, __date[0], __date[1], None, 14)
+    b2bzhongyuan_order = 0 if b2bzhongyuan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bzhongyuan[0].aggregate(Sum('amount'))['amount__sum']
+    b2bzhongyuan_pos =  0 if b2bzhongyuan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bzhongyuan[1].aggregate(Sum('amount'))['amount__sum']
+    res['b2bzhongyuan'] = int(b2bzhongyuan_order+b2bzhongyuan_pos)########
+
+    zhiyingdian = incometd._get_queryset_list(request, __date[0], __date[1], None, 15)
+    zhiyingdian_order = 0 if zhiyingdian[0].aggregate(Sum('amount'))['amount__sum'] == None else zhiyingdian[0].aggregate(Sum('amount'))['amount__sum']
+    zhiyingdian_pos =  0 if zhiyingdian[1].aggregate(Sum('amount'))['amount__sum'] == None else zhiyingdian[1].aggregate(Sum('amount'))['amount__sum']
+    res['zhiyingdian'] = int(zhiyingdian_order+zhiyingdian_pos)########
+
+    hezhongnongye = incometd._get_queryset_list(request, __date[0], __date[1], None, 16)
+    hezhongnongye_order = 0 if hezhongnongye[0].aggregate(Sum('amount'))['amount__sum'] == None else hezhongnongye[0].aggregate(Sum('amount'))['amount__sum']
+    hezhongnongye_pos =  0 if hezhongnongye[1].aggregate(Sum('amount'))['amount__sum'] == None else hezhongnongye[1].aggregate(Sum('amount'))['amount__sum']
+    res['hezhongnongye'] = int(hezhongnongye_order+hezhongnongye_pos)########
+
+    hezhongweidao = incometd._get_queryset_list(request, __date[0], __date[1], None, 17)
+    hezhongweidao_order = 0 if hezhongweidao[0].aggregate(Sum('amount'))['amount__sum'] == None else hezhongweidao[0].aggregate(Sum('amount'))['amount__sum']
+    hezhongweidao_pos =  0 if hezhongweidao[1].aggregate(Sum('amount'))['amount__sum'] == None else hezhongweidao[1].aggregate(Sum('amount'))['amount__sum']
+    res['hezhongweidao'] = int(hezhongweidao_order+hezhongweidao_pos)########
+
+    chanpinbu = incometd._get_queryset_list(request, __date[0], __date[1], None, 18)
+    chanpinbu_order = 0 if chanpinbu[0].aggregate(Sum('amount'))['amount__sum'] == None else chanpinbu[0].aggregate(Sum('amount'))['amount__sum']
+    chanpinbu_pos =  0 if chanpinbu[1].aggregate(Sum('amount'))['amount__sum'] == None else chanpinbu[1].aggregate(Sum('amount'))['amount__sum']
+    res['chanpinbu'] = int(chanpinbu_order+chanpinbu_pos)########
+
+    ret = sorted(res.items(),key = lambda x:x[1],reverse = True)[0:3]
+    # return HttpResponse(ret)
+    recv = {}
+    recv[ret[0][0]] = ret[0][1]
+    recv[ret[1][0]] = ret[1][1]
+    recv[ret[2][0]] = ret[2][1]
+    return JsonResponse(recv)
 
 # 本月B2B销售人员TOP3
-@login_required(login_url='/login/')
-@B2B_TOP3_month_which
-def b2b_top3_month(request):
-    pass
+# @login_required(login_url='/login/')
+# @B2B_TOP3_month_which
+# def b2b_top3_month(request):
+#     pass
+#
 
 
+def score(request, year, month):
+    '''
+        业务员数据API  hzyg备份数据库  和 excel读取汇总
+    '''
+    queryset = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year,createDate__month=month).filter(orderStore='101101')
+    queryset_investment = sale_upload.objects.using('investment').filter(createdate__year=year, createdate__month=month).filter(checkif=1)
+    mysqldata = queryset.values('realName').annotate(c=Count('amount'),s=Sum('amount')).values_list('realName','c','s').order_by('-s')
+    # if queryset_investment.
+    mysqldata_investment = queryset_investment.values('salesname').annotate(c=Count('amount'), s=Sum('amount')).values_list('salesname','c', 's')
+    datalist = []
+    # datalist_investment = []
+
+
+    for data in mysqldata:
+        datalist.append({'name': data[0],'count': data[1], 'sum': data[2]})
+    try:
+        for dt in mysqldata_investment:
+            # print(data)
+            tmp_dic = {'name': dt[0],'count': dt[1], 'sum': dt[2]}
+            datalist.append(tmp_dic)
+    except:
+        pass
+
+    keyforname = []
+    dataend = []
+    try:
+        for datanum in range(len(datalist)):
+
+            if str(datalist[datanum]['name']) not in keyforname:
+                keyforname.append(datalist[datanum]['name'])
+                dataend.append(datalist[datanum])
+
+            else:
+                for index in range(len(datalist)):
+                    if index < datanum and datalist[index]['name'] == datalist[datanum]['name']:
+                        dataend[index]['count'] = datalist[index]['count']+datalist[datanum]['count']
+                        dataend[index]['sum'] = datalist[index]['sum']+datalist[datanum]['sum']
+                        break
+        dataend_sort = sorted(dataend, key=operator.itemgetter('sum'), reverse=True)
+
+
+        for x in datalist:
+            x['sum'] = str(x['sum'])
+
+        return HttpResponse(json.dumps(dataend_sort), content_type='application/json')
+    except:
+        return HttpResponse(json.dumps({'result': 'faild lianxiguanliyuan'}), content_type='application/json')
 
 
 

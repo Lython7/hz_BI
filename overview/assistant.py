@@ -154,5 +154,12 @@ class incomeDay(object):
             querysetlist.append(queryset2.filter(Q(orderStore=110101)))
             querysetlist.append(queryset3.filter(Q(storeCode='110101')))
 
+        elif _settings == 18:
+            # 产品部 110107
+            # print(len(queryset1.filter(Q(orderStore='110107'))))
+            querysetlist.append(queryset1.filter(Q(orderStore='101107')))
+            querysetlist.append(queryset2.filter(Q(orderStore=101107)))
+            querysetlist.append(queryset3.filter(Q(storeCode='101107')))
+
         return querysetlist
 
