@@ -278,7 +278,7 @@ def sales_trend(request):
         b2b_order = 0 if tmp[0].aggregate(Sum('amount'))['amount__sum'] == None else tmp[0].aggregate(Sum('amount'))['amount__sum']
         b2b_pos =  0 if tmp[1].aggregate(Sum('amount'))['amount__sum'] == None else tmp[1].aggregate(Sum('amount'))['amount__sum']
         data.append(str(int(b2b_pos+b2b_order)))
-    res['data'] = data.reverse()
+    res['data'] = data[::-1]
     # print(res)
     return JsonResponse(res)
 
