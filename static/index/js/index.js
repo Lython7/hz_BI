@@ -194,7 +194,11 @@ ajax('GET', './views/salestrend/', null, function (res) {
 	var salesTrend = document.getElementById("salesTrend");
 	var datas = {
 		x:data.date,
-		y:data.data
+		y:data.data,
+		dataZoom:{
+			start:0,
+			end:50
+		}
 	}
 	lineChart2(salesTrend, datas, '#8DB9BE');
 });
@@ -204,8 +208,8 @@ function lineChart2(dom, data, col) {
 		zoomLock: true
 	}
 	if (data.dataZoom) {
-		dataZoomData.startValue = data.dataZoom.start;
-		dataZoomData.endValue = data.dataZoom.end;
+		dataZoomData.start = data.dataZoom.start;
+		dataZoomData.end = data.dataZoom.end;
 	}
 	var lineChart = echarts.init(dom);
 	lineChart.setOption({
@@ -223,10 +227,10 @@ function lineChart2(dom, data, col) {
 			}
 		},
 		grid: {
-			left: 30
+			left: 40
 		},
 		dataZoom: [
-		dataZoomData // 滑动
+			dataZoomData // 滑动
 		],
 		series: [{
 			smooth: true, // 曲线平滑
@@ -403,6 +407,10 @@ function rowBar(dom, data) {
 		}]
 	})
 }
+ajax('GET', './views/classify_amount_month/', null, function (res) {
+	var data = JSON.parse(res).data;
+	
+});
 var saleBar = document.getElementById("saleBar"),
 	salesRank = document.getElementById("salesRank");
 rowBar(saleBar, {

@@ -15,6 +15,7 @@ from .assistant import incomeDay
 def ranking(request):
     return render(request, 'index/ranking.html', context={})
 
+@login_required
 def goodscount(request):
     return render(request, 'index/goodscount.html', context={})
 
@@ -284,12 +285,10 @@ def sales_trend(request):
 
         data.append(int(b2b_pos+b2b_order))
 
+    res['data'] = data[::-1]
+    res['date'] = date_ls[::-1]
 
-    # print(date_ls)
-    # print(data)
     # res = dict(zip(date_ls, data))
-    res['data'] = data
-    res['date'] = date_ls
     return JsonResponse(res)
 
 
