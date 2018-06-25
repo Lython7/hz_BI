@@ -287,8 +287,18 @@ def sales_trend(request):
 
     # print(date_ls)
     # print(data)
+<<<<<<< HEAD
+    # res = dict(zip(date_ls, data))
+    res['data'] = data
+    res['date'] = date_ls
+=======
     res = dict(zip(date_ls, data))
     # res['data'] = data[::-1]
+<<<<<<< HEAD
+=======
+>>>>>>> f864253d1e806a0a31bfd810b32a0afd0c607fa3
+>>>>>>> 21b54607d42b129791a69d4cacc743aa9c829829
+>>>>>>> 5e537e51991be40f4f936620cd20b4f00ba8348d
     # print(res)
     return JsonResponse(res)
 
