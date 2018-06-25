@@ -66,16 +66,16 @@ class incomeDay(object):
             querysetlist.append(queryset2.filter(orderStore=101103))
             querysetlist.append(queryset3.filter(storeCode='101103'))
 
-        elif _settings == 4:# 
+        elif _settings == 4:#
             # B2B数据全部                               1010                  1011                         101101                 101102                  1012                      1016                 102101                    103101                   104101                    105101                  106101                   107101                   108101              109101               110101
             querysetlist.append(queryset1.filter(Q(orderStore='1010') | Q(orderStore='1011') | Q(orderStore='101101') | Q(orderStore='101102') | Q(orderStore='1012') | Q(orderStore='1016') | Q(orderStore='102101') | Q(orderStore='103101') | Q(orderStore='104101') | Q(orderStore='105101') | Q(orderStore='106101') | Q(orderStore='107101') | Q(orderStore='108101') | Q(orderStore='109101') | Q(orderStore='110101')))
-            querysetlist.append(queryset2.filter(Q(orderStore=1010)   | Q(orderStore=1011)   | Q(orderStore=101101)   | Q(orderStore=101102)   | Q(orderStore=1012)   | Q(orderStore=1016)   | Q(orderStore=102101)   | Q(orderStore=103101)   | Q(orderStore=104101)   | Q(orderStore=105101)   | Q(orderStore=106101)   | Q(orderStore=107101)   | Q(orderStore=108101)   | Q(orderStore=109101)   | Q(orderStore=110101)))
+            querysetlist.append(queryset2.filter(Q(orderStore=1010)   | Q(orderStore=1011)   |                          Q(orderStore=101102)   | Q(orderStore=1012)   | Q(orderStore=1016)   | Q(orderStore=102101)   | Q(orderStore=103101)   | Q(orderStore=104101)   | Q(orderStore=105101)   | Q(orderStore=106101)   | Q(orderStore=107101)   | Q(orderStore=108101)   | Q(orderStore=109101)   | Q(orderStore=110101)))
             querysetlist.append(queryset3.filter(Q(storeCode='1010')  | Q(storeCode='1011')  | Q(storeCode='101101')  | Q(storeCode='101102')  | Q(storeCode='1012')  | Q(storeCode='1016')  | Q(storeCode='102101')  | Q(storeCode='103101')  | Q(storeCode='104101')  | Q(storeCode='105101')  | Q(storeCode='106101')  | Q(storeCode='107101')  | Q(storeCode='108101')  | Q(storeCode='109101')  | Q(storeCode='110101')))
 
         elif _settings == 15:
             # 直营店1014
             querysetlist.append(queryset1.filter(orderStore='1014'))
-            querysetlist.append(queryset2.filter(orderStore=1014))
+            querysetlist.append(queryset2)
             querysetlist.append(queryset3.filter(storeCode='1014'))
 
 
@@ -94,7 +94,7 @@ class incomeDay(object):
         elif _settings == 5:
             # B2B北京数据                             1010                  1011                         101101                 101102                  1012                      1016
             querysetlist.append(queryset1.filter(Q(orderStore='1010') | Q(orderStore='1011') | Q(orderStore='101101') | Q(orderStore='101102') | Q(orderStore='1012') | Q(orderStore='1016')))
-            querysetlist.append(queryset2.filter(Q(orderStore=1010)   | Q(orderStore=1011)   | Q(orderStore=101101)   | Q(orderStore=101102)   | Q(orderStore=1012)   | Q(orderStore=1016)))
+            querysetlist.append(queryset2.filter(Q(orderStore=1010)   | Q(orderStore=1011)   |                          Q(orderStore=101102)   | Q(orderStore=1012)   | Q(orderStore=1016)))
             querysetlist.append(queryset3.filter(Q(storeCode='1010')  | Q(storeCode='1011')  | Q(storeCode='101101')  | Q(storeCode='101102')  | Q(storeCode='1012')  | Q(storeCode='1016')))
 
         elif _settings == 6:
