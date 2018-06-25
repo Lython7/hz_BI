@@ -262,12 +262,16 @@ def sales_trend(request):
     tmp_ls = []
     tmp_ls.append(queryset_list_month)
     month_l = int(__date[1])
+
+    date_ls = []
+    date_ls.append(str(__date[0][2::])+'.'+str(month_l))
     while len(tmp_ls) < 12:
 
         if month_l-1 > 0:
             tmp_ls.append(incometd._get_queryset_list(request, __date[0], str(month_l-1), None, _settings))
+            date_ls.append(str(__date[0][2::])+'.'+str(month_l-1))
         else:
-            month_l=13
+            month_l=14
             __date[0] = str(int(__date[0])-1)
             # tmp_ls.append(incometd._get_queryset_list(request, str(int(__date[0])-1), str(int(__date[1])-1), None, _settings))
 
@@ -277,8 +281,13 @@ def sales_trend(request):
     for tmp in tmp_ls:
         b2b_order = 0 if tmp[0].aggregate(Sum('amount'))['amount__sum'] == None else tmp[0].aggregate(Sum('amount'))['amount__sum']
         b2b_pos =  0 if tmp[1].aggregate(Sum('amount'))['amount__sum'] == None else tmp[1].aggregate(Sum('amount'))['amount__sum']
-        data.append(str(int(b2b_pos+b2b_order)))
-    res['data'] = data.reverse()
+        data.append(int(b2b_pos+b2b_order))
+
+
+    # print(date_ls)
+    # print(data)
+    res = dict(zip(date_ls, data))
+    # res['data'] = data[::-1]
     # print(res)
     return JsonResponse(res)
 
