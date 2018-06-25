@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'explore',# 前端首页 探索
     'mine',# 前端首页 我的
     'permissions',# 权限设定
+    'investment',# 招商数据上传
 ]
 
 #api框架
@@ -121,7 +122,15 @@ DATABASES = {
         'HOST': '47.92.133.25',
         'PORT': '3306',
         'NAME': 'dxh_b2b',
-    }
+    },
+    'investment': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'hzbl_b2b',
+        'USER': 'investment',
+        'PASSWORD': 'pingtaiyunying@1313113',
+        'HOST': '47.92.133.25',
+        'PORT': '3306',
+    },
 }
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 # 一周
