@@ -146,7 +146,6 @@ function outputdollars(number) {
 	}
 }
 
-var salesTrend = document.getElementById("salesTrend");
 
 function lineChart(dom, data, col) {
 	var dataZoomData = {
@@ -190,6 +189,10 @@ function lineChart(dom, data, col) {
 	})
 }
 
+// ajax('GET', './views/salestrend/', null, function (res) {
+//
+// });
+var salesTrend = document.getElementById("salesTrend");
 var towData = {
 	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
 	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330],
@@ -198,9 +201,72 @@ var towData = {
 		end:5
 	}
 }
-
 lineChart(salesTrend, towData, '#8DB9BE');
 
+ajax('GET', './views/classify_amount_month/', null, function (res) {
+	var data = JSON.parse(res).data;
+});
+categoryPieEcharts();
+function categoryPieEcharts() {
+	var categoryPie = echarts.init(document.getElementById("categoryPie"));
+	categoryPie.setOption({
+		title: {
+			text: '总资产',
+			subtext: '2000000.00',
+			x: 'center',
+			y: '40%'
+		},
+		 tooltip: {
+		     trigger: 'item',
+		     // formatter: "{a} <br/>{b}: {c} ({d}%)"
+			 formatter: "{b}<br/>{c} ({d}%)"
+		 },
+		//  legend: {
+		//      orient: 'vertical',
+		//      x: 'left',
+		//      data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
+		//  },
+		series: [{
+			name: '本月商品分类销售额',
+			type: 'pie',
+			radius: ['50%', '70%'],
+			avoidLabelOverlap: false,
+			hoverAnimation: false, // 悬浮动画效果
+			label: {
+               show: true,
+               formatter: "{b}：{c}({d}%)"
+            },
+			labelLine: {
+                show: true
+            },
+			data: [{
+					value: 335,
+					name: '直接访问'
+				},
+				{
+					value: 310,
+					name: '邮件营销'
+				},
+				{
+					value: 234,
+					name: '联盟广告'
+				},
+				{
+					value: 135,
+					name: '视频广告'
+				},
+				{
+					value: 1548,
+					name: '搜索引擎'
+				}
+			]
+		}]
+	})
+	categoryPie.on('click', function (params) {
+		localStorage.categoryPieName = params.name;
+		window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name), _self);
+	});
+}
 
 
 function channelOrder(dom, data) {
@@ -312,76 +378,4 @@ rowBar(saleBar, {
 rowBar(salesRank, {
 	x: [120, 200, 150],
 	y: ['张金勇', '赵子龙', '秦亮']
-})
-
-var categoryPie = echarts.init(document.getElementById("categoryPie"));
-categoryPie.setOption({
-	title: {
-		text: '总资产',
-		subtext: '2000000.00',
-		x: 'center',
-		y: '40%'
-	},
-	//  tooltip: {
-	//      trigger: 'item',
-	//      formatter: "{a} <br/>{b}: {c} ({d}%)"
-	//  },
-	//  legend: {
-	//      orient: 'vertical',
-	//      x: 'left',
-	//      data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-	//  },
-	series: [{
-		name: '访问来源',
-		type: 'pie',
-		radius: ['50%', '70%'],
-		avoidLabelOverlap: false,
-		hoverAnimation: false, // 悬浮动画效果
-		label: {
-			normal: {
-				show: false,
-				position: 'center'
-			},
-			emphasis: {
-				show: true,
-				textStyle: {
-					fontSize: '30',
-					fontWeight: 'bold'
-				}
-			}
-		},
-		label: {
-
-		},
-		//          labelLine: {
-		//              show: true
-		// normal: {
-		// show: false
-		// }
-		//          },
-		itemStyle: {
-
-		},
-		data: [{
-				value: 335,
-				name: '直接访问'
-			},
-			{
-				value: 310,
-				name: '邮件营销'
-			},
-			{
-				value: 234,
-				name: '联盟广告'
-			},
-			{
-				value: 135,
-				name: '视频广告'
-			},
-			{
-				value: 1548,
-				name: '搜索引擎'
-			}
-		]
-	}]
 })

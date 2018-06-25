@@ -281,14 +281,24 @@ def sales_trend(request):
     for tmp in tmp_ls:
         b2b_order = 0 if tmp[0].aggregate(Sum('amount'))['amount__sum'] == None else tmp[0].aggregate(Sum('amount'))['amount__sum']
         b2b_pos =  0 if tmp[1].aggregate(Sum('amount'))['amount__sum'] == None else tmp[1].aggregate(Sum('amount'))['amount__sum']
+<<<<<<< HEAD
+        data.append(str(int(b2b_pos+b2b_order)))
+    res['data'] = data[::-1]
+=======
         data.append(int(b2b_pos+b2b_order))
 
 
     # print(date_ls)
     # print(data)
+<<<<<<< HEAD
     # res = dict(zip(date_ls, data))
     res['data'] = data
     res['date'] = date_ls
+=======
+    res = dict(zip(date_ls, data))
+    # res['data'] = data[::-1]
+>>>>>>> f864253d1e806a0a31bfd810b32a0afd0c607fa3
+>>>>>>> 21b54607d42b129791a69d4cacc743aa9c829829
     # print(res)
     return JsonResponse(res)
 
