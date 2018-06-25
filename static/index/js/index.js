@@ -205,27 +205,34 @@ lineChart(salesTrend, towData, '#8DB9BE');
 
 ajax('GET', './views/classify_amount_month/', null, function (res) {
 	var data = JSON.parse(res).data;
+	var datas = [],
+		legends=[],
+		sum=0;
+	for (var item in data) {
+		sum+=data[item];
+		legends.push(item);
+		datas.push({
+			value: data[item],
+			name: item
+		})
+	}
+	categoryPieEcharts(datas, sum, legends);
 });
-categoryPieEcharts();
-function categoryPieEcharts() {
+function categoryPieEcharts(datas, sum, legends) {
 	var categoryPie = echarts.init(document.getElementById("categoryPie"));
 	categoryPie.setOption({
 		title: {
-			text: '总资产',
-			subtext: '2000000.00',
+			text: sum,
+			// subtext: '2000000.00',
 			x: 'center',
-			y: '40%'
+			y: 'center'
 		},
-		 tooltip: {
-		     trigger: 'item',
-		     // formatter: "{a} <br/>{b}: {c} ({d}%)"
-			 formatter: "{b}<br/>{c} ({d}%)"
-		 },
-		//  legend: {
-		//      orient: 'vertical',
-		//      x: 'left',
-		//      data:['直接访问','邮件营销','联盟广告','视频广告','搜索引擎']
-		//  },
+		legend: {
+			type: 'scroll',
+			orient: 'vertical',
+			x: 'left',
+			data:legends
+		},
 		series: [{
 			name: '本月商品分类销售额',
 			type: 'pie',
@@ -233,38 +240,18 @@ function categoryPieEcharts() {
 			avoidLabelOverlap: false,
 			hoverAnimation: false, // 悬浮动画效果
 			label: {
-               show: true,
+               show: false,
                formatter: "{b}：{c}({d}%)"
             },
 			labelLine: {
-                show: true
+                show: false
             },
-			data: [{
-					value: 335,
-					name: '直接访问'
-				},
-				{
-					value: 310,
-					name: '邮件营销'
-				},
-				{
-					value: 234,
-					name: '联盟广告'
-				},
-				{
-					value: 135,
-					name: '视频广告'
-				},
-				{
-					value: 1548,
-					name: '搜索引擎'
-				}
-			]
+			data: datas
 		}]
-	})
+	});
 	categoryPie.on('click', function (params) {
 		localStorage.categoryPieName = params.name;
-		window.open('https://www.baidu.com/s?wd=' + encodeURIComponent(params.name), _self);
+		location.href="views/goodscount/";
 	});
 }
 

@@ -285,12 +285,9 @@ def sales_trend(request):
 
         data.append(int(b2b_pos+b2b_order))
 
-
-    # res = dict(zip(date_ls, data))
     res['data'] = data[::-1]
     res['date'] = date_ls[::-1]
 
-    # print(res)
     return JsonResponse(res)
 
 
