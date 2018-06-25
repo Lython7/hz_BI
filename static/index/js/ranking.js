@@ -472,7 +472,6 @@ function ajaxDatas(url_, callback) {
 		type: 'GET',
 		success: function(data, textStatus, jqXHR) {
 			callback(data);
-
 		},
 		error: function(xhr, textStatus) {
 			console.log('错误');

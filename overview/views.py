@@ -40,7 +40,7 @@ def today_income(request):
     b2b_order = 0 if queryset_list[0].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[0].aggregate(Sum('amount'))['amount__sum']
     b2b_pos =  0 if queryset_list[1].aggregate(Sum('amount'))['amount__sum'] == None else queryset_list[1].aggregate(Sum('amount'))['amount__sum']
 
-    res['order_count'] = str(len(queryset_list[0])+len(queryset_list[1].values('orderN').distinct())) ###################################
+    res['order_count'] = str(len(queryset_list[0])+len(queryset_list[1].values('orderNo').distinct())) ###################################
     res['order_amount'] = str(int(b2b_order+b2b_pos)) ###################################
     res['ordered_cust_count'] = str(len(queryset_list[0].values('memberPin').distinct())) ###################################
     res['newreg_count'] = str(len(queryset_list[2])) ###################################
