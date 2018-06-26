@@ -9,7 +9,7 @@ navIndex(index);
 var oBtn = document.getElementById("time-btn"),
 	oShow = document.getElementById("time-show");
 oBtn.onclick = function() {
-	chooseCreate(function(con,res) {
+	chooseCreate(function(con, res) {
         console.log(res);
         oBtn.innerHTML=con;
         oShow.innerHTML=res.start+'~'+res.end;
@@ -37,7 +37,7 @@ var data = [
 		value: 1548,
 		name: '搜索引擎'
 	}
-]
+];
 categoryPieEcharts(data);
 
 function categoryPieEcharts(data) {
