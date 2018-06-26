@@ -1,10 +1,56 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>商品统计</title>
+    {% include 'index/head.html' %}
+    <link rel="stylesheet" type="text/css" href={% static 'index/css/goodscount.css' %}/>
 </head>
 <body>
-商品统计
+{% include 'index/nav.html' %}
+<div class="header">
+			<h1>商品统计</h1>
+			<a class="back" href=""><span class="czs-angle-left-l"></span></a>
+		</div>
+		<div class="container">
+			<div class="categorySaleroom">
+				<div class="tit-head">
+					<div class="title">饮料</div>
+					<div class="time-choose">
+						<span id="time-btn">本月</span>
+						<span id="time-show">2017.10.24~2018.11.22</span>
+					</div>
+				</div>
+				<div class="data-show clearfix">
+					<div class="data-list">
+						<div class="data-tit">销售额</div>
+						<div class="data-value">2015</div>
+					</div>
+					<div class="data-list">
+						<div class="data-tit">销售件数</div>
+						<div class="data-value">263</div>
+					</div>
+				</div>
+				<div id="categoryPie"></div>
+			</div>
+			<div class="ranking">
+				<div class="title">排名</div>
+				<ul id="ranking">
+					<li class="clearfix">
+						<span class="sale-index">1</span>
+						<span class="sale-name">红牛</span>
+						<span class="sale-counts">12354</span>
+					</li>
+					<li class="clearfix">
+						<span class="sale-index">2</span>
+						<span class="sale-name">克隆</span>
+						<span class="sale-counts">5246</span>
+					</li>
+				</ul>
+			</div>
+		</div>
 </body>
+<script src={% static 'index/js/ajax.js' %} type="text/javascript" charset="utf-8"></script>
+<script src={% static 'index/js/goodscount.js' %} type="text/javascript" charset="utf-8"></script>
 </html>

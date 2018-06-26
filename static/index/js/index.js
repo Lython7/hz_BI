@@ -383,6 +383,56 @@ function rowBar(dom, data) {
 	var chart = echarts.init(dom);
 	chart.setOption({
 		yAxis: {
+			type: 'category',
+			data: data.y
+		},
+		xAxis: {
+			type: 'value',
+			show: false,
+			boundaryGap: ['0%', '6%']
+		},
+		grid: {
+			left: 80
+		},
+		series: [{
+			data: data.x,
+			label: { // 让折线图的每个折点都显示对应数值
+				show: true,
+				position: 'right'/*,
+				formatter: function (params) {
+					return (parseInt(params.data/100)/100).toFixed(2) + 'W';
+                }*/
+			},
+			itemStyle: {
+				color: '#4B6F9E'
+			},
+			type: 'bar'
+		}]
+	})
+}
+ajax('GET', './views/region_amount_month/', null, function (res) {
+	var data = JSON.parse(res);
+	var saleBar = document.getElementById("saleBar");
+	var datas={
+		x:[],
+		y:[]
+	}
+	for (var item in data){
+		datas.x.push(data[item]);
+		datas.y.push(item);
+	}
+	rowBar(saleBar, datas);
+});
+
+var salesRank = document.getElementById("salesRank");
+rowBars(salesRank, {
+	x: [120, 200, 150],
+	y: ['张金勇', '赵子龙', '秦亮']
+})
+function rowBars(dom, data) {
+	var chart = echarts.init(dom);
+	chart.setOption({
+		yAxis: {
 //			show: false,
 			type: 'category',
 			data: data.y
@@ -407,17 +457,3 @@ function rowBar(dom, data) {
 		}]
 	})
 }
-ajax('GET', './views/classify_amount_month/', null, function (res) {
-	var data = JSON.parse(res).data;
-	
-});
-var saleBar = document.getElementById("saleBar"),
-	salesRank = document.getElementById("salesRank");
-rowBar(saleBar, {
-	x: [120, 200, 150, 80, 70, 90, 110, 130, 356],
-	y: ['北京', '华北区', '东北区', '北方区', '西北区', '西南区', '华南区', '华东区', '中原区']
-})
-rowBar(salesRank, {
-	x: [120, 200, 150],
-	y: ['张金勇', '赵子龙', '秦亮']
-})
