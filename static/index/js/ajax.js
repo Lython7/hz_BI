@@ -23,7 +23,7 @@ function ajax(method, url, data, success) {
 			if ( xhr.status == 200 ) {
 				success && success(xhr.responseText);
 			} else {
-				alert('出错了,Err：' + xhr.status);
+				console.log('出错了,Err：' + xhr.status);
 			}
 		}
 	}
