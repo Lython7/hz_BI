@@ -99,6 +99,8 @@ TEMPLATES = [
     },
 ]
 
+
+
 WSGI_APPLICATION = 'hz_BI.wsgi.application'
 
 
@@ -132,6 +134,9 @@ DATABASES = {
         'PORT': '3306',
     },
 }
+
+
+CACHE_BACKEND = 'db://mycache'
 
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 7 # 一周
 # SESSION_COOKIE_AGE = 30 # 30s
