@@ -5,6 +5,7 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q, Count
 from django.http import HttpResponse
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
 
 from hzyg.models import *
 from investment.models import sale_upload
@@ -19,6 +20,7 @@ def ranking(request):
 def goodscount(request):
     return render(request, 'index/goodscount.html', context={})
 
+@cache_page(60 * 60)
 # @login_required(login_url='/login/')
 @tdincome_which
 def today_income(request):
@@ -55,6 +57,7 @@ def today_income(request):
 
     return JsonResponse(res)
 
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @sales_amount_which
 def sales_amount(request):
@@ -95,8 +98,9 @@ def sales_amount(request):
 
     return JsonResponse(res)
 
-    # 新增客户数
 
+    # 新增客户数
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @store_count_which
 def store_count(request):
@@ -131,7 +135,7 @@ def store_count(request):
 
 
     # 下单客户数
-
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @orderstore_count_which
 def orderstore_count(request):
@@ -164,8 +168,9 @@ def orderstore_count(request):
 
     return JsonResponse(res)
 
-    # 订单数量
 
+    # 订单数量
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @order_count_which
 def order_count(request):
@@ -200,6 +205,7 @@ def order_count(request):
 
 
 # 本月各渠道销售额
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @channal_salesamount_month_which
 def channal_salesamount_month(request):
@@ -247,6 +253,7 @@ def channal_salesamount_month(request):
     return JsonResponse(res)
 
 # 销售趋势
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @sales_trend_which
 def sales_trend(request):
@@ -293,7 +300,7 @@ def sales_trend(request):
 
 
 
-
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @classify_amount_month_which
 def classify_amount_month(request):
@@ -325,6 +332,7 @@ def classify_amount_month(request):
     return JsonResponse(res)
 
 # 本月区域销售额
+@cache_page(60 * 60)
 @login_required(login_url='/login/')
 @area_salesamount_month_which
 def region_amount_month(request):
@@ -436,7 +444,7 @@ def region_amount_month(request):
 #     pass
 #
 
-
+@cache_page(60 * 60)
 def score(request, year, month):
     '''
         业务员数据API  hzyg备份数据库  和 excel读取汇总
