@@ -92,64 +92,64 @@ class incomeDay(object):
             querysetlist.append(queryset3.filter(storeCode='1201'))
 
         elif _settings == 5:
-            # B2B北京数据                             1010                  1011                         101101                 101102                  1012                      1016
+            # 北京全部数据                             1010                  1011                         101101                 101102                  1012                      1016
             querysetlist.append(queryset1.filter(Q(orderStore='1010') | Q(orderStore='1011') | Q(orderStore='101101') | Q(orderStore='101102') | Q(orderStore='1012') | Q(orderStore='1016')))
-            querysetlist.append(queryset2.filter(Q(orderStore=1010)   | Q(orderStore=1011)   |                          Q(orderStore=101102)   | Q(orderStore=1012)   | Q(orderStore=1016)))
+            querysetlist.append(queryset2.filter(Q(orderStore=1010)   | Q(orderStore=1011)   | Q(orderStore='101101') | Q(orderStore=101102)   | Q(orderStore=1012)   | Q(orderStore=1016)))
             querysetlist.append(queryset3.filter(Q(storeCode='1010')  | Q(storeCode='1011')  | Q(storeCode='101101')  | Q(storeCode='101102')  | Q(storeCode='1012')  | Q(storeCode='1016')))
 
         elif _settings == 6:
-            # b2b华北数据 102101
+            # 华北数据 102101
             querysetlist.append(queryset1.filter(Q(orderStore='102101')))
             querysetlist.append(queryset2.filter(Q(orderStore=102101)))
             querysetlist.append(queryset3.filter(Q(storeCode='102101')))
 
         elif _settings == 7:
-            # b2b双鸭山数据 103101
+            # 双鸭山数据 103101
             querysetlist.append(queryset1.filter(Q(orderStore='103101')))
             querysetlist.append(queryset2.filter(Q(orderStore=103101)))
             querysetlist.append(queryset3.filter(Q(storeCode='103101')))
 
         elif _settings == 8:
-            # b2b东北数据 104101
+            # 东北数据 104101
             querysetlist.append(queryset1.filter(Q(orderStore='104101')))
             querysetlist.append(queryset2.filter(Q(orderStore=104101)))
             querysetlist.append(queryset3.filter(Q(storeCode='104101')))
 
         elif _settings == 9:
-            # b2b华南数据 105101
+            # 华南数据 105101
             querysetlist.append(queryset1.filter(Q(orderStore='105101')))
             querysetlist.append(queryset2.filter(Q(orderStore=105101)))
             querysetlist.append(queryset3.filter(Q(storeCode='105101')))
 
 
         elif _settings == 10:
-            # b2b西南数据 106101
+            # 西南数据 106101
             querysetlist.append(queryset1.filter(Q(orderStore='106101')))
             querysetlist.append(queryset2.filter(Q(orderStore=106101)))
             querysetlist.append(queryset3.filter(Q(storeCode='106101')))
 
         elif _settings == 11:
-            # b2b北方数据 107101
+            # 北方数据 107101
             querysetlist.append(queryset1.filter(Q(orderStore='107101')))
             querysetlist.append(queryset2.filter(Q(orderStore=107101)))
             querysetlist.append(queryset3.filter(Q(storeCode='107101')))
 
 
         elif _settings == 12:
-            # b2b华东数据 108101
+            # 华东数据 108101
             querysetlist.append(queryset1.filter(Q(orderStore='108101')))
             querysetlist.append(queryset2.filter(Q(orderStore=108101)))
             querysetlist.append(queryset3.filter(Q(storeCode='108101')))
 
         elif _settings == 13:
-            # b2b西北数据 109101
+            # 西北数据 109101
             querysetlist.append(queryset1.filter(Q(orderStore='109101')))
             querysetlist.append(queryset2.filter(Q(orderStore=109101)))
             querysetlist.append(queryset3.filter(Q(storeCode='109101')))
 
 
         elif _settings == 14:
-            # b2b中原数据 110101
+            # 中原数据 110101
             querysetlist.append(queryset1.filter(Q(orderStore='110101')))
             querysetlist.append(queryset2.filter(Q(orderStore=110101)))
             querysetlist.append(queryset3.filter(Q(storeCode='110101')))

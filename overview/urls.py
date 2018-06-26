@@ -14,7 +14,7 @@ urlpatterns = [
     url(r'^classify_amount_month/', views.classify_amount_month, name='classify_amount_month'), # 月销售商品分类
 
     url(r'^region_amount_month/', views.region_amount_month, name='region_amount_month'), # 月区域销售额排名
-    url(r'^score/(?P<year>.+)/(?P<month>.+)', views.score, name='score'), # 销售人员额排名
+    url(r'^score/(?P<year>.+)/(?P<month>.+)/', views.score, name='score'), # 销售人员额排名
 
 
     url(r'^ranking/', views.ranking, name='ranking'), # 业绩排名link
