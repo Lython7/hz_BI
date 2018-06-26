@@ -288,6 +288,7 @@ def sales_trend(request):
     res['data'] = data[::-1]
     res['date'] = date_ls[::-1]
 
+    # res = dict(zip(date_ls, data))
     return JsonResponse(res)
 
 

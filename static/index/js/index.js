@@ -167,7 +167,7 @@ function lineChart(dom, data, col) {
 			type: 'value'
 		},
 		grid: {
-			left: 50
+			left: 60
 		},
 		dataZoom: [
 		dataZoomData // 滑动
@@ -189,19 +189,70 @@ function lineChart(dom, data, col) {
 	})
 }
 
-// ajax('GET', './views/salestrend/', null, function (res) {
-//
-// });
-var salesTrend = document.getElementById("salesTrend");
-var towData = {
-	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330],
-	dataZoom: {
-		start:0,
-		end:5
+ajax('GET', './views/salestrend/', null, function (res) {
+	var data = JSON.parse(res);
+	var salesTrend = document.getElementById("salesTrend");
+	var datas = {
+		x:data.date,
+		y:data.data,
+		dataZoom:{
+			start:0,
+			end:50
+		}
 	}
+	lineChart2(salesTrend, datas, '#8DB9BE');
+});
+function lineChart2(dom, data, col) {
+	var dataZoomData = {
+		type: 'inside',
+		zoomLock: true
+	}
+	if (data.dataZoom) {
+		dataZoomData.start = data.dataZoom.start;
+		dataZoomData.end = data.dataZoom.end;
+	}
+	var lineChart = echarts.init(dom);
+	lineChart.setOption({
+		xAxis: {
+			type: 'category',
+			boundaryGap: false,
+			data: data.x
+		},
+		yAxis: {
+			type: 'value',
+			axisLabel: {
+				formatter: function(val){
+					return val/10000+'W';
+				}
+			}
+		},
+		grid: {
+			left: 40
+		},
+		dataZoom: [
+			dataZoomData // 滑动
+		],
+		series: [{
+			smooth: true, // 曲线平滑
+			itemStyle: { // 让折线图的每个折点都显示对应数值
+				normal: {
+					label: {
+						show: true
+					},
+					color: col
+				}
+			},
+			data: data.y,
+			type: 'line',
+			areaStyle: {}
+		}]
+	})
 }
-lineChart(salesTrend, towData, '#8DB9BE');
+// var towData = {
+// 	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
+// 	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330]
+// }
+// lineChart(salesTrend, towData, '#8DB9BE');
 
 ajax('GET', './views/classify_amount_month/', null, function (res) {
 	var data = JSON.parse(res).data;
@@ -356,6 +407,10 @@ function rowBar(dom, data) {
 		}]
 	})
 }
+ajax('GET', './views/classify_amount_month/', null, function (res) {
+	var data = JSON.parse(res).data;
+	
+});
 var saleBar = document.getElementById("saleBar"),
 	salesRank = document.getElementById("salesRank");
 rowBar(saleBar, {
