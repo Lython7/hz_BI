@@ -6,12 +6,16 @@
     <title>商品统计</title>
     {% include 'index/head.html' %}
     <link rel="stylesheet" type="text/css" href={% static 'index/css/goodscount.css' %}/>
+    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
+    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/lcalendars.css' %}/>
+    <script src={% static 'index/lcalendar/LCalendar.js' %} type="text/javascript" charset="utf-8"></script>
+    <script src={% static 'index/lcalendar/lcalendars.js' %} type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 {% include 'index/nav.html' %}
 <div class="header">
 			<h1>商品统计</h1>
-			<a class="back" href=""><span class="czs-angle-left-l"></span></a>
+			<a class="back" href="javascript:history.back()"><span class="czs-angle-left-l"></span></a>
 		</div>
 		<div class="container">
 			<div class="categorySaleroom">
@@ -22,7 +26,7 @@
 						<span id="time-show">2017.10.24~2018.11.22</span>
 					</div>
 				</div>
-				<div class="data-show clearfix">
+				{% comment %}<div class="data-show clearfix">
 					<div class="data-list">
 						<div class="data-tit">销售额</div>
 						<div class="data-value">2015</div>
@@ -31,7 +35,7 @@
 						<div class="data-tit">销售件数</div>
 						<div class="data-value">263</div>
 					</div>
-				</div>
+				</div>{% endcomment %}
 				<div id="categoryPie"></div>
 			</div>
 			<div class="ranking">

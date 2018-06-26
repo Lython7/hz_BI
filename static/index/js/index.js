@@ -301,6 +301,7 @@ function categoryPieEcharts(datas, sum, legends) {
 		}]
 	});
 	categoryPie.on('click', function (params) {
+		sessionStorage.tabIndex=0;
 		localStorage.categoryPieName = params.name;
 		location.href="views/goodscount/";
 	});

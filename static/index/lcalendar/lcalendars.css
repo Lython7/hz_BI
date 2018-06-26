@@ -1,0 +1,88 @@
+.choose-box {
+	position: fixed;
+	top: 0;
+	left: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 1000;
+	overflow: hidden;
+	background-color: rgba(0, 0, 0, 0.2);
+}
+
+.choose-box .choose-data {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	z-index: 1005;
+	width: 100%;
+	max-height: 100%;
+	overflow: auto;
+	background-color: #fff;
+	color: #000;
+	text-align: center;
+	font-size: 14px;
+}
+
+.choose-box .choose-data li,
+.choose-box .choose-data div {
+	width: 100%;
+	height: 36px;
+	line-height: 36px;
+	border-top: 1px solid #ddd;
+}
+
+.choose-box .choose-data .cancel-btn {
+	color: #888;
+}
+
+
+/*自定义时间框*/
+
+#definedBox {
+	width: 100%;
+	height: 100%;
+	background-color: rgba(0, 0, 0, 0.2);
+	position: fixed;
+	top: 0;
+	left: 0;
+	z-index: 20;
+}
+
+#definedBox .select_date {
+	border-bottom: 1px solid darkgray;
+	height: 36px;
+	background-color: #fff;
+	line-height: 36px;
+	padding: 0 4px;
+	font-size: 16px;
+}
+
+#definedBox .date_tit,
+#definedBox .date_right {
+	float: left;
+	width: 50%;
+	height: 100%;
+}
+
+#definedBox input {
+	background: transparent;
+	border: none;
+	color: #666666;
+	font-size: 14px;
+	text-align: right;
+}
+
+#definedBox a {
+	height: 100%;
+	padding: 0 4%;
+}
+
+a#sele_cancel {
+	float: left;
+	color: #888888;
+}
+
+a#sele_confirm {
+	float: right;
+	color: #333;
+}
