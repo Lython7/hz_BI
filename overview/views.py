@@ -1,12 +1,14 @@
 import json
 import operator
 
+from datetime import datetime
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum, Q, Count
 from django.http import HttpResponse
 from django.shortcuts import render
 from django.views.decorators.cache import cache_page
 
+from hz_BI.settings import CACHE_TIME
 from hzyg.models import *
 from investment.models import sale_upload
 from permissions.decorator import *
@@ -20,7 +22,7 @@ def ranking(request):
 def goodscount(request):
     return render(request, 'index/goodscount.html', context={})
 
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 # @login_required(login_url='/login/')
 @tdincome_which
 def today_income(request):
@@ -57,7 +59,7 @@ def today_income(request):
 
     return JsonResponse(res)
 
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @sales_amount_which
 def sales_amount(request):
@@ -100,7 +102,7 @@ def sales_amount(request):
 
 
     # 新增客户数
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @store_count_which
 def store_count(request):
@@ -135,7 +137,7 @@ def store_count(request):
 
 
     # 下单客户数
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @orderstore_count_which
 def orderstore_count(request):
@@ -170,7 +172,7 @@ def orderstore_count(request):
 
 
     # 订单数量
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @order_count_which
 def order_count(request):
@@ -205,7 +207,7 @@ def order_count(request):
 
 
 # 本月各渠道销售额
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @channal_salesamount_month_which
 def channal_salesamount_month(request):
@@ -253,7 +255,7 @@ def channal_salesamount_month(request):
     return JsonResponse(res)
 
 # 销售趋势
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @sales_trend_which
 def sales_trend(request):
@@ -300,7 +302,7 @@ def sales_trend(request):
 
 
 
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @classify_amount_month_which
 def classify_amount_month(request):
@@ -332,7 +334,7 @@ def classify_amount_month(request):
     return JsonResponse(res)
 
 # 本月区域销售额
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @area_salesamount_month_which
 def region_amount_month(request):
@@ -444,7 +446,7 @@ def region_amount_month(request):
 #     pass
 #
 
-@cache_page(60 * 60)
+@cache_page(CACHE_TIME)
 def score(request, year, month):
     '''
         业务员数据API  hzyg备份数据库  和 excel读取汇总
@@ -493,6 +495,82 @@ def score(request, year, month):
     except:
         return HttpResponse(json.dumps({'result': 'faild lianxiguanliyuan'}), content_type='application/json')
 
+@cache_page(CACHE_TIME)
+def goodscount_2(request):
+    if request.method == 'GET':
+        res = {}
+
+        incometd = incomeDay()
+        date_list = incometd._get_today()
+        try:
+            classify = request.GET.get('classify', None)
+        except:
+            classify = '饮料'
+
+        lyear = int(request.GET.get('lyear', date_list[0]))
+        lmonth = int(request.GET.get('lmonth', date_list[1]))
+        lday = int(request.GET.get('lday', '1'))
+        ryear = int(request.GET.get('ryear', date_list[0]))
+        rmonth = int(request.GET.get('rmonth', date_list[1]))
+        rday = int(request.GET.get('rday', date_list[2]))
+
+
+        queryset_pos =  b2b_posgoods.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
+                                                                  createDate__lte=datetime(ryear, rmonth, rday+1),
+                                                                  secondIcatName=classify,
+                                                               )
+        queryset_goodstb = b2b_goodstable.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
+                                                    createDate__lte=datetime(ryear, rmonth, rday+1),
+                                                    secondIcatName=classify,
+                                                    )
+
+
+
+
+        data_pos = queryset_pos.values('skuName').annotate(Sum('amount'))
+
+        data_goodstb = queryset_goodstb.values('skuName').annotate(Sum('amount'))
+
+        # count_pos = queryset_pos.aggregate(Sum('skuNum'))
+        # count_goodstb = queryset_goodstb.aggregate(Sum('skuNum'))
+        # print(count_pos)
+
+        if classify == None:
+            return JsonResponse({'res': 'failed'})
+
+
+
+        goodstb_dic = {}
+        pos_dic = {}
+        try:
+            for data in list(data_goodstb):
+                # goodstb_ls.append({data['skuName'] : int(data['amount__sum'])})
+                goodstb_dic[data['skuName']] = data['amount__sum']
+        except:
+            pass
+        try:
+            for data1 in list(data_pos):
+                pos_dic[data1['skuName']] = data1['amount__sum']
+        except:
+            pass
+
+        X, Y = Counter(goodstb_dic), Counter(pos_dic)
+        Z = dict(X + Y)
+        ret = sorted(Z.items(),key = lambda x:x[1],reverse = True)
+        print(ret)
+        recv = {}
+        for i in range(len(ret)):
+            recv[ret[i][0]] = ret[i][1]
+
+        sum = 0
+        for i in recv.values():
+            sum = sum + i
+
+        res['amount'] = int(sum)
+        res['data'] = recv
+        # res['count'] = int(count_pos['skuNum__sum'])+int(count_goodstb['skuNum__sum'])
+
+        return JsonResponse(res)
 
 
 

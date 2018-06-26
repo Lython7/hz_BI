@@ -20,6 +20,8 @@ urlpatterns = [
     url(r'^ranking/', views.ranking, name='ranking'), # 业绩排名link
     url(r'^goodscount/', views.goodscount, name='goodscount'), # 商品统计link
 
+    url(r'^goodscount_2/', views.goodscount_2, name='goodscount_2'), # 商品统计次级页面数据
+
     # url(r'sendsms/(?P<cellphone>\d{11})$', demo_sms_send.send_sms, name='sendsms'),
 
 ]
