@@ -424,36 +424,24 @@ ajax('GET', './views/region_amount_month/', null, function (res) {
 	rowBar(saleBar, datas);
 });
 
-var salesRank = document.getElementById("salesRank");
-rowBars(salesRank, {
-	x: [120, 200, 150],
-	y: ['张金勇', '赵子龙', '秦亮']
-})
-function rowBars(dom, data) {
-	var chart = echarts.init(dom);
-	chart.setOption({
-		yAxis: {
-//			show: false,
-			type: 'category',
-			data: data.y
-		},
-		xAxis: {
-			type: 'value',
-			show: false
-		},
-		grid: {
-			left: 50
-		},
-		series: [{
-			data: data.x,
-			label: { // 让折线图的每个折点都显示对应数值
-				show: true,
-				position: 'right'
-			},
-			itemStyle: {
-				color: '#4B6F9E'
-			},
-			type: 'bar'
-		}]
-	})
-}
+
+
+
+var dateNow = new Date();
+var year_=dateNow.getFullYear(),month_=dateNow.getMonth()+1;
+ajax('GET', './views/score/'+year_+'/'+month_, null, function (res) {
+	// var data = JSON.parse(res).splice(0,3); // 返回删除的数组项目
+	var data = JSON.parse(res);
+	var salesRank = document.getElementById("salesRank");
+	var datas={
+		x:[],
+		y:[]
+	}
+	for (var i=0; i<3; i++){
+		datas.x.push(parseInt(data[i].sum));
+		datas.y.push(data[i].name);
+	}
+	datas.x.reverse();
+	datas.y.reverse();
+	rowBar(salesRank, datas);
+});
