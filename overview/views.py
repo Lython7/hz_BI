@@ -503,7 +503,7 @@ def goodscount_2(request):
         incometd = incomeDay()
         date_list = incometd._get_today()
         try:
-            classify = request.GET.get('classify', None)
+            classify = request.GET.get('classify', '饮料')
         except:
             classify = '饮料'
 
@@ -538,8 +538,6 @@ def goodscount_2(request):
         if classify == None:
             return JsonResponse({'res': 'failed'})
 
-
-
         goodstb_dic = {}
         pos_dic = {}
         try:
@@ -557,17 +555,27 @@ def goodscount_2(request):
         X, Y = Counter(goodstb_dic), Counter(pos_dic)
         Z = dict(X + Y)
         ret = sorted(Z.items(),key = lambda x:x[1],reverse = True)
-        print(ret)
+
+        # print(ret)
+
+        recvs = {}
+        for i in range(len(ret[0:5])):
+            recvs[ret[i][0]] = int(ret[i][1])
+
+        sums = 0
+        for i in recvs.values():
+            sums = sums + i
+
         recv = {}
         for i in range(len(ret)):
-            recv[ret[i][0]] = ret[i][1]
+            recv[ret[i][0]] = int(ret[i][1])
 
         sum = 0
         for i in recv.values():
             sum = sum + i
-
+        recvs['其它'] = int(sum) - int(sums)
         res['amount'] = int(sum)
-        res['data'] = recv
+        res['data'] = recvs
         # res['count'] = int(count_pos['skuNum__sum'])+int(count_goodstb['skuNum__sum'])
 
         return JsonResponse(res)
