@@ -352,58 +352,58 @@ def region_amount_month(request):
     b2bbeijing = incometd._get_queryset_list(request, __date[0], __date[1], None, 5)
     b2bbeijing_order = 0 if b2bbeijing[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeijing[0].aggregate(Sum('amount'))['amount__sum']
     b2bbeijing_pos =  0 if b2bbeijing[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeijing[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b北京'] = int(b2bbeijing_order+b2bbeijing_pos)########
+    res['北京区域'] = int(b2bbeijing_order+b2bbeijing_pos)########
 
 
     b2bhuabei = incometd._get_queryset_list(request, __date[0], __date[1], None, 6)
     b2bhuabei_order = 0 if b2bhuabei[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuabei[0].aggregate(Sum('amount'))['amount__sum']
     b2bhuabei_pos =  0 if b2bhuabei[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuabei[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b华北大区'] = int(b2bhuabei_order+b2bhuabei_pos)########
+    res['华北大区'] = int(b2bhuabei_order+b2bhuabei_pos)########
 
     b2bshuangyashan = incometd._get_queryset_list(request, __date[0], __date[1], None, 7)
     b2bshuangyashan_order = 0 if b2bshuangyashan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bshuangyashan[0].aggregate(Sum('amount'))['amount__sum']
     b2bshuangyashan_pos =  0 if b2bshuangyashan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bshuangyashan[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b双鸭山'] = int(b2bshuangyashan_order+b2bshuangyashan_pos)########
+    res['双鸭山区域'] = int(b2bshuangyashan_order+b2bshuangyashan_pos)########
 
     b2bdongbei = incometd._get_queryset_list(request, __date[0], __date[1], None, 8)
     b2bdongbei_order = 0 if b2bdongbei[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bdongbei[0].aggregate(Sum('amount'))['amount__sum']
     b2bdongbei_pos =  0 if b2bdongbei[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bdongbei[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b东北大区'] = int(b2bdongbei_order+b2bdongbei_pos)########
+    res['东北大区'] = int(b2bdongbei_order+b2bdongbei_pos)########
 
     b2bhuanan = incometd._get_queryset_list(request, __date[0], __date[1], None, 9)
     b2bhuanan_order = 0 if b2bhuanan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuanan[0].aggregate(Sum('amount'))['amount__sum']
     b2bhuanan_pos =  0 if b2bhuanan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuanan[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b华南大区'] = int(b2bhuanan_order+b2bhuanan_pos)########
+    res['华南大区'] = int(b2bhuanan_order+b2bhuanan_pos)########
 
     b2bxinan = incometd._get_queryset_list(request, __date[0], __date[1], None, 10)
     b2bxinan_order = 0 if b2bxinan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bxinan[0].aggregate(Sum('amount'))['amount__sum']
     b2bxinan_pos =  0 if b2bxinan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bxinan[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b西南大区'] = int(b2bxinan_order+b2bxinan_pos)########
+    res['西南大区'] = int(b2bxinan_order+b2bxinan_pos)########
 
     b2bbeifang = incometd._get_queryset_list(request, __date[0], __date[1], None, 11)
     b2bbeifang_order = 0 if b2bbeifang[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeifang[0].aggregate(Sum('amount'))['amount__sum']
     b2bbeifang_pos =  0 if b2bbeifang[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bbeifang[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b北方大区'] = int(b2bbeifang_order+b2bbeifang_pos)########
+    res['北方大区'] = int(b2bbeifang_order+b2bbeifang_pos)########
 
     b2bhuadong = incometd._get_queryset_list(request, __date[0], __date[1], None, 12)
     b2bhuadong_order = 0 if b2bhuadong[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuadong[0].aggregate(Sum('amount'))['amount__sum']
     b2bhuadong_pos =  0 if b2bhuadong[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bhuadong[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b华东大区'] = int(b2bhuadong_order+b2bhuadong_pos)########
+    res['华东大区'] = int(b2bhuadong_order+b2bhuadong_pos)########
 
     b2bxibei = incometd._get_queryset_list(request, __date[0], __date[1], None, 13)
     b2bxibei_order = 0 if b2bxibei[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bxibei[0].aggregate(Sum('amount'))['amount__sum']
     b2bxibei_pos =  0 if b2bxibei[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bxibei[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b西北大区'] = int(b2bxibei_order+b2bxibei_pos)########
+    res['西北大区'] = int(b2bxibei_order+b2bxibei_pos)########
 
     b2bzhongyuan = incometd._get_queryset_list(request, __date[0], __date[1], None, 14)
     b2bzhongyuan_order = 0 if b2bzhongyuan[0].aggregate(Sum('amount'))['amount__sum'] == None else b2bzhongyuan[0].aggregate(Sum('amount'))['amount__sum']
     b2bzhongyuan_pos =  0 if b2bzhongyuan[1].aggregate(Sum('amount'))['amount__sum'] == None else b2bzhongyuan[1].aggregate(Sum('amount'))['amount__sum']
-    res['b2b中原大区'] = int(b2bzhongyuan_order+b2bzhongyuan_pos)########
+    res['中原大区'] = int(b2bzhongyuan_order+b2bzhongyuan_pos)########
 
-    zhiyingdian = incometd._get_queryset_list(request, __date[0], __date[1], None, 15)
-    zhiyingdian_order = 0 if zhiyingdian[0].aggregate(Sum('amount'))['amount__sum'] == None else zhiyingdian[0].aggregate(Sum('amount'))['amount__sum']
-    zhiyingdian_pos =  0 if zhiyingdian[1].aggregate(Sum('amount'))['amount__sum'] == None else zhiyingdian[1].aggregate(Sum('amount'))['amount__sum']
-    res['直营店'] = int(zhiyingdian_order+zhiyingdian_pos)########
+    # zhiyingdian = incometd._get_queryset_list(request, __date[0], __date[1], None, 15)
+    # zhiyingdian_order = 0 if zhiyingdian[0].aggregate(Sum('amount'))['amount__sum'] == None else zhiyingdian[0].aggregate(Sum('amount'))['amount__sum']
+    # zhiyingdian_pos =  0 if zhiyingdian[1].aggregate(Sum('amount'))['amount__sum'] == None else zhiyingdian[1].aggregate(Sum('amount'))['amount__sum']
+    # res['直营店'] = int(zhiyingdian_order+zhiyingdian_pos)########
 
     hezhongnongye = incometd._get_queryset_list(request, __date[0], __date[1], None, 16)
     hezhongnongye_order = 0 if hezhongnongye[0].aggregate(Sum('amount'))['amount__sum'] == None else hezhongnongye[0].aggregate(Sum('amount'))['amount__sum']
