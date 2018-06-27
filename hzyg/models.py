@@ -22,6 +22,9 @@ class b2b_goodstable(models.Model):
     supName = models.CharField(max_length=64)
     orderStatus = models.IntegerField(null=True)
     payMode = models.IntegerField(null=True)
+    stockUnit = models.CharField(max_length=40)
+    realSaleStockUnit = models.DecimalField(max_digits=30, decimal_places=2)
+    regionCode = models.CharField(max_length=32)
 
     class Meta:
         db_table = 'b2b_goodstable'
@@ -46,6 +49,7 @@ class b2b_ordertable(models.Model):
     realName = models.CharField(max_length=32, verbose_name='用户姓名')
     orderStatus = models.IntegerField(null=True)
     payMode = models.IntegerField(null=True)
+    regionCode = models.CharField(max_length=32)
 
     # id = models.AutoField(primary_key=True)
     class Meta:
@@ -65,7 +69,9 @@ class b2b_posgoods(models.Model):
     skuNum = models.DecimalField(max_digits=22, decimal_places=5)
     saleUnit = models.CharField(max_length=40)
     amount = models.DecimalField(max_digits=22, decimal_places=5, verbose_name='数量')
-    realPayAmount = models.DecimalField(max_digits=22, decimal_places=5)
+    orderAmount = models.DecimalField(max_digits=22, decimal_places=5)
+    stockUnit = models.CharField(max_length=40)
+    realSaleStockUnit = models.DecimalField(max_digits=20, decimal_places=2)# 最小单位
 
     class Meta:
         db_table = 'b2b_posgoods'
