@@ -503,10 +503,11 @@ def goodscount_2(request):
         incometd = incomeDay()
         date_list = incometd._get_today()
         try:
-            classify = request.GET.get('classify', '饮料')
+            classify = request.GET.get('classify', None)
         except:
-            classify = '饮料'
-
+            classify = None
+        if classify == None:
+            return JsonResponse({'res':'no classify'})
         lyear = int(request.GET.get('lyear', date_list[0]))
         lmonth = int(request.GET.get('lmonth', date_list[1]))
         lday = int(request.GET.get('lday', '1'))
