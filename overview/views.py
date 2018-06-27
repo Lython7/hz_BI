@@ -302,7 +302,7 @@ def sales_trend(request):
 
 
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @classify_amount_month_which
 def classify_amount_month(request):
@@ -332,6 +332,93 @@ def classify_amount_month(request):
     res['data'] = dict(X + Y)
 
     return JsonResponse(res)
+
+
+# @cache_page(CACHE_TIME)
+def goodscount_2(request):
+    if request.method == 'GET':
+        res = {}
+
+        incometd = incomeDay()
+        date_list = incometd._get_today()
+        try:
+            classify = request.GET.get('classify', None)
+        except:
+            classify = None
+        if classify == None:
+            return JsonResponse({'res':'no classify'})
+        lyear = int(request.GET.get('lyear', date_list[0]))
+        lmonth = int(request.GET.get('lmonth', date_list[1]))
+        lday = int(request.GET.get('lday', '1'))
+        ryear = int(request.GET.get('ryear', date_list[0]))
+        rmonth = int(request.GET.get('rmonth', date_list[1]))
+        rday = int(request.GET.get('rday', date_list[2]))
+
+
+        queryset_pos =  b2b_posgoods.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
+                                                                  createDate__lte=datetime(ryear, rmonth, rday),
+                                                                  secondIcatName=classify,
+                                                                  )
+        queryset_goodstb = b2b_goodstable.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
+                                                                       createDate__lte=datetime(ryear, rmonth, rday),
+                                                                       secondIcatName=classify,
+                                                                       )
+
+
+
+
+        data_pos = queryset_pos.values('skuName').annotate(Sum('amount'))
+
+        data_goodstb = queryset_goodstb.values('skuName').annotate(Sum('amount'))
+
+        # count_pos = queryset_pos.aggregate(Sum('skuNum'))
+        # count_goodstb = queryset_goodstb.aggregate(Sum('skuNum'))
+        # print(count_pos)
+
+        if classify == None:
+            return JsonResponse({'res': 'failed'})
+
+        goodstb_dic = {}
+        pos_dic = {}
+        try:
+            for data in list(data_goodstb):
+                # goodstb_ls.append({data['skuName'] : int(data['amount__sum'])})
+                goodstb_dic[data['skuName']] = data['amount__sum']
+        except:
+            pass
+        try:
+            for data1 in list(data_pos):
+                pos_dic[data1['skuName']] = data1['amount__sum']
+        except:
+            pass
+
+        X, Y = Counter(goodstb_dic), Counter(pos_dic)
+        Z = dict(X + Y)
+        ret = sorted(Z.items(),key = lambda x:x[1],reverse = True)
+
+        # print(ret)
+
+        recvs = {}
+        for i in range(len(ret[0:5])):
+            recvs[ret[i][0]] = int(ret[i][1])
+
+        sums = 0
+        for i in recvs.values():
+            sums = sums + i
+
+        recv = {}
+        for i in range(len(ret)):
+            recv[ret[i][0]] = ret[i][1]
+
+        sum = 0
+        for i in recv.values():
+            sum = sum + i
+        recvs['其它'] = int(sum) - int(sums)
+        res['amount'] = int(sum)
+        res['data'] = recvs
+        # res['count'] = int(count_pos['skuNum__sum'])+int(count_goodstb['skuNum__sum'])
+
+        return JsonResponse(res)
 
 # 本月区域销售额
 @cache_page(CACHE_TIME)
@@ -495,91 +582,7 @@ def score(request, year, month):
     except:
         return HttpResponse(json.dumps({'result': 'faild lianxiguanliyuan'}), content_type='application/json')
 
-# @cache_page(CACHE_TIME)
-def goodscount_2(request):
-    if request.method == 'GET':
-        res = {}
 
-        incometd = incomeDay()
-        date_list = incometd._get_today()
-        try:
-            classify = request.GET.get('classify', None)
-        except:
-            classify = None
-        if classify == None:
-            return JsonResponse({'res':'no classify'})
-        lyear = int(request.GET.get('lyear', date_list[0]))
-        lmonth = int(request.GET.get('lmonth', date_list[1]))
-        lday = int(request.GET.get('lday', '1'))
-        ryear = int(request.GET.get('ryear', date_list[0]))
-        rmonth = int(request.GET.get('rmonth', date_list[1]))
-        rday = int(request.GET.get('rday', date_list[2]))
-
-
-        queryset_pos =  b2b_posgoods.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
-                                                                  createDate__lte=datetime(ryear, rmonth, rday+1),
-                                                                  secondIcatName=classify,
-                                                               )
-        queryset_goodstb = b2b_goodstable.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
-                                                    createDate__lte=datetime(ryear, rmonth, rday+1),
-                                                    secondIcatName=classify,
-                                                    )
-
-
-
-
-        data_pos = queryset_pos.values('skuName').annotate(Sum('amount'))
-
-        data_goodstb = queryset_goodstb.values('skuName').annotate(Sum('amount'))
-
-        # count_pos = queryset_pos.aggregate(Sum('skuNum'))
-        # count_goodstb = queryset_goodstb.aggregate(Sum('skuNum'))
-        # print(count_pos)
-
-        if classify == None:
-            return JsonResponse({'res': 'failed'})
-
-        goodstb_dic = {}
-        pos_dic = {}
-        try:
-            for data in list(data_goodstb):
-                # goodstb_ls.append({data['skuName'] : int(data['amount__sum'])})
-                goodstb_dic[data['skuName']] = data['amount__sum']
-        except:
-            pass
-        try:
-            for data1 in list(data_pos):
-                pos_dic[data1['skuName']] = data1['amount__sum']
-        except:
-            pass
-
-        X, Y = Counter(goodstb_dic), Counter(pos_dic)
-        Z = dict(X + Y)
-        ret = sorted(Z.items(),key = lambda x:x[1],reverse = True)
-
-        # print(ret)
-
-        recvs = {}
-        for i in range(len(ret[0:5])):
-            recvs[ret[i][0]] = int(ret[i][1])
-
-        sums = 0
-        for i in recvs.values():
-            sums = sums + i
-
-        recv = {}
-        for i in range(len(ret)):
-            recv[ret[i][0]] = int(ret[i][1])
-
-        sum = 0
-        for i in recv.values():
-            sum = sum + i
-        recvs['其它'] = int(sum) - int(sums)
-        res['amount'] = int(sum)
-        res['data'] = recvs
-        # res['count'] = int(count_pos['skuNum__sum'])+int(count_goodstb['skuNum__sum'])
-
-        return JsonResponse(res)
 
 
 
