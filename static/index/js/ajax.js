@@ -6,7 +6,7 @@ function ajax(method, url, data, success) {
 		xhr = new ActiveXObject('Microsoft.XMLHTTP');
 	}
 	
-	if (method == 'get' && data) {
+	if (method.toLowerCase() == 'get' && data) {
 		url += '?' + data;
 	}
 	
