@@ -495,7 +495,7 @@ def score(request, year, month):
     except:
         return HttpResponse(json.dumps({'result': 'faild lianxiguanliyuan'}), content_type='application/json')
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 def goodscount_2(request):
     if request.method == 'GET':
         res = {}
