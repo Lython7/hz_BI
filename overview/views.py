@@ -22,7 +22,7 @@ def ranking(request):
 def goodscount(request):
     return render(request, 'index/goodscount.html', context={})
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 # @login_required(login_url='/login/')
 @tdincome_which
 def today_income(request):

@@ -78,6 +78,7 @@ def doLogin(request):
                 # 将USER相关权限写入session
                 try:
                     request.session['settings'] = model_to_dict(Show_overview.objects.get(user=user))
+                    request.session['ucellphone'] = Uprofile.objects.get(user=user).ucellphone
                 # request.session.set_expiry(60000)
                 except:
                     request.session['settings'] = {}
