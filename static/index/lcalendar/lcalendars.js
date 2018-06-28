@@ -93,12 +93,12 @@ function chooseCreate(callback) {
 		dates.innerHTML = ht;
 		sele_lCalendar({
 			id: 'start_date',
-			min: 2015 + '-' + 1 + '-' + 1,
+			min: 2017 + '-' + 8 + '-' + 29,
 			max: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
 		});
 		sele_lCalendar({
 			id: 'end_date',
-			min: 2015 + '-' + 1 + '-' + 1,
+			min: 2017 + '-' + 8 + '-' + 29,
 			max: new Date().getFullYear() + '-' + (new Date().getMonth() + 1) + '-' + new Date().getDate()
 		});
 		var cancel_ = document.getElementById("sele_cancel");
