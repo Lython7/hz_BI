@@ -8,11 +8,33 @@
     <script src={% static 'index/js/rem.js' %} type="text/javascript" charset="utf-8"></script>
     <link rel="stylesheet" type="text/css" href={% static 'index/caomei1.2.8/style.css' %} />
     <link rel="stylesheet" type="text/css" href={% static 'index/css/reset.css' %}/>
+    <link rel="stylesheet" type="text/css" href={% static 'index/css/mine.css' %}/>
     <script src={% static 'index/js/navIndex.js' %} type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 {% include 'index/nav.html' %}
-
+<div class="container">
+    <h1>个人信息</h1>
+    <div class="info-box">
+        <div class="row">
+            <span class="titles">用户名：</span>
+            <span id="username" class="content">a</span>
+        </div>
+        <div class="row">
+            <span class="titles">联系方式：</span>
+            <span id="tel" class="content">a</span>
+        </div>
+        <div class="row">
+            <span class="titles">职位：</span>
+            <span id="position" class="content">a</span>
+        </div>
+        <div class="row">
+            <span class="titles">审核状态：</span>
+            <span id="status" class="content">a</span>
+        </div>
+    </div>
+</div>
 </body>
-
+<script src={% static 'index/js/ajax.js' %} type="text/javascript" charset="utf-8"></script>
+<script src={% static 'index/js/mine.js' %} type="text/javascript" charset="utf-8"></script>
 </html>
