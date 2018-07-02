@@ -164,7 +164,12 @@ function lineChart(dom, data, col) {
 			data: data.x
 		},
 		yAxis: {
-			type: 'value'
+			type: 'value',
+			axisLabel: {
+				formatter: function(val){
+					return val>=10000?(parseInt(val/100)/100+'W'):val;
+				}
+			}
 		},
 		grid: {
 			left: 60
@@ -248,7 +253,6 @@ function lineChart2(dom, data, col) {
 		}]
 	})
 }
-
 ajax('GET', './views/classify_amount_month/', null, function (res) {
 	var data = JSON.parse(res).data;
 	var datas = [],
@@ -301,8 +305,6 @@ function categoryPieEcharts(datas, sum, legends) {
 		location.href="views/goodscount/";
 	});
 }
-
-
 function channelOrder(dom, data) {
 	var channelOrder = echarts.init(dom);
 	channelOrder.setOption({
@@ -331,7 +333,6 @@ function channelOrder(dom, data) {
 		}]
 	});
 }
-
 function gauge(dom, data) {
 	var mychart = echarts.init(dom);
 	mychart.setOption({
@@ -373,8 +374,6 @@ function gauge(dom, data) {
 		}]
 	})
 }
-
-
 function rowBar(dom, data) {
 	var chart = echarts.init(dom);
 	chart.setOption({
@@ -422,7 +421,6 @@ ajax('GET', './views/region_amount_month/', null, function (res) {
 	}else {
 		saleBar.innerHTML='<p style="font-size: 26px;text-align: center">暂无数据</p>';
 	}
-
 });
 
 
@@ -439,7 +437,8 @@ ajax('GET', './views/score/'+year_+'/'+month_, null, function (res) {
 			x:[],
 			y:[]
 		}
-		for (var i=0; i<3; i++){
+		var len = data.length<3?data.length:3;
+		for (var i=0; i<len; i++){
 			datas.x.push(parseInt(data[i].sum));
 			datas.y.push(data[i].name);
 		}
