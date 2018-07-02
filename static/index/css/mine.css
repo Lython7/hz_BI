@@ -1,0 +1,16 @@
+.info-box{
+    padding-top: 20px;
+}
+.row{
+    height: 30px;
+    line-height: 30px;
+    padding-left: 12px;
+    border-bottom: 1px solid #e1e1e1;
+}
+.row span{
+    float: left;
+}
+.row .titles{
+    width: 86px;
+    font-weight: bold;
+}

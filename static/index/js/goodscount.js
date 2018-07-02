@@ -126,6 +126,15 @@ function categoryPieEcharts(sum, data) {
 	});
 }
 function sortList(data) {
+	var other;
+	for (var i=0; i<data.length; i++){
+		if (data[i].name=='其它'){
+			other=data[i];
+			data.splice(i,1);
+			i--;
+		}
+	}
+	data.push(other);
 	var ranking = document.getElementById("ranking");
 	var str='';
 	for (var i=0; i<data.length; i++){
