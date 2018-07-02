@@ -222,7 +222,7 @@ function lineChart2(dom, data, col) {
 			type: 'value',
 			axisLabel: {
 				formatter: function(val){
-					return val/10000+'W';
+					return val>=10000?(parseInt(val/100)/100+'W'):val;
 				}
 			}
 		},
@@ -248,11 +248,6 @@ function lineChart2(dom, data, col) {
 		}]
 	})
 }
-// var towData = {
-// 	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-// 	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330]
-// }
-// lineChart(salesTrend, towData, '#8DB9BE');
 
 ajax('GET', './views/classify_amount_month/', null, function (res) {
 	var data = JSON.parse(res).data;
@@ -322,7 +317,7 @@ function channelOrder(dom, data) {
 			type: 'value',
 			axisLabel: {
 				formatter: function(val){
-					return val/10000+'W';
+					return val>=10000?(parseInt(val/100)/100+'W'):val;
 				}
 			}
 		},
@@ -414,15 +409,20 @@ function rowBar(dom, data) {
 ajax('GET', './views/region_amount_month/', null, function (res) {
 	var data = JSON.parse(res);
 	var saleBar = document.getElementById("saleBar");
-	var datas={
-		x:[],
-		y:[]
+	if(data.length){
+		var datas={
+			x:[],
+			y:[]
+		}
+		for (var item in data){
+			datas.x.push(data[item]);
+			datas.y.push(item);
+		}
+		rowBar(saleBar, datas);
+	}else {
+		saleBar.innerHTML='<p style="font-size: 26px;text-align: center">暂无数据</p>';
 	}
-	for (var item in data){
-		datas.x.push(data[item]);
-		datas.y.push(item);
-	}
-	rowBar(saleBar, datas);
+
 });
 
 
@@ -434,15 +434,19 @@ ajax('GET', './views/score/'+year_+'/'+month_, null, function (res) {
 	// var data = JSON.parse(res).splice(0,3); // 返回删除的数组项目
 	var data = JSON.parse(res);
 	var salesRank = document.getElementById("salesRank");
-	var datas={
-		x:[],
-		y:[]
+	if(data.length){
+		var datas={
+			x:[],
+			y:[]
+		}
+		for (var i=0; i<3; i++){
+			datas.x.push(parseInt(data[i].sum));
+			datas.y.push(data[i].name);
+		}
+		datas.x.reverse();
+		datas.y.reverse();
+		rowBar(salesRank, datas);
+	}else {
+		salesRank.innerHTML='<p style="font-size: 26px;text-align: center">暂无数据</p>';
 	}
-	for (var i=0; i<3; i++){
-		datas.x.push(parseInt(data[i].sum));
-		datas.y.push(data[i].name);
-	}
-	datas.x.reverse();
-	datas.y.reverse();
-	rowBar(salesRank, datas);
 });
