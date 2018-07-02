@@ -408,7 +408,7 @@ function rowBar(dom, data) {
 ajax('GET', './views/region_amount_month/', null, function (res) {
 	var data = JSON.parse(res);
 	var saleBar = document.getElementById("saleBar");
-	if(data.length){
+	if(res != '{}'){
 		var datas={
 			x:[],
 			y:[]
