@@ -116,6 +116,14 @@ DATABASES = {
         'PORT': '3306',
         'NAME': 'bi',
     },
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'USER': 'root',
+    #     'PASSWORD': 'root',
+    #     'HOST': '127.0.0.1',
+    #     'PORT': '3306',
+    #     'NAME': 'hz_bi',
+    # },
     # 迁徙备份的数据库，可做查询
     'hzyg':{
         'ENGINE': 'django.db.backends.mysql',
