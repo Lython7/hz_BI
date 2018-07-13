@@ -499,20 +499,20 @@ def goodscount_2(request):
         recvs = {}
         for i in range(len(ret[0:5])):
             recvs[ret[i][0]] = int(ret[i][1])
-        print(recvs)
+        # print(recvs)
         sums = 0
         for i in recvs.values():
             sums = sums + i
-        print(sums)
+        # print(sums)
         recv = {}
         for i in range(len(ret)):
             recv[ret[i][0]] = ret[i][1]
-        print(recv)
+        # print(recv)
 
         sum = 0
         for i in recv.values():
             sum = sum + i
-        print(sum)
+        # print(sum)
         recvs['其它'] = int(sum) - int(sums)
         res['amount'] = int(sum)
         res['data'] = recvs
