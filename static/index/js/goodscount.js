@@ -85,7 +85,6 @@ function init(sum, data) {
 	sortList(data); // 排名
 }
 function categoryPieEcharts(sum, data) {
-
 	var legends=[];
 	for (var i=0; i<data.length; i++){
 	    // sum+=data[i].value;
