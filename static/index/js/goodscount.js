@@ -88,7 +88,7 @@ function categoryPieEcharts(sum, data) {
 
 	var legends=[];
 	for (var i=0; i<data.length; i++){
-	    sum+=data[i].value;
+	    // sum+=data[i].value;
 	    legends.push(data[i].name);
     }
 	categoryPie.setOption({
