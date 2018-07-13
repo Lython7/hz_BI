@@ -23,7 +23,7 @@ def goodscount(request):
     return render(request, 'index/goodscount.html', context={})
 
 # @cache_page(CACHE_TIME)
-# @login_required(login_url='/login/')
+@login_required(login_url='/login/')
 @tdincome_which
 def today_income(request):
     # 今日营收
@@ -68,7 +68,7 @@ def sales_amount(request):
 
     # 获取日期
     incometd = incomeDay()
-    __date = incometd._get_month()        # ['2018', '05']
+    __date = incometd._get_today()        # ['2018', '05']
 
     try: # 获取 显示哪个
         _settings = incometd._get_settings(request)['sales_amount']
@@ -87,16 +87,43 @@ def sales_amount(request):
     res['order_amount_month'] = str(int(b2b_pos+b2b_order))########
 
     res['order_amount_lastmonth'] = str(int(queryset_list_lastmonth[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_lastmonth[1].aggregate(Sum('amount'))['amount__sum']))########
-    res['month_ratio'] = str(int((float(res['order_amount_month'])-float(res['order_amount_lastmonth']))/float(res['order_amount_lastmonth']) * 100))+r'%' ##########
-    res['ratio'] = str(int(float(res['order_amount_month'])/float(res['order_amount_lastmonth']) * 100))+r'%'
+
+
+
+    try:
+        res['order_amount_lastmonth_part'] = str(int(
+            queryset_list_lastmonth[0].filter(createDate__day__gte='01', createDate__day__lte=__date[2]).aggregate(
+                Sum('amount'))['amount__sum'] +
+            queryset_list_lastmonth[1].filter(createDate__day__gte='01', createDate__day__lte=__date[2]).aggregate(
+                Sum('amount'))['amount__sum']))  ########
+    except:
+        res['order_amount_lastmonth_part'] = '0'
 
 
     queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
-    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), __date[1], None, _settings)
 
     res['order_amount_year'] = str(int(queryset_list_year[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_year[1].aggregate(Sum('amount'))['amount__sum']))########
-    order_amount_lastyear = str(int(queryset_list_lastyear[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_lastyear[1].aggregate(Sum('amount'))['amount__sum']))
-    res['year_ratio'] = str(int((float(res['order_amount_year'])-float(order_amount_lastyear))/float(order_amount_lastyear) * 100))+r'%' #####
+    try:
+        order_amount_lastyear = str(int(queryset_list_lastyear[0].filter(createDate__day__gte='01', createDate__day__lte=__date[2]).aggregate(Sum('amount'))['amount__sum']+queryset_list_lastyear[1].filter(createDate__day__gte='01', createDate__day__lte=__date[2]).aggregate(Sum('amount'))['amount__sum']))
+    except:
+        order_amount_lastyear = '0'
+
+    if float(res['order_amount_lastmonth']) == 0:
+        res['ratio'] = 'N/A'
+    else:
+        res['ratio'] = str(int(float(res['order_amount_month']) / float(res['order_amount_lastmonth']) * 100)) + r'%'
+
+    if float(res['order_amount_lastmonth_part']) == 0:
+        res['month_ratio'] = 'N/A'
+    else:
+        res['month_ratio'] = str(int((float(res['order_amount_month']) - float(res['order_amount_lastmonth_part'])) / float(
+            res['order_amount_lastmonth_part']) * 100)) + r'%'  ##########
+
+    if float(order_amount_lastyear) == 0:
+        res['year_ratio'] = 'N/A'
+    else:
+        res['year_ratio'] = str(int((float(res['order_amount_month'])-float(order_amount_lastyear))/float(order_amount_lastyear) * 100))+r'%' #####
 
     return JsonResponse(res)
 
@@ -108,7 +135,7 @@ def sales_amount(request):
 def store_count(request):
     res = {}
     incometd = incomeDay()
-    __date = incometd._get_month()        # ['2018', '05']
+    __date = incometd._get_today()        # ['2018', '05']
 
     try: # 获取 显示哪个
         _settings = incometd._get_settings(request)['store_count']
@@ -124,14 +151,35 @@ def store_count(request):
         queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
     res['store_reg_month'] = str(len(queryset_list_month[2]))
     res['store_reg_lastmonth'] = str(len(queryset_list_lastmonth[2]))
-    res['ratio'] = str(int(int(res['store_reg_month'])/int(res['store_reg_lastmonth'])*100)) + '%'
-    res['month_ratio'] = str(int((int(res['store_reg_month'])-int(res['store_reg_lastmonth']))/int(res['store_reg_lastmonth'])*100)) + '%'
+
+
+    try:
+        res['store_reg_lastmonth_part'] = str(len(queryset_list_lastmonth[2].filter(createDate__day__gte='01', createDate__day__lte=__date[2])))########
+    except:
+        res['store_reg_lastmonth_part'] = '0'
+
 
     queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
-    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), __date[1], None, _settings)
     res['store_reg_year'] = str(len(queryset_list_year[2]))
-    store_reg_lastyear = len(queryset_list_lastyear[2])
-    res['year_ratio'] = str(int((int(res['store_reg_year'])-store_reg_lastyear)/store_reg_lastyear*100))+'%'
+    try:
+        store_reg_lastyear = len(queryset_list_lastyear[2])
+    except:
+        store_reg_lastyear = 0
+    if float(int(res['store_reg_lastmonth'])) == 0:
+        res['ratio'] = 'N/A'
+    else:
+        res['ratio'] = str(int(int(res['store_reg_month']) / int(res['store_reg_lastmonth']) * 100)) + '%'
+    if float(int(res['store_reg_lastmonth_part'])) == 0:
+        res['month_ratio'] = 'N/A'
+    else:
+        res['month_ratio'] = str(int((int(res['store_reg_month']) - int(res['store_reg_lastmonth_part'])) / int(
+            res['store_reg_lastmonth_part']) * 100)) + '%'
+    if store_reg_lastyear == 0:
+        res['year_ratio'] = 'N/A'
+    else:
+        res['year_ratio'] = str(int((int(res['store_reg_month'])-store_reg_lastyear)/store_reg_lastyear*100))+'%'
 
     return JsonResponse(res)
 
@@ -143,7 +191,7 @@ def store_count(request):
 def orderstore_count(request):
     res = {}
     incometd = incomeDay()
-    __date = incometd._get_month()        # ['2018', '05']
+    __date = incometd._get_today()        # ['2018', '05']
 
     try: # 获取 显示哪个
         _settings = incometd._get_settings(request)['orderstore_count']
@@ -157,16 +205,38 @@ def orderstore_count(request):
         queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
 
     queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
-    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), __date[1], None, _settings)
 
     res['odstore_count_month'] = str(len(queryset_list_month[0].values('memberPin').distinct()))
     res['odstore_count_lastmonth'] = str(len(queryset_list_lastmonth[0].values('memberPin').distinct()))
-    res['ratio'] = str(int(int(res['odstore_count_month'])/int(res['odstore_count_lastmonth'])*100)) + '%'
-    res['month_ratio'] = str(int((int(res['odstore_count_month'])-int(res['odstore_count_lastmonth']))/int(res['odstore_count_lastmonth'])*100)) + '%'
+
+
+    try:
+        res['odstore_count_lastmonth_part'] = str(len(queryset_list_lastmonth[0].filter(createDate__day__gte='01', createDate__day__lte=__date[2]).values('memberPin').distinct()))########
+    except:
+        res['odstore_count_lastmonth_part'] = '0'
+
 
     res['odstore_count_year'] = str(len(queryset_list_year[0].values('memberPin').distinct()))
-    odstore_count_lastyear = len(queryset_list_lastyear[0].values('memberPin').distinct())
-    res['year_ratio'] = str(int((int(res['odstore_count_year'])-odstore_count_lastyear)/odstore_count_lastyear*100))+'%'
+    try:
+        odstore_count_lastyear = len(queryset_list_lastyear[0].values('memberPin').distinct())
+    except:
+        odstore_count_lastyear= 0
+
+    if int(res['odstore_count_lastmonth']) == 0:
+        res['ratio'] = 'N/A'
+    else:
+        res['ratio'] = str(int(int(res['odstore_count_month'])/int(res['odstore_count_lastmonth'])*100)) + '%'
+
+    if int(res['odstore_count_lastmonth_part']) == 0:
+        res['month_ratio'] = 'N/A'
+    else:
+        res['month_ratio'] = str(int((int(res['odstore_count_month']) - int(res['odstore_count_lastmonth_part'])) / int(res['odstore_count_lastmonth_part']) * 100)) + '%'
+
+    if odstore_count_lastyear == 0:
+        res['year_ratio'] = 'N/A'
+    else:
+        res['year_ratio'] = str(int((int(res['odstore_count_month'])-odstore_count_lastyear)/odstore_count_lastyear*100))+'%'
 
     return JsonResponse(res)
 
@@ -178,7 +248,7 @@ def orderstore_count(request):
 def order_count(request):
     res = {}
     incometd = incomeDay()
-    __date = incometd._get_month()        # ['2018', '05']
+    __date = incometd._get_today()        # ['2018', '05']
 
     try: # 获取 显示哪个
         _settings = incometd._get_settings(request)['order_count']
@@ -192,16 +262,36 @@ def order_count(request):
         queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
 
     queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
-    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), None, None, _settings)
+    queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), __date[1], None, _settings)
 
     res['order_month'] = str(len(queryset_list_month[0]))
     res['order_lastmonth'] = str(len(queryset_list_lastmonth[0]))
-    res['ratio'] = str(int(int(res['order_month'])/int(res['order_lastmonth'])*100)) + '%'
-    res['month_ratio'] = str(int((int(res['order_month'])-int(res['order_lastmonth']))/int(res['order_lastmonth'])*100)) + '%'
+
+
+    try:
+        res['order_lastmonth_part'] = str(len(queryset_list_lastmonth[0].filter(createDate__day__gte='01', createDate__day__lte=__date[2])))########
+    except:
+        res['order_lastmonth_part'] = '0'
+
 
     res['order_year'] = str(len(queryset_list_year[0]))
-    order_lastyear = len(queryset_list_lastyear[0])
-    res['year_ratio'] = str(int((int(res['order_year'])-order_lastyear)/order_lastyear*100))+'%'
+    try:
+        order_lastyear = len(queryset_list_lastyear[0])
+    except:
+        order_lastyear = 0
+
+    if int(res['order_lastmonth']) == 0:
+        res['ratio'] = 'N/A'
+    else:
+        res['ratio'] = str(int(int(res['order_month']) / int(res['order_lastmonth']) * 100)) + '%'
+    if int(res['order_lastmonth_part']) == 0:
+        res['month_ratio'] = 'N/A'
+    else:
+        res['month_ratio'] = str(int((int(res['order_month']) - int(res['order_lastmonth_part'])) / int(res['order_lastmonth_part']) * 100)) + '%'
+    if order_lastyear == 0:
+        res['year_ratio'] = 'N/A'
+    else:
+        res['year_ratio'] = str(int((int(res['order_month'])-order_lastyear)/order_lastyear*100))+'%'
     return JsonResponse(res)
 
 
@@ -225,11 +315,14 @@ def channal_salesamount_month(request):
     b2b_2 = queryset_list_month[1].aggregate(Sum('amount'))['amount__sum'] # pos
 
 
+    b2c = b2b_posgoods.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1],).aggregate(Sum('amount'))['amount__sum']
+
     agriculture = queryset_list_month[0].filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单')).aggregate(Sum('amount'))['amount__sum'] # 农业
     online = queryset_list_month[0].filter(Q(orderStoreName='京东九河泉仓库') | Q(orderStoreName='京东官方直营店') | Q(orderStoreName='民生银行仓库')).aggregate(Sum('amount'))['amount__sum'] # 电商
     television = queryset_list_month[0].filter(orderStoreName='电视购物仓库').aggregate(Sum('amount'))['amount__sum']# 电视
     taste = queryset_list_month[0].filter(orderStoreName='禾中味道官方直营店').aggregate(Sum('amount'))['amount__sum']# 禾中味道
     direct_store = queryset_list_month[0].filter(orderStoreName='直营门店').aggregate(Sum('amount'))['amount__sum']# 直营店
+    chanpinbu = b2b_ordertable.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1],orderStoreName='产品部仓库').aggregate(Sum('amount'))['amount__sum']
 
     if agriculture == None:
         agriculture = 0
@@ -237,21 +330,28 @@ def channal_salesamount_month(request):
         online = 0
     if television == None:
         television = 0
-    if taste == None:
-        taste = 0
-    if direct_store == None:
-        direct_store = 0
+    if b2c == None:
+        b2c = 0
+    if chanpinbu == None:
+        chanpinbu = 0
     if b2b_1 == None:
         b2b_1 = 0
     if b2b_2 == None:
         b2b_2 = 0
 
+    if taste == None:
+        taste = 0
+    if direct_store == None:
+        direct_store =0
+
+
     b2b_all = b2b_1 - (agriculture + online + television + taste + direct_store) + b2b_2
     res['b2b'] = str(int(b2b_all))
+    res['b2c'] = str(int(b2c))
     res['agriculture'] = str(int(agriculture))
     res['online'] = str(int(online))
     res['television'] = str(int(television))
-    res['taste'] = str(int(taste))
+    res['chanpinbu'] = str(int(chanpinbu))
     return JsonResponse(res)
 
 # 销售趋势
@@ -365,8 +465,6 @@ def goodscount_2(request):
                                                                        )
 
 
-
-
         data_pos = queryset_pos.values('skuName').annotate(Sum('amount'))
 
         data_goodstb = queryset_goodstb.values('skuName').annotate(Sum('amount'))
@@ -401,18 +499,20 @@ def goodscount_2(request):
         recvs = {}
         for i in range(len(ret[0:5])):
             recvs[ret[i][0]] = int(ret[i][1])
-
+        print(recvs)
         sums = 0
         for i in recvs.values():
             sums = sums + i
-
+        print(sums)
         recv = {}
         for i in range(len(ret)):
             recv[ret[i][0]] = ret[i][1]
+        print(recv)
 
         sum = 0
         for i in recv.values():
             sum = sum + i
+        print(sum)
         recvs['其它'] = int(sum) - int(sums)
         res['amount'] = int(sum)
         res['data'] = recvs
@@ -507,10 +607,10 @@ def region_amount_month(request):
     hezhongnongye_pos =  0 if hezhongnongye[1].aggregate(Sum('amount'))['amount__sum'] == None else hezhongnongye[1].aggregate(Sum('amount'))['amount__sum']
     res['禾中农业'] = int(hezhongnongye_order+hezhongnongye_pos)########
 
-    hezhongweidao = incometd._get_queryset_list(request, __date[0], __date[1], None, 17)
-    hezhongweidao_order = 0 if hezhongweidao[0].aggregate(Sum('amount'))['amount__sum'] == None else hezhongweidao[0].aggregate(Sum('amount'))['amount__sum']
-    hezhongweidao_pos =  0 if hezhongweidao[1].aggregate(Sum('amount'))['amount__sum'] == None else hezhongweidao[1].aggregate(Sum('amount'))['amount__sum']
-    res['禾中味道'] = int(hezhongweidao_order+hezhongweidao_pos)########
+    # hezhongweidao = incometd._get_queryset_list(request, __date[0], __date[1], None, 17)
+    # hezhongweidao_order = 0 if hezhongweidao[0].aggregate(Sum('amount'))['amount__sum'] == None else hezhongweidao[0].aggregate(Sum('amount'))['amount__sum']
+    # hezhongweidao_pos =  0 if hezhongweidao[1].aggregate(Sum('amount'))['amount__sum'] == None else hezhongweidao[1].aggregate(Sum('amount'))['amount__sum']
+    # res['禾中味道'] = int(hezhongweidao_order+hezhongweidao_pos)########
 
     chanpinbu = incometd._get_queryset_list(request, __date[0], __date[1], None, 18)
     chanpinbu_order = 0 if chanpinbu[0].aggregate(Sum('amount'))['amount__sum'] == None else chanpinbu[0].aggregate(Sum('amount'))['amount__sum']
@@ -533,12 +633,12 @@ def region_amount_month(request):
 #     pass
 #
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 def score(request, year, month):
     '''
         业务员数据API  hzyg备份数据库  和 excel读取汇总
     '''
-    queryset = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year,createDate__month=month).filter(orderStore='101101')
+    queryset = b2b_ordertable.objects.using('hzyg').filter(createDate__year=year,createDate__month=month).filter(orderStore='101101').filter(amount__gt=0)
     queryset_investment = sale_upload.objects.using('investment').filter(createdate__year=year, createdate__month=month).filter(checkif=1)
     mysqldata = queryset.values('realName').annotate(c=Count('amount'),s=Sum('amount')).values_list('realName','c','s').order_by('-s')
     # if queryset_investment.
