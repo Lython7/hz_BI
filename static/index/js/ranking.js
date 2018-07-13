@@ -1,6 +1,6 @@
 var index = sessionStorage.tabIndex || 0;
 navIndex(index);
-
+var baseUrls='http://10.10.10.100:8000/score/';
 
 
 $('#myCarousel').carousel({
@@ -438,7 +438,7 @@ function monthData(nowY, nowM) {
 	var jd = (nowY == new Date().getFullYear() && nowM == new Date().getMonth() + 1) ? (new Date().getDate()) * 100 / calcDays(nowY, (nowM - 1)) : 100;
 	if(nowY > 2018 || (nowY == 2018 && nowM > 2)) {
 		var m = ((nowM + '').length == 1) ? ('/0' + nowM) : nowM;
-		var url_ = 'https://ywy.hzbl360.com:442/score/' + nowY + m;
+		var url_ = baseUrls + nowY + m;
 		ajaxDatas(url_, sortList);
 	} else {
 		var m = ((nowM + '').length == 1) ? ('0' + nowM) : nowM;

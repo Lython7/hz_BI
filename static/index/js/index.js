@@ -24,9 +24,23 @@ ajax('GET', './views/incometoday/', null, function (res) {
 		arr.y.push(data.hours_data[i]);
 	}
 	if (arr.x.length>7){
+		var start,end;
+		var h=new Date().getHours();
+		if (h>8){
+			if (h<15){
+				start=h-7;
+				end=h;
+			}else {
+				start=8;
+				end=15;
+			}
+		}else {
+			start=0;
+			end=h;
+		}
 		arr.dataZoom={
-						start:0,
-						end:7
+						start:start,
+						end:end
 					}
 	}
 	lineChart(revenueToday, arr, '#C66E6B');
@@ -409,13 +423,24 @@ ajax('GET', './views/region_amount_month/', null, function (res) {
 	var data = JSON.parse(res);
 	var saleBar = document.getElementById("saleBar");
 	if(res != '{}'){
+		var dataTem=[];
+		for (var item in data){
+			dataTem.push({
+				x: data[item],
+				y: item
+			})
+		}
+		dataTem.sort(function (a,b) {
+			return a.x - b.x;
+        });
+
 		var datas={
 			x:[],
 			y:[]
 		}
-		for (var item in data){
-			datas.x.push(data[item]);
-			datas.y.push(item);
+		for (var i=0; i<dataTem.length; i++){
+			datas.x.push(dataTem[i].x);
+			datas.y.push(dataTem[i].y);
 		}
 		rowBar(saleBar, datas);
 	}else {
