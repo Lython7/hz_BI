@@ -1,7 +1,7 @@
 var index = sessionStorage.tabIndex || 0;
 navIndex(index);
-var baseUrls='http://10.10.10.100:8000/score/';
-
+// var baseUrls='http://10.10.10.100:8000/score/';
+var baseUrls='../score/';
 
 $('#myCarousel').carousel({
 	interval: 2000

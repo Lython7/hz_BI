@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
-<<<<<<< HEAD
+  <component name="JavaScriptSettings">
+    <option name="languageLevel" value="ES6" />
+  </component>
   <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6.3 virtualenv at D:\Djangosite\Djangoenv" project-jdk-type="Python SDK" />
-=======
-  <component name="ProjectRootManager" version="2" project-jdk-name="Python 3.6.3 virtualenv at D:\downloads\2.0DjangoENV" project-jdk-type="Python SDK" />
->>>>>>> 49c69a6cfdb072297d5f4668119f19498c78d685
 </project>
