@@ -113,10 +113,6 @@ DATABASES = {
         'USER': 'root',
         'PASSWORD': 'root',
         'HOST': '192.168.12.21',
-<<<<<<< HEAD
-        # 'HOST': 'localhost',
-=======
->>>>>>> 49c69a6cfdb072297d5f4668119f19498c78d685
         'PORT': '3306',
         'NAME': 'bi',
     },

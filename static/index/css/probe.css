@@ -10,7 +10,7 @@
 	float: left;
 }
 .filter-list span{
-	width: 3rem;
+	width: 46px;
 }
 .filter-list #data-show{
 	padding-left: 0.2rem;
@@ -29,4 +29,54 @@
 #channelSaleroom,#salesTrend,#categoryPie,#saleBar{
 	width: 100%;
 	height: 200px;
+}
+
+
+
+
+.time-choose{
+	float: left;
+	font-size: 12px;
+	line-height: 14px;
+	padding-top: 2px;
+}
+.time-choose span{
+	float: left;
+}
+.time-choose #time-btn{
+	background-color: #44C0FF;
+    border-radius: 12px;
+    width: 36px;
+    color: #fff;
+    padding: 1px 8px;
+    text-align: center;
+}
+.time-choose #time-show{
+    padding: 1px 0 1px 5px;
+	white-space: nowrap;
+    min-width: 160px;
+}
+
+
+
+
+.filter-list .czs-angle-right-l{
+	float: right;
+    padding-top: 4px;
+}
+#J_flilters{
+	border: none;
+    border-bottom: 1px solid #ccc;
+    width: calc(100% - 100px);
+    padding: 2px;
+    background-color: transparent;
+    margin: 0;
+    outline: none;
+    color: #555;
+    font-size: 12px;
+}
+
+span,input,
+input:after{
+	box-sizing: content-box;
 }

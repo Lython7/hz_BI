@@ -5,49 +5,50 @@
     <meta charset="UTF-8">
     <title>探索</title>
     {% include 'index/head.html' %}
+    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
+    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/lcalendars.css' %}/>
+    <script src={% static 'index/lcalendar/LCalendar.js' %} type="text/javascript" charset="utf-8"></script>
+    <script src={% static 'index/lcalendar/lcalendars.js' %} type="text/javascript" charset="utf-8"></script>
+    
+    {#<link rel="stylesheet" type="text/css" href={% static 'index/choose-dist/ydui.css?rev=@@hash' %} />#}
+    <link rel="stylesheet" type="text/css" href={% static 'index/choose-dist/ydui.css' %} />
+    <link rel="stylesheet" type="text/css" href={% static 'index/choose-dist/demo.css' %} />
+	<script src={% static 'index/choose-dist/ydui.flexible.js' %}></script>
+	<script src={% static 'index/choose-dist/jquery-1.10.2.js' %}></script>
+	<script src={% static 'index/choose-dist/ydui.citys.js' %}></script>
+	
     <link rel="stylesheet" type="text/css" href={% static 'index/css/probe.css' %}/>
 </head>
 <body>
 {% include 'index/nav.html' %}
-<div style="
-    position: fixed;
-    top: 30px;
-    left: 0;
-    height: 200px;
-    line-height: 200px;
-    font-size: 28px;
-    z-index: 1000;
-    color: goldenrod;
-    text-align: center;
-    width: 100%;
-    background-color: #333;">探索页面未完成，暂无数据</div>
+{#<div style="#}
+{#    position: fixed;#}
+{#    top: 30px;#}
+{#    left: 0;#}
+{#    height: 200px;#}
+{#    line-height: 200px;#}
+{#    font-size: 28px;#}
+{#    z-index: 1000;#}
+{#    color: goldenrod;#}
+{#    text-align: center;#}
+{#    width: 100%;#}
+{#    background-color: #333;">探索页面未完成，暂无数据</div>#}
 <div class="container">
 			<h1>探索</h1>
 			<div class="filter">
 				<div class="filter-list clearfix">
-					<span>渠道</span>
-					<select name="">
-						<option value="">全部</option>
-					</select>
+					<span>日期：</span>
+					<div class="time-choose">
+						<span id="time-btn">本月</span>
+						<span id="time-show"></span>
+					</div>
 				</div>
 				<div class="filter-list clearfix">
-					<span>日期</span>
-					<select name="">
-						<option value="">本月</option>
-					</select>
-					<div id="data-show">2017.2.15~2018.3.5</div>
-				</div>
-				<div class="filter-list clearfix">
-					<span>区域</span>
-					<select name="">
-						<option value="">全部</option>
-					</select>
-				</div>
-				<div class="filter-list clearfix">
-					<span>配送中心</span>
-					<select name="">
-						<option value="">全部</option>
-					</select>
+					<span>筛选：</span>
+					<label>
+						<input type="text" readonly="" id="J_flilters" value="" placeholder="请选择收货地址">
+						<span class="czs-angle-right-l"></span>
+					</label>
 				</div>
 			</div>
 			<div class="channelSaleroom">
@@ -88,6 +89,7 @@
 				<div id="saleBar"></div>
 			</div>
 		</div>
+		<script src={% static 'index/choose-dist/ydui.js' %}></script>
+		<script src={% static 'index/js/probe.js' %} type="text/javascript" charset="utf-8"></script>
 </body>
-<script src={% static 'index/js/probe.js' %} type="text/javascript" charset="utf-8"></script>
 </html>

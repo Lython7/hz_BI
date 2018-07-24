@@ -1,7 +1,60 @@
 navIndex(1);
 
+$(function(){
+	(function() {
+		var $target = $('#J_flilters');
+		$target.citySelect();
+		$target.on('click', function(event) {
+			event.stopPropagation();
+			$target.citySelect({
+					country: '本月',
+					provance: 'B2B',
+					city: '全部区域',
+					area: '全部配送中心',
+					id: '1-31-330-3033'
+				});
+		});
+		$target.on('done.ydui.cityselect', function(ret) {
+			console.log(ret)
+			$(this).val(ret.country + ' ' + ret.provance + ' ' + ret.city + ' ' + ret.area);
+		});
+	})();
+})
 
-
+var oBtn = document.getElementById("time-btn"),
+	oShow = document.getElementById("time-show");
+var dataValue = new Date();
+var currentYear = dataValue.getFullYear();
+var currentMonth = dataValue.getMonth() + 1;
+var currentDate = dataValue.getDate();
+oBtn.innerHTML = '本月';
+oShow.innerHTML = currentYear + '-' + currentMonth + '-1~' + currentYear + '-' + currentMonth + '-' + currentDate;
+oBtn.onclick = function() {
+	chooseCreate(function(con, res) {
+		console.log(res);
+		oBtn.innerHTML = con;
+		oShow.innerHTML = res.start + '~' + res.end;
+		var start = res.start.split('-');
+		var end = res.end.split('-');
+		/*var params = 'classify=' + classifyName + '&lyear=' + start[0] + '&lmonth=' + start[1] + '&lday=' + start[2] +'&ryear=' + end[0] + '&rmonth=' + end[1] + '&rday=' + end[2];
+        ajax('GET','../goodscount_2/',params,function (res){
+        	var data = JSON.parse(res);
+			var sum = data.amount;
+			var datas = [];
+			for(var item in data.data){
+				datas.push({
+					name: item,
+					value: data.data[item]
+				})
+			}
+			datas.sort(function (a, b) {
+				return b.value - a.value;
+			});
+			console.log(datas);
+			init(sum, datas);
+		})*/
+	})
+}
 
 var channel = document.getElementById("channelSaleroom");
 
@@ -28,11 +81,10 @@ function channelSaleroom(dom, data, dataZoomData) {
 		}]
 	})
 }
-channelSaleroom(channel,
-	{
-		x:['B2B', '电商', '电视'],
-		y:[120, 200, 150]
-	});
+channelSaleroom(channel, {
+	x: ['B2B', '电商', '电视'],
+	y: [120, 200, 150]
+});
 
 function lineChart(dom, data, col) {
 	var lineChart = echarts.init(dom);
@@ -77,7 +129,6 @@ var todayData = {
 }
 var salesTrend = document.getElementById("salesTrend");
 lineChart(salesTrend, todayData, '#38A7F0');
-
 
 var categoryPie = echarts.init(document.getElementById("categoryPie"));
 categoryPie.setOption({
@@ -137,8 +188,7 @@ categoryPie.setOption({
 });
 
 var saleBar = document.getElementById("saleBar");
-channelSaleroom(saleBar,
-	{
-		x:['北京', '华北区', '东北区', '北方区', '西北区', '西南区', '华南区', '华东区', '中原区'],
-		y:[120, 200, 150, 80, 70, 90, 110, 130, 356]
-	});
+channelSaleroom(saleBar, {
+	x: ['北京', '华北区', '东北区', '北方区', '西北区', '西南区', '华南区', '华东区', '中原区'],
+	y: [120, 200, 150, 80, 70, 90, 110, 130, 356]
+});
