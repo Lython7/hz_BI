@@ -71,7 +71,7 @@ class b2b_posgoods(models.Model):
     amount = models.DecimalField(max_digits=22, decimal_places=5, verbose_name='数量')
     orderAmount = models.DecimalField(max_digits=22, decimal_places=5)
     stockUnit = models.CharField(max_length=40)
-    realSaleStockUnit = models.DecimalField(max_digits=20, decimal_places=2)# 最小单位
+    saleStockNum = models.DecimalField(max_digits=20, decimal_places=2)# 最小单位
 
     class Meta:
         db_table = 'b2b_posgoods'

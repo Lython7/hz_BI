@@ -15,10 +15,11 @@ from permissions.decorator import *
 from collections import Counter
 from .assistant import incomeDay
 
+@login_required(login_url='/login/')
 def ranking(request):
     return render(request, 'index/ranking.html', context={})
 
-@login_required
+@login_required(login_url='/login/')
 def goodscount(request):
     return render(request, 'index/goodscount.html', context={})
 
@@ -87,8 +88,6 @@ def sales_amount(request):
     res['order_amount_month'] = str(int(b2b_pos+b2b_order))########
 
     res['order_amount_lastmonth'] = str(int(queryset_list_lastmonth[0].aggregate(Sum('amount'))['amount__sum']+queryset_list_lastmonth[1].aggregate(Sum('amount'))['amount__sum']))########
-
-
 
     try:
         res['order_amount_lastmonth_part'] = str(int(
@@ -320,7 +319,7 @@ def channal_salesamount_month(request):
     agriculture = queryset_list_month[0].filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单')).aggregate(Sum('amount'))['amount__sum'] # 农业
     online = queryset_list_month[0].filter(Q(orderStoreName='京东九河泉仓库') | Q(orderStoreName='京东官方直营店') | Q(orderStoreName='民生银行仓库')).aggregate(Sum('amount'))['amount__sum'] # 电商
     television = queryset_list_month[0].filter(orderStoreName='电视购物仓库').aggregate(Sum('amount'))['amount__sum']# 电视
-    taste = queryset_list_month[0].filter(orderStoreName='禾中味道官方直营店').aggregate(Sum('amount'))['amount__sum']# 禾中味道
+    # taste = queryset_list_month[0].filter(orderStoreName='禾中味道官方直营店').aggregate(Sum('amount'))['amount__sum']# 禾中味道
     direct_store = queryset_list_month[0].filter(orderStoreName='直营门店').aggregate(Sum('amount'))['amount__sum']# 直营店
     chanpinbu = b2b_ordertable.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1],orderStoreName='产品部仓库').aggregate(Sum('amount'))['amount__sum']
 
@@ -339,13 +338,13 @@ def channal_salesamount_month(request):
     if b2b_2 == None:
         b2b_2 = 0
 
-    if taste == None:
-        taste = 0
+    # if taste == None:
+    #     taste = 0
     if direct_store == None:
         direct_store =0
 
 
-    b2b_all = b2b_1 - (agriculture + online + television + taste + direct_store) + b2b_2
+    b2b_all = b2b_1 - (agriculture + online + television  + direct_store) + b2b_2
     res['b2b'] = str(int(b2b_all))
     res['b2c'] = str(int(b2c))
     res['agriculture'] = str(int(agriculture))
@@ -499,20 +498,20 @@ def goodscount_2(request):
         recvs = {}
         for i in range(len(ret[0:5])):
             recvs[ret[i][0]] = int(ret[i][1])
-        print(recvs)
+        # print(recvs)
         sums = 0
         for i in recvs.values():
             sums = sums + i
-        print(sums)
+        # print(sums)
         recv = {}
         for i in range(len(ret)):
             recv[ret[i][0]] = ret[i][1]
-        print(recv)
+        # print(recv)
 
         sum = 0
         for i in recv.values():
             sum = sum + i
-        print(sum)
+        # print(sum)
         recvs['其它'] = int(sum) - int(sums)
         res['amount'] = int(sum)
         res['data'] = recvs
@@ -633,7 +632,8 @@ def region_amount_month(request):
 #     pass
 #
 
-# @cache_page(CACHE_TIME)
+@cache_page(CACHE_TIME)
+@login_required(login_url='/login/')
 def score(request, year, month):
     '''
         业务员数据API  hzyg备份数据库  和 excel读取汇总

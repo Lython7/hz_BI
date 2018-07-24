@@ -117,17 +117,20 @@ ajax('GET', './views/channal_salesamount_month/', null, function (res) {
 				case 'b2b':
 					return 'B2B';
 					break;
+				case 'b2c':
+					return 'B2C';
+					break;
 				case 'agriculture':
 					return '农业';
 					break;
 				case 'online':
-					return '线上';
+					return '电商';
 					break;
 				case 'television':
 					return '电视';
 					break;
-				case 'taste':
-					return '禾中味道';
+				case 'chanpinbu':
+					return '产品部';
 					break;
 				default:
 					return data;
