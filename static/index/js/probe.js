@@ -127,7 +127,7 @@ function init(data, callback) {
 			channelSaleroom(channel, channelData);
 			/*销售趋势*/
 			var data2 = res.part3['销售趋势'];
-			var endFilter = switchs(data2['类型']);
+			var endFilter = switchs(res.part3['类型']);
 			var echartsData={
 				x:[],
 				y:[]
@@ -135,7 +135,7 @@ function init(data, callback) {
 			for (var i=0; i<data2.length; i++) {
 				for(var attr in data2[i]){
 					var xData= endFilter==='h'?attr.split('-')[2]:attr;
-					echartsData.x.push(attr + endFilter);
+					echartsData.x.push(xData + endFilter);
 					echartsData.y.push(data2[i][attr]);
 				}
 			}
@@ -179,7 +179,6 @@ function switchs(data) {
 }
 
 function channelSaleroom(dom, data, dataZoomData) {
-//	var channelSaleroom = echarts.init(dom);
 	var channelSaleroom = dom;
 	channelSaleroom.setOption({
 		xAxis: {
@@ -216,8 +215,8 @@ function lineChart(dom, data, col) {
 		dataZoom=[{ // 滑动
 			type: 'inside',
 			zoomLock: true,
-			start: data.x[0],
-			end: data.x[9]
+			startValue: data.x[0],
+			endValue: data.x[9]
 		}]
 	}
 	lineChart.setOption({
@@ -229,6 +228,9 @@ function lineChart(dom, data, col) {
 			boundaryGap: false,
 			data: data.x
 		},
+		tooltip:{
+	      show: true  
+	    },
 		yAxis: {
 			type: 'value',
 			axisLabel: {
