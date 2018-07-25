@@ -626,10 +626,10 @@ def explore_API(request):
             else:
                 dict_bar[i] = 0
     if dict_bar == {}:
-        res['part3'] = {'销售趋势': dict_foo}
+        res['part3'] = {'销售趋势': dict_foo, '类型': tmp_foo}
         # res['销售趋势'] = dict_foo
     else:
-        res['part3'] = {'销售趋势': dict_bar}
+        res['part3'] = {'销售趋势': dict_bar, '类型': tmp_foo}
         # res['销售趋势'] = dict_bar
 
     try:
@@ -983,13 +983,6 @@ def goodscount_2(request):
         # res['count'] = int(count_pos['skuNum__sum'])+int(count_goodstb['skuNum__sum'])
 
         return JsonResponse(res)
-
-
-
-
-
-
-
 
 
 # 请求 获取复选框内容
