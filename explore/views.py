@@ -457,12 +457,23 @@ def explore_API(request):
     # res['订单数量'] = int(order_count + pos_count)
     # res['下单客户数'] = int(order_cuscount)
     # res['新增客户数'] = int(store_reg_count)
+    if order_orderamount == None:
+        order_orderamount = 0
+    if pos_orderamount == None:
+        pos_orderamount = 0
+    if order_count == None:
+        order_count = 0
+    if pos_count == None:
+        pos_count = 0
+    if order_cuscount == None:
+        order_cuscount = 0
+    if store_reg_count == None:
+        store_reg_count = 0
 
     res['part1'] = {'订单金额': int(order_orderamount + pos_orderamount),
                     '订单数量': int(order_count + pos_count),
                     '下单客户数': int(order_cuscount),
                     '新增客户数': int(store_reg_count),
-
             }
 
 
