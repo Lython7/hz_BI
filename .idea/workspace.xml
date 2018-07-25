@@ -1,9 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
+<<<<<<< HEAD
     <list default="true" id="e5360331-8ccd-4fb3-98fc-8e1f20bd12fb" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/explore/views.py" beforeDir="false" afterPath="$PROJECT_DIR$/explore/views.py" afterDir="false" />
+=======
+    <list default="true" id="f3a37780-1469-4a36-bbdd-8a5e12a77c8e" name="默认的" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/static/index/choose-dist/jquery.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/hz_BI.iml" afterPath="$PROJECT_DIR$/.idea/hz_BI.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/static/index/js/probe.js" afterPath="$PROJECT_DIR$/static/index/js/probe.js" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/templates/explore/explore.html" afterPath="$PROJECT_DIR$/templates/explore/explore.html" />
+>>>>>>> 70e4bad47122dade1a0ec15fa448f258a4799001
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -13,24 +22,85 @@
     <option name="LAST_RESOLUTION" value="IGNORE" />
   </component>
   <component name="FileEditorManager">
-    <leaf>
-      <file leaf-file-name="views.py" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/explore/views.py">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="explore.html" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/templates/explore/explore.html">
           <provider selected="true" editor-type-id="text-editor">
+<<<<<<< HEAD
             <state relative-caret-position="301">
               <caret line="162" column="62" lean-forward="true" selection-start-line="162" selection-start-column="62" selection-end-line="162" selection-end-column="62" />
+=======
+            <state relative-caret-position="390">
+              <caret line="27" column="24" lean-forward="true" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
+>>>>>>> 70e4bad47122dade1a0ec15fa448f258a4799001
               <folding>
-                <element signature="e#0#31#0" expanded="true" />
+                <marker date="1532504391156" expanded="true" signature="1091:3015" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1130:1142" ph="&lt;div style... %}" />
+                <marker date="1532504391156" expanded="true" signature="1147:1167" ph="    position: fixe... %}" />
+                <marker date="1532504391156" expanded="true" signature="1172:1186" ph="    top: 30p... %}" />
+                <marker date="1532504391156" expanded="true" signature="1191:1203" ph="    left: ... %}" />
+                <marker date="1532504391156" expanded="true" signature="1208:1226" ph="    height: 200p... %}" />
+                <marker date="1532504391156" expanded="true" signature="1231:1254" ph="    line-height: 200p... %}" />
+                <marker date="1532504391156" expanded="true" signature="1259:1279" ph="    font-size: 28p... %}" />
+                <marker date="1532504391156" expanded="true" signature="1284:1302" ph="    z-index: 100... %}" />
+                <marker date="1532504391156" expanded="true" signature="1307:1328" ph="    color: goldenro... %}" />
+                <marker date="1532504391156" expanded="true" signature="1333:1356" ph="    text-align: cente... %}" />
+                <marker date="1532504391156" expanded="true" signature="1361:1377" ph="    width: 100... %}" />
+                <marker date="1532504391156" expanded="true" signature="1382:1429" ph="    background-color: ##333;&quot;&gt;探索页面未完成，暂无数据&lt;/di... %}" />
+                <marker date="1532504391156" expanded="true" signature="1456:2845" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1495:1944" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1534:1681" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1587:1670" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1720:1934" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1755:1923" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="1977:2473" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2048:2411" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2058:2138" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2148:2226" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2236:2313" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2323:2401" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2501:2577" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2631:2722" ph="..." />
+                <marker date="1532504391156" expanded="true" signature="2731:2834" ph="..." />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
+<<<<<<< HEAD
       <file leaf-file-name="base.py" pinned="false" current-in-tab="false">
         <entry file="file://D:/Djangosite/Djangoenv/Lib/site-packages/django/core/handlers/base.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="184">
               <caret line="125" selection-start-line="125" selection-end-line="125" />
+=======
+      <file leaf-file-name="jquery-1.10.2.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/index/choose-dist/jquery-1.10.2.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="0">
+              <caret line="0" column="78" lean-forward="true" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="78" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="probe.js" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/index/js/probe.js">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="-2236">
+              <caret line="156" column="9" lean-forward="false" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="probe.css" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/static/index/css/probe.css">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="234">
+              <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+              <folding />
+>>>>>>> 70e4bad47122dade1a0ec15fa448f258a4799001
             </state>
           </provider>
         </entry>
@@ -44,6 +114,9 @@
     <option name="CHANGED_PATHS">
       <list>
         <option value="$PROJECT_DIR$/explore/views.py" />
+        <option value="$PROJECT_DIR$/static/index/js/probe.js" />
+        <option value="$PROJECT_DIR$/static/index/choose-dist/jquery.js" />
+        <option value="$PROJECT_DIR$/templates/explore/explore.html" />
       </list>
     </option>
   </component>
@@ -57,19 +130,30 @@
     <packageJsonPaths />
   </component>
   <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="243" />
-    <option name="y" value="214" />
-    <option name="width" value="1079" />
-    <option name="height" value="579" />
+    <option name="x" value="-8" />
+    <option name="y" value="-8" />
+    <option name="width" value="1296" />
+    <option name="height" value="920" />
   </component>
-  <component name="ProjectLevelVcsManager">
-    <ConfirmationsSetting value="2" id="Add" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="添加" />
   </component>
   <component name="ProjectView">
-    <navigator proportions="" version="1">
+    <navigator currentView="ProjectPane" proportions="" version="1">
+      <flattenPackages />
+      <showMembers />
+      <showModules />
+      <showLibraryContents />
+      <hideEmptyPackages />
+      <abbreviatePackageNames />
+      <autoscrollToSource />
+      <autoscrollFromSource />
+      <sortByType />
+      <manualOrder />
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
+      <pane id="Scratches" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -80,6 +164,30 @@
             <path>
               <item name="hz_BI" type="b2602c69:ProjectViewProjectNode" />
               <item name="hz_BI" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hz_BI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hz_BI" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hz_BI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hz_BI" type="462c0819:PsiDirectoryNode" />
+              <item name="static" type="462c0819:PsiDirectoryNode" />
+              <item name="index" type="462c0819:PsiDirectoryNode" />
+              <item name="choose-dist" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hz_BI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hz_BI" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="hz_BI" type="b2602c69:ProjectViewProjectNode" />
+              <item name="hz_BI" type="462c0819:PsiDirectoryNode" />
+              <item name="templates" type="462c0819:PsiDirectoryNode" />
               <item name="explore" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
@@ -109,7 +217,6 @@
   </component>
   <component name="RunManager">
     <configuration name="hz_BI" type="Python.DjangoServer" factoryName="Django server">
-      <module name="hz_BI" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
       <envs>
@@ -121,6 +228,7 @@
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
+      <module name="hz_BI" />
       <option name="launchJavascriptDebuger" value="false" />
       <option name="port" value="8000" />
       <option name="host" value="" />
@@ -131,6 +239,9 @@
       <option name="useCustomRunCommand" value="false" />
       <option name="customRunCommand" value="" />
     </configuration>
+  </component>
+  <component name="ShelveChangesManager" show_recycled="false">
+    <option name="remove_strategy" value="false" />
   </component>
   <component name="SvnConfiguration">
     <configuration />
@@ -146,30 +257,30 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="-8" y="-8" width="1616" height="876" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info anchor="bottom" id="TODO" order="6" />
-      <window_info anchor="bottom" id="Event Log" side_tool="true" />
-      <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" />
-      <window_info anchor="bottom" id="Version Control" />
-      <window_info anchor="bottom" id="Python Console" />
-      <window_info anchor="bottom" id="Terminal" />
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.25" />
-      <window_info anchor="bottom" id="Docker" show_stripe_button="false" />
-      <window_info anchor="right" id="Database" />
-      <window_info anchor="right" id="SciView" />
-      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
-      <window_info active="true" anchor="bottom" id="Debug" order="3" visible="true" weight="0.3997833" />
-      <window_info id="Favorites" side_tool="true" />
-      <window_info anchor="bottom" id="Find" order="1" />
-      <window_info anchor="right" id="Commander" order="0" weight="0.4" />
-      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
-      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
-      <window_info anchor="bottom" id="Message" order="0" />
-      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.20437019" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
+      <window_info id="调试" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="运行" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.32884097" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Data View" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -189,8 +300,10 @@
       </breakpoints>
       <option name="time" value="7" />
     </breakpoint-manager>
+    <watches-manager />
   </component>
   <component name="editorHistoryManager">
+<<<<<<< HEAD
     <entry file="file://D:/Djangosite/Djangoenv/Lib/site-packages/django/core/handlers/base.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="184">
@@ -202,8 +315,173 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="301">
           <caret line="162" column="62" lean-forward="true" selection-start-line="162" selection-start-column="62" selection-end-line="162" selection-end-column="62" />
+=======
+    <entry file="file://$PROJECT_DIR$/templates/explore/explore.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1300">
+          <caret line="50" column="73" lean-forward="false" selection-start-line="50" selection-start-column="73" selection-end-line="50" selection-end-column="73" />
           <folding>
-            <element signature="e#0#31#0" expanded="true" />
+            <marker date="1532504391156" expanded="true" signature="1091:3015" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1130:1142" ph="&lt;div style... %}" />
+            <marker date="1532504391156" expanded="true" signature="1147:1167" ph="    position: fixe... %}" />
+            <marker date="1532504391156" expanded="true" signature="1172:1186" ph="    top: 30p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1191:1203" ph="    left: ... %}" />
+            <marker date="1532504391156" expanded="true" signature="1208:1226" ph="    height: 200p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1231:1254" ph="    line-height: 200p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1259:1279" ph="    font-size: 28p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1284:1302" ph="    z-index: 100... %}" />
+            <marker date="1532504391156" expanded="true" signature="1307:1328" ph="    color: goldenro... %}" />
+            <marker date="1532504391156" expanded="true" signature="1333:1356" ph="    text-align: cente... %}" />
+            <marker date="1532504391156" expanded="true" signature="1361:1377" ph="    width: 100... %}" />
+            <marker date="1532504391156" expanded="true" signature="1382:1429" ph="    background-color: ##333;&quot;&gt;探索页面未完成，暂无数据&lt;/di... %}" />
+            <marker date="1532504391156" expanded="true" signature="1456:2845" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1495:1944" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1534:1681" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1587:1670" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1720:1934" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1755:1923" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1977:2473" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2048:2411" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2058:2138" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2148:2226" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2236:2313" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2323:2401" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2501:2577" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2631:2722" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2731:2834" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/js/probe.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="3874">
+          <caret line="149" column="9" lean-forward="false" selection-start-line="149" selection-start-column="9" selection-end-line="149" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/css/probe.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1066">
+          <caret line="41" column="20" lean-forward="true" selection-start-line="41" selection-start-column="20" selection-end-line="41" selection-end-column="20" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/explore/explore.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1300">
+          <caret line="50" column="73" lean-forward="false" selection-start-line="50" selection-start-column="73" selection-end-line="50" selection-end-column="73" />
+          <folding>
+            <marker date="1532504391156" expanded="true" signature="1091:3015" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1130:1142" ph="&lt;div style... %}" />
+            <marker date="1532504391156" expanded="true" signature="1147:1167" ph="    position: fixe... %}" />
+            <marker date="1532504391156" expanded="true" signature="1172:1186" ph="    top: 30p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1191:1203" ph="    left: ... %}" />
+            <marker date="1532504391156" expanded="true" signature="1208:1226" ph="    height: 200p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1231:1254" ph="    line-height: 200p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1259:1279" ph="    font-size: 28p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1284:1302" ph="    z-index: 100... %}" />
+            <marker date="1532504391156" expanded="true" signature="1307:1328" ph="    color: goldenro... %}" />
+            <marker date="1532504391156" expanded="true" signature="1333:1356" ph="    text-align: cente... %}" />
+            <marker date="1532504391156" expanded="true" signature="1361:1377" ph="    width: 100... %}" />
+            <marker date="1532504391156" expanded="true" signature="1382:1429" ph="    background-color: ##333;&quot;&gt;探索页面未完成，暂无数据&lt;/di... %}" />
+            <marker date="1532504391156" expanded="true" signature="1456:2845" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1495:1944" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1534:1681" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1587:1670" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1720:1934" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1755:1923" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1977:2473" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2048:2411" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2058:2138" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2148:2226" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2236:2313" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2323:2401" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2501:2577" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2631:2722" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2731:2834" ph="..." />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/js/probe.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="364">
+          <caret line="14" column="22" lean-forward="true" selection-start-line="14" selection-start-column="22" selection-end-line="14" selection-end-column="22" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/css/probe.css">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="234">
+          <caret line="36" column="0" lean-forward="false" selection-start-line="36" selection-start-column="0" selection-end-line="36" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/js/probe.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-2236">
+          <caret line="156" column="9" lean-forward="false" selection-start-line="156" selection-start-column="9" selection-end-line="156" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/choose-dist/jquery.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="130">
+          <caret line="5" column="28898" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="5" selection-end-column="28898" />
+          <folding>
+            <element signature="n#!!doc" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/static/index/choose-dist/jquery-1.10.2.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="0">
+          <caret line="0" column="78" lean-forward="true" selection-start-line="0" selection-start-column="29" selection-end-line="0" selection-end-column="78" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/templates/explore/explore.html">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="390">
+          <caret line="27" column="24" lean-forward="true" selection-start-line="27" selection-start-column="24" selection-end-line="27" selection-end-column="24" />
+>>>>>>> 70e4bad47122dade1a0ec15fa448f258a4799001
+          <folding>
+            <marker date="1532504391156" expanded="true" signature="1091:3015" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1130:1142" ph="&lt;div style... %}" />
+            <marker date="1532504391156" expanded="true" signature="1147:1167" ph="    position: fixe... %}" />
+            <marker date="1532504391156" expanded="true" signature="1172:1186" ph="    top: 30p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1191:1203" ph="    left: ... %}" />
+            <marker date="1532504391156" expanded="true" signature="1208:1226" ph="    height: 200p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1231:1254" ph="    line-height: 200p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1259:1279" ph="    font-size: 28p... %}" />
+            <marker date="1532504391156" expanded="true" signature="1284:1302" ph="    z-index: 100... %}" />
+            <marker date="1532504391156" expanded="true" signature="1307:1328" ph="    color: goldenro... %}" />
+            <marker date="1532504391156" expanded="true" signature="1333:1356" ph="    text-align: cente... %}" />
+            <marker date="1532504391156" expanded="true" signature="1361:1377" ph="    width: 100... %}" />
+            <marker date="1532504391156" expanded="true" signature="1382:1429" ph="    background-color: ##333;&quot;&gt;探索页面未完成，暂无数据&lt;/di... %}" />
+            <marker date="1532504391156" expanded="true" signature="1456:2845" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1495:1944" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1534:1681" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1587:1670" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1720:1934" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1755:1923" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="1977:2473" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2048:2411" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2058:2138" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2148:2226" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2236:2313" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2323:2401" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2501:2577" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2631:2722" ph="..." />
+            <marker date="1532504391156" expanded="true" signature="2731:2834" ph="..." />
           </folding>
         </state>
       </provider>
