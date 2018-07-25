@@ -34,7 +34,7 @@ var lyear = ryear = currentYear,
 var channal = '全部渠道', // 渠道
 	region = '全部区域', // 区域
 	depot = '全部配送中心'; // 配送中心
-var orderAmount= document.getElementById("order-amount"), // 订单金额
+var orderAmount = document.getElementById("order-amount"), // 订单金额
 	manCounts = document.getElementById("manCounts"), // 下单客户数
 	orderCounts = document.getElementById("orderCounts"), // 订单数量
 	addManCounts = document.getElementById("addManCounts"); // 新增客户数
@@ -50,29 +50,28 @@ var todayData = {
 	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330]
 }
 lineChart(salesTrend, todayData, '#38A7F0');
-var categoryPieData=[{
-					value: 335,
-					name: '直接访问'
-				},
-				{
-					value: 310,
-					name: '邮件营销'
-				},
-				{
-					value: 234,
-					name: '联盟广告'
-				},
-				{
-					value: 135,
-					name: '视频广告'
-				},
-				{
-					value: 1548,
-					name: '搜索引擎'
-				}
-			];
+var categoryPieData = [{
+		value: 335,
+		name: '直接访问'
+	},
+	{
+		value: 310,
+		name: '邮件营销'
+	},
+	{
+		value: 234,
+		name: '联盟广告'
+	},
+	{
+		value: 135,
+		name: '视频广告'
+	},
+	{
+		value: 1548,
+		name: '搜索引擎'
+	}
+];
 categoryPieEcharts(categoryPie, categoryPieData);
-
 
 init({
 	lyear: lyear,
@@ -113,8 +112,6 @@ oBtn.onclick = function() {
 	})
 }
 
-
-
 function init(data, callback) {
 	$.ajax({
 		type: "get",
@@ -132,32 +129,47 @@ function init(data, callback) {
 		},
 		success: function(res) {
 			console.log(res);
-			orderAmount.innerHTML=res.part1['订单金额'];
-			manCounts.innerHTML=res.part1['下单客户数'];
-			orderCounts.innerHTML=res.part1['订单数量'];
-			addManCounts.innerHTML=res.part1['新增客户数'];
+			orderAmount.innerHTML = res.part1['订单金额'];
+			manCounts.innerHTML = res.part1['下单客户数'];
+			orderCounts.innerHTML = res.part1['订单数量'];
+			addManCounts.innerHTML = res.part1['新增客户数'];
 			/*各渠道销售额*/
-			var data1=res.part2,
-				channelData={
+			var data1 = res.part2,
+				channelData = {
 					x: [],
 					y: []
 				}
-			for (var attr in data1) {
+			for(var attr in data1) {
 				channelData.x.push(attr);
 				channelData.y.push(data1[attr]);
 			}
 			channelSaleroom(channel, channelData);
 			/*销售趋势*/
-			var data2=res.part3['销售趋势'];
+			var data2 = res.part3['销售趋势'];
 			
 		}
 	});
 }
 
-
-
-
-
+function switchs(data) {
+	switch(data) {
+		case 'week':
+			return '周';
+			break;
+		case 'day':
+			return '日';
+			break;
+		case 'month':
+			return '月';
+			break;
+		case 'hour':
+			return 'h';
+			break;
+		default:
+			return data;
+			break;
+	}
+}
 
 function channelSaleroom(dom, data, dataZoomData) {
 	var channelSaleroom = echarts.init(dom);
@@ -172,17 +184,17 @@ function channelSaleroom(dom, data, dataZoomData) {
 		yAxis: {
 			type: 'value',
 			axisLabel: {
-				formatter: function(val){
-					return val>=10000?(parseInt(val/100)/100+'W'):val;
+				formatter: function(val) {
+					return val >= 10000 ? (parseInt(val / 100) / 100 + 'W') : val;
 				}
 			}
 		},
 		series: [{
 			data: data.y,
 			label: {
-	            show: true,
-	            position: 'top'
-	        },
+				show: true,
+				position: 'top'
+			},
 			type: 'bar'
 		}]
 	})
@@ -202,8 +214,8 @@ function lineChart(dom, data, col) {
 		yAxis: {
 			type: 'value',
 			axisLabel: {
-				formatter: function(val){
-					return val>=10000?(parseInt(val/100)/100+'W'):val;
+				formatter: function(val) {
+					return val >= 10000 ? (parseInt(val / 100) / 100 + 'W') : val;
 				}
 			}
 		},
@@ -230,7 +242,7 @@ function lineChart(dom, data, col) {
 	})
 }
 
-function categoryPieEcharts (dom, data) {
+function categoryPieEcharts(dom, data) {
 	var categoryPie = echarts.init(dom);
 	categoryPie.setOption({
 		title: {
