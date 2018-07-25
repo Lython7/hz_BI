@@ -625,11 +625,18 @@ def explore_API(request):
                 dict_bar[i] = dict_foo[i]
             else:
                 dict_bar[i] = 0
+
+
+    dataresult = []
     if dict_bar == {}:
-        res['part3'] = {'销售趋势': dict_foo, '类型': tmp_foo}
+        for i in dict_foo:
+            dataresult.append({i: dict_foo[i]})
+        res['part3'] = {'销售趋势': dataresult, '类型': tmp_foo}
         # res['销售趋势'] = dict_foo
     else:
-        res['part3'] = {'销售趋势': dict_bar, '类型': tmp_foo}
+        for i in dict_bar:
+            dataresult.append({i: dict_bar[i]})
+        res['part3'] = {'销售趋势': dataresult, '类型': tmp_foo}
         # res['销售趋势'] = dict_bar
 
     try:
