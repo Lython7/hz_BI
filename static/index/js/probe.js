@@ -9,6 +9,13 @@ var currentDate = dataValue.getDate();
 oBtn.innerHTML = '本月';
 oShow.innerHTML = currentYear + '-' + currentMonth + '-1~' + currentYear + '-' + currentMonth + '-' + currentDate;
 
+var lyear = ryear = currentYear,
+	lmonth = rmonth = currentMonth,
+	lday = 1,
+	rday = currentDate;
+var channal = '全部渠道', // 渠道
+	region = '全部区域', // 区域
+	depot = '全部配送中心'; // 配送中心
 ! function() {
 	var $target = $('#J_flilters');
 	$target.citySelect({
@@ -24,54 +31,31 @@ oShow.innerHTML = currentYear + '-' + currentMonth + '-1~' + currentYear + '-' +
 	$target.on('done.ydui.cityselect', function(ret) {
 		console.log(ret);
 		$(this).val(ret.country + ' ' + ret.provance + ' ' + ret.city + ' ' + ret.area);
+		channal=ret.provance;
+		region=ret.city;
+		depot=ret.area;
+		init({
+			lyear: lyear,
+			lmonth: lmonth,
+			lday: lday,
+			ryear: ryear,
+			rmonth: rmonth,
+			rday: rday,
+			channal: channal,
+			region: region,
+			depot: depot
+		})
 	});
 }();
 
-var lyear = ryear = currentYear,
-	lmonth = rmonth = currentMonth,
-	lday = 1,
-	rday = currentDate;
-var channal = '全部渠道', // 渠道
-	region = '全部区域', // 区域
-	depot = '全部配送中心'; // 配送中心
+
 var orderAmount = document.getElementById("order-amount"), // 订单金额
 	manCounts = document.getElementById("manCounts"), // 下单客户数
 	orderCounts = document.getElementById("orderCounts"), // 订单数量
 	addManCounts = document.getElementById("addManCounts"); // 新增客户数
-var channel = document.getElementById("channelSaleroom"); // 各渠道销售额
-var salesTrend = document.getElementById("salesTrend"); // 销售趋势
-var categoryPie = document.getElementById("categoryPie"); // 商品统计
-/*channelSaleroom(channel, {
-	x: ['B2B', '电商', '电视'],
-	y: [120, 200, 150]
-});*/
-var todayData = {
-	x: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23],
-	y: [820, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330, 1320, 932, 901, 934, 1290, 1330]
-}
-lineChart(salesTrend, todayData, '#38A7F0');
-var categoryPieData = [{
-		value: 335,
-		name: '直接访问'
-	},
-	{
-		value: 310,
-		name: '邮件营销'
-	},
-	{
-		value: 234,
-		name: '联盟广告'
-	},
-	{
-		value: 135,
-		name: '视频广告'
-	},
-	{
-		value: 1548,
-		name: '搜索引擎'
-	}
-];
-categoryPieEcharts(categoryPie, categoryPieData);
+var channel = echarts.init(document.getElementById("channelSaleroom")); // 各渠道销售额
+var salesTrend = echarts.init(document.getElementById("salesTrend")); // 销售趋势
+var categoryPie = echarts.init(document.getElementById("categoryPie")); // 商品统计
 
 init({
 	lyear: lyear,
@@ -87,28 +71,25 @@ init({
 
 oBtn.onclick = function() {
 	chooseCreate(function(con, res) {
-		console.log(res);
 		oBtn.innerHTML = con;
 		oShow.innerHTML = res.start + '~' + res.end;
-		var start = res.start.split('-');
-		var end = res.end.split('-');
-		/*var params = 'classify=' + classifyName + '&lyear=' + start[0] + '&lmonth=' + start[1] + '&lday=' + start[2] +'&ryear=' + end[0] + '&rmonth=' + end[1] + '&rday=' + end[2];
-        ajax('GET','../goodscount_2/',params,function (res){
-        	var data = JSON.parse(res);
-			var sum = data.amount;
-			var datas = [];
-			for(var item in data.data){
-				datas.push({
-					name: item,
-					value: data.data[item]
-				})
-			}
-			datas.sort(function (a, b) {
-				return b.value - a.value;
-			});
-			console.log(datas);
-			init(sum, datas);
-		})*/
+		lyear=res.start.split('-')[0];
+		lmonth=res.start.split('-')[1];
+		lday=res.start.split('-')[2];
+		ryear=res.end.split('-')[0];
+		rmonth=res.end.split('-')[1];
+		rday=res.end.split('-')[2];
+		init({
+			lyear: lyear,
+			lmonth: lmonth,
+			lday: lday,
+			ryear: ryear,
+			rmonth: rmonth,
+			rday: rday,
+			channal: channal,
+			region: region,
+			depot: depot
+		})
 	})
 }
 
@@ -146,7 +127,33 @@ function init(data, callback) {
 			channelSaleroom(channel, channelData);
 			/*销售趋势*/
 			var data2 = res.part3['销售趋势'];
-			
+			var endFilter = switchs(data2['类型']);
+			var echartsData={
+				x:[],
+				y:[]
+			}
+			for (var i=0; i<data2.length; i++) {
+				for(var attr in data2[i]){
+					var xData= endFilter==='h'?attr.split('-')[2]:attr;
+					echartsData.x.push(attr + endFilter);
+					echartsData.y.push(data2[i][attr]);
+				}
+			}
+			lineChart(salesTrend, echartsData, '#38A7F0');
+			/*商品统计*/
+			var data3 = res.part4['商品分类销售额'];
+			var categoryPieData = [],
+				legends=[],
+				sum=0;
+			for (var attr in data3) {
+				sum+=data3[attr];
+				legends.push(attr);
+				categoryPieData.push({
+					name: attr,
+					value: data3[attr]
+				})
+			}
+			categoryPieEcharts(categoryPie, categoryPieData, sum, legends);
 		}
 	});
 }
@@ -172,7 +179,8 @@ function switchs(data) {
 }
 
 function channelSaleroom(dom, data, dataZoomData) {
-	var channelSaleroom = echarts.init(dom);
+//	var channelSaleroom = echarts.init(dom);
+	var channelSaleroom = dom;
 	channelSaleroom.setOption({
 		xAxis: {
 			type: 'category',
@@ -201,7 +209,17 @@ function channelSaleroom(dom, data, dataZoomData) {
 }
 
 function lineChart(dom, data, col) {
-	var lineChart = echarts.init(dom);
+//	var lineChart = echarts.init(dom);
+	var lineChart = dom;
+	var dataZoom=[];
+	if (data.x.length>=10) {
+		dataZoom=[{ // 滑动
+			type: 'inside',
+			zoomLock: true,
+			start: data.x[0],
+			end: data.x[9]
+		}]
+	}
 	lineChart.setOption({
 		grid: {
 			left: 50
@@ -219,12 +237,7 @@ function lineChart(dom, data, col) {
 				}
 			}
 		},
-		dataZoom: [{ // 滑动
-			type: 'inside',
-			zoomLock: true,
-			start: 0,
-			end: 30
-		}],
+		dataZoom: dataZoom,
 		series: [{
 			smooth: true, // 曲线平滑
 			itemStyle: { // 让折线图的每个折点都显示对应数值
@@ -242,47 +255,42 @@ function lineChart(dom, data, col) {
 	})
 }
 
-function categoryPieEcharts(dom, data) {
-	var categoryPie = echarts.init(dom);
+
+function categoryPieEcharts(dom, datas, sum, legends) {
+//	var categoryPie = echarts.init(dom);
+	var categoryPie = dom;
 	categoryPie.setOption({
 		title: {
-			text: '总资产',
-			subtext: '2000000.00',
+			text: sum,
+			// subtext: '2000000.00',
 			x: 'center',
-			y: '40%'
+			y: 'center'
+		},
+		legend: {
+			type: 'scroll',
+			orient: 'vertical',
+			x: 'left',
+			data:legends
 		},
 		series: [{
-			name: '访问来源',
+			name: '本月商品分类销售额',
 			type: 'pie',
 			radius: ['50%', '70%'],
 			avoidLabelOverlap: false,
 			hoverAnimation: false, // 悬浮动画效果
 			label: {
-				normal: {
-					show: false,
-					position: 'center'
-				},
-				emphasis: {
-					show: true,
-					textStyle: {
-						fontSize: '30',
-						fontWeight: 'bold'
-					}
-				}
-			},
-			label: {
-
-			},
-			itemStyle: {
-
-			},
-			data: data
+               show: false,
+               formatter: "{b}：{c}({d}%)"
+            },
+			labelLine: {
+                show: false
+            },
+			data: datas
 		}]
 	});
+	categoryPie.on('click', function (params) {
+		sessionStorage.tabIndex=0;
+		localStorage.categoryPieName = params.name;
+		location.href="../views/goodscount/";
+	});
 }
-
-/*var saleBar = document.getElementById("saleBar");
-channelSaleroom(saleBar, {
-	x: ['北京', '华北区', '东北区', '北方区', '西北区', '西南区', '华南区', '华东区', '中原区'],
-	y: [120, 200, 150, 80, 70, 90, 110, 130, 356]
-});*/
