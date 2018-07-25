@@ -1,27 +1,29 @@
 {% load static %}
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>探索</title>
-    {% include 'index/head.html' %}
-    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
-    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/lcalendars.css' %}/>
-    <script src={% static 'index/lcalendar/LCalendar.js' %} type="text/javascript" charset="utf-8"></script>
-    <script src={% static 'index/lcalendar/lcalendars.js' %} type="text/javascript" charset="utf-8"></script>
-    
-    {#<link rel="stylesheet" type="text/css" href={% static 'index/choose-dist/ydui.css?rev=@@hash' %} />#}
-    <link rel="stylesheet" type="text/css" href={% static 'index/choose-dist/ydui.css' %} />
-    <link rel="stylesheet" type="text/css" href={% static 'index/choose-dist/demo.css' %} />
-	<script src={% static 'index/choose-dist/ydui.flexible.js' %}></script>
-	<script src={% static 'index/choose-dist/jquery-1.10.2.js' %}></script>
-	<script src={% static 'index/choose-dist/ydui.citys.js' %}></script>
-	
-    <link rel="stylesheet" type="text/css" href={% static 'index/css/probe.css' %}/>
-</head>
-<body>
-{% include 'index/nav.html' %}
-{#<div style="#}
+
+	<head>
+		<meta charset="UTF-8">
+		<title>探索</title>
+		{% include 'index/head.html' %}
+		<link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
+		<link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/lcalendars.css' %}/>
+		<script src={% static 'index/lcalendar/LCalendar.js' %} type="text/javascript" charset="utf-8"></script>
+		<script src={% static 'index/lcalendar/lcalendars.js' %} type="text/javascript" charset="utf-8"></script>
+
+		
+		<link rel="stylesheet" href={% static 'index/choose-dist/ydui.css' %} />
+		<link rel="stylesheet" href={% static 'index/choose-dist/demo.css' %} />
+		<script src={% static 'index/choose-dist/ydui.flexible.js' %}></script>
+		<script src={% static 'index/choose-dist/jquery-1.10.2.js' %}></script>
+		<script src={% static 'index/choose-dist/ydui.citys.js' %}></script>
+
+		<link rel="stylesheet" type="text/css" href={% static 'index/css/probe.css' %}/>
+	</head>
+
+	<body>
+		{% include 'index/nav.html' %} 
+	{#<div style="#}
 {#    position: fixed;#}
 {#    top: 30px;#}
 {#    left: 0;#}
@@ -33,7 +35,7 @@
 {#    text-align: center;#}
 {#    width: 100%;#}
 {#    background-color: #333;">探索页面未完成，暂无数据</div>#}
-<div class="container">
+		<div class="container">
 			<h1>探索</h1>
 			<div class="filter">
 				<div class="filter-list clearfix">
@@ -46,7 +48,7 @@
 				<div class="filter-list clearfix">
 					<span>筛选：</span>
 					<label>
-						<input type="text" readonly="" id="J_flilters" value="" placeholder="请选择收货地址">
+						<input type="text" readonly="true" id="J_flilters" value="本月 全部渠道 全部区域 全部配送中心" placeholder="请选择收货地址">
 						<span class="czs-angle-right-l"></span>
 					</label>
 				</div>
@@ -60,15 +62,15 @@
 					</li>
 					<li>
 						<span>下单客户数：</span>
-						<span id="">345234</span>
+						<span id="manCounts">345234</span>
 					</li>
 					<li>
 						<span>订单数量：</span>
-						<span id="">4234</span>
+						<span id="orderCounts">4234</span>
 					</li>
 					<li>
 						<span>新增客户数：</span>
-						<span id="">755</span>
+						<span id="addManCounts">755</span>
 					</li>
 				</ul>
 				<!--折线图-->
@@ -84,12 +86,12 @@
 				<!--环饼-->
 				<div id="categoryPie"></div>
 			</div>
-			<div class="categorySaleroom">
+			<!--<div class="categorySaleroom">
 				<div class="title">区域统计</div>
 				<div id="saleBar"></div>
-			</div>
+			</div>-->
 		</div>
 		<script src={% static 'index/choose-dist/ydui.js' %}></script>
 		<script src={% static 'index/js/probe.js' %} type="text/javascript" charset="utf-8"></script>
-</body>
+	</body>
 </html>
