@@ -1,7 +1,8 @@
 var index = sessionStorage.tabIndex || 0;
 navIndex(index);
 var oBtn = document.getElementById("time-btn"),
-	oShow = document.getElementById("time-show");
+	oShow = document.getElementById("time-show"),
+	oCategoryName = document.getElementById("categoryName");
 var dataValue = new Date();
 var currentYear = dataValue.getFullYear();
 var currentMonth = dataValue.getMonth()+1;
@@ -11,6 +12,7 @@ oShow.innerHTML=currentYear+'-'+currentMonth+'-1~'+currentYear+'-'+currentMonth+
 var pieChart = document.getElementById("categoryPie");
 var categoryPie = echarts.init(pieChart);
 var classifyName = localStorage.categoryPieName || '饮料';
+oCategoryName.innerHTML=classifyName;
 ajax('GET','../goodscount_2/','classify=' + classifyName + '&lyear=' + currentYear + '&lmonth=' + currentMonth + '&lday=1&ryear=' + currentYear + '&rmonth=' + currentMonth + '&rday=' + currentDate,function (res) {
     var data = JSON.parse(res);
 	var sum = data.amount;
@@ -55,30 +57,6 @@ oBtn.onclick = function() {
 		})
     })
 }
-
-// var data = [
-// 	{
-// 		value: 335,
-// 		name: '直接访问'
-// 	},
-// 	{
-// 		value: 310,
-// 		name: '邮件营销'
-// 	},
-// 	{
-// 		value: 234,
-// 		name: '联盟广告'
-// 	},
-// 	{
-// 		value: 135,
-// 		name: '视频广告'
-// 	},
-// 	{
-// 		value: 1548,
-// 		name: '搜索引擎'
-// 	}
-// ];
-// categoryPieEcharts(data);
 
 function init(sum, data) {
 	categoryPieEcharts(sum, data); // 绘制echarts饼图
