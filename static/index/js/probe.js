@@ -229,7 +229,8 @@ function lineChart(dom, data, col) {
 			data: data.x
 		},
 		tooltip:{
-	      show: true  
+			show: true,
+			trigger: 'axis'
 	    },
 		yAxis: {
 			type: 'value',
