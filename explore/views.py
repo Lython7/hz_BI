@@ -538,10 +538,16 @@ def explore_API(request):
         '电视购物': int(television),
         '产品部': int(chanpinbu)
     }
+    try:
+        time_seconds = make_time(ryear, rmonth, rday+1) - make_time(lyear, lmonth, lday)
 
-    time_seconds = make_time(ryear, rmonth, rday+1) - make_time(lyear, lmonth, lday)
-    time_days = time_seconds/60/60/24
+    except:
+        try:
+            time_seconds = make_time(ryear, rmonth+1, 1) - make_time(lyear, lmonth, lday)
+        except:
+            time_seconds = make_time(ryear+1, 1, 1) - make_time(lyear, lmonth, lday)
 
+    time_days = time_seconds / 60 / 60 / 24
     # print(queryset_order.extra(select={'month': 'extract( month from createDate )'}).values('month').annotate(sum=Sum('amount')))
 
     # order_orderamount = 0 if queryset_order == None else queryset_order.aggregate(Sum('amount'))['amount__sum']
@@ -559,7 +565,7 @@ def explore_API(request):
 
         tmp_foo = 'hour'
 
-    elif 3 <= time_days < 21:
+    elif 3 <= time_days < 32:
         # 趋势按照天返回
         try:
             data_list_order = list(queryset_order.extra(select={'day': """DATE_FORMAT(createDate,'%%Y-%%m-%%d')"""}).values('day').annotate(sum=Sum('amount')))
@@ -571,7 +577,7 @@ def explore_API(request):
             data_list_pos = []
         tmp_foo = 'day'
 
-    elif 21 <= time_days < 100:
+    elif 32 <= time_days < 100:
         # 趋势按照周返回
         try:
             data_list_order = list(queryset_order.extra(select={'week': 'extract( week from createDate )'}).values('week').annotate(sum=Sum('amount')))
