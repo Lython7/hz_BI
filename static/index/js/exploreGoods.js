@@ -13,8 +13,7 @@ var pieChart = document.getElementById("categoryPie");
 var categoryPie = echarts.init(pieChart);
 var classifyName = localStorage.categoryPieName || '饮料';
 oCategoryName.innerHTML=classifyName;
-ajax('GET','../goodscount_2/','classify=' + classifyName,function (res) {
-	// ajax('GET','../goodscount_2/','classify=' + classifyName + '&lyear=' + currentYear + '&lmonth=' + currentMonth + '&lday=1&ryear=' + currentYear + '&rmonth=' + currentMonth + '&rday=' + currentDate,function (res) {
+ajax('GET','../goodscount_2/','classify=' + classifyName + '&lyear=' + currentYear + '&lmonth=' + currentMonth + '&lday=1&ryear=' + currentYear + '&rmonth=' + currentMonth + '&rday=' + currentDate,function (res) {
     var data = JSON.parse(res);
 	var sum = data.amount;
 	var datas = [];
@@ -32,33 +31,6 @@ ajax('GET','../goodscount_2/','classify=' + classifyName,function (res) {
 });
 
 
-/*oBtn.onclick = function() {
-	chooseCreate(function(con, res) {
-        console.log(res);
-        oBtn.innerHTML=con;
-        oShow.innerHTML=res.start+'~'+res.end;
-        var start = res.start.split('-');
-        var end = res.end.split('-');
-        var params = 'classify=' + classifyName + '&lyear=' + start[0] + '&lmonth=' + start[1] + '&lday=' + start[2] +'&ryear=' + end[0] + '&rmonth=' + end[1] + '&rday=' + end[2];
-        ajax('GET','../goodscount_2/',params,function (res){
-        	var data = JSON.parse(res);
-			var sum = data.amount;
-			var datas = [];
-			for(var item in data.data){
-				datas.push({
-					name: item,
-					value: data.data[item]
-				})
-			}
-			datas.sort(function (a, b) {
-				return b.value - a.value;
-			});
-			console.log(datas);
-			init(sum, datas);
-		})
-    })
-}*/
-
 function init(sum, data) {
 	categoryPieEcharts(sum, data); // 绘制echarts饼图
 	sortList(data); // 排名
@@ -66,7 +38,6 @@ function init(sum, data) {
 function categoryPieEcharts(sum, data) {
 	var legends=[];
 	for (var i=0; i<data.length; i++){
-	    // sum+=data[i].value;
 	    legends.push(data[i].name);
     }
 	categoryPie.setOption({
