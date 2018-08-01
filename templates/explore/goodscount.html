@@ -6,10 +6,10 @@
     <title>商品统计</title>
     {% include 'index/head.html' %}
     <link rel="stylesheet" type="text/css" href={% static 'index/css/goodscount.css' %}/>
-    {% comment %}<link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
+    <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
     <link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/lcalendars.css' %}/>
     <script src={% static 'index/lcalendar/LCalendar.js' %} type="text/javascript" charset="utf-8"></script>
-    <script src={% static 'index/lcalendar/lcalendars.js' %} type="text/javascript" charset="utf-8"></script>{% endcomment %}
+    <script src={% static 'index/lcalendar/lcalendars.js' %} type="text/javascript" charset="utf-8"></script>
 </head>
 <body>
 {% include 'index/nav.html' %}
@@ -20,11 +20,11 @@
 		<div class="container">
 			<div class="categorySaleroom">
 				<div class="tit-head">
-					<div id="categoryName" class="title"></div>
-					{% comment %}<div class="time-choose">
+					<div id="categoryName" class="title">饮料</div>
+					<div class="time-choose">
 						<span id="time-btn">本月</span>
 						<span id="time-show"></span>
-					</div>{% endcomment %}
+					</div>
 				</div>
 				{% comment %}<div class="data-show clearfix">
 					<div class="data-list">

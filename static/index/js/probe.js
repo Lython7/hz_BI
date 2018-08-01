@@ -294,6 +294,6 @@ function categoryPieEcharts(dom, datas, sum, legends) {
 	categoryPie.on('click', function (params) {
 		sessionStorage.tabIndex=1;
 		localStorage.categoryPieName = params.name;
-		location.href="../views/goodscount/";
+		location.href="goodscount/";
 	});
 }
