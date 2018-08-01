@@ -2,11 +2,17 @@ from collections import Counter
 from datetime import datetime, timedelta
 import time
 from time import strftime
+
+from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render
 from hzyg.models import *
 
+
+@login_required(login_url='/login/')
+def goodscount(request):
+    return render(request, 'explore/goodscount.html', context={})
 
 def make_time(year, month, day):
     __time = str(year) + '-' + str(month) + '-' + str(day)
