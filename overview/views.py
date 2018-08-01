@@ -401,7 +401,7 @@ def sales_trend(request):
 
 
 
-# @cache_page(CACHE_TIME)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @classify_amount_month_which
 def classify_amount_month(request):
@@ -455,11 +455,11 @@ def goodscount_2(request):
 
 
         queryset_pos =  b2b_posgoods.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
-                                                                  createDate__lte=datetime(ryear, rmonth, rday),
+                                                                  createDate__lte=datetime(ryear, rmonth, rday,23,59,59),
                                                                   secondIcatName=classify,
                                                                   )
         queryset_goodstb = b2b_goodstable.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday),
-                                                                       createDate__lte=datetime(ryear, rmonth, rday),
+                                                                       createDate__lte=datetime(ryear, rmonth, rday,23,59,59),
                                                                        secondIcatName=classify,
                                                                        )
 
