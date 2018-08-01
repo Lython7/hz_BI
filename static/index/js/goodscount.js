@@ -1,14 +1,14 @@
 var index = sessionStorage.tabIndex || 0;
 navIndex(index);
-var oBtn = document.getElementById("time-btn"),
-	oShow = document.getElementById("time-show"),
-	oCategoryName = document.getElementById("categoryName");
+// var oBtn = document.getElementById("time-btn"),
+// 	oShow = document.getElementById("time-show");
+var oCategoryName = document.getElementById("categoryName");
 var dataValue = new Date();
 var currentYear = dataValue.getFullYear();
 var currentMonth = dataValue.getMonth()+1;
 var currentDate = dataValue.getDate();
-oBtn.innerHTML='本月';
-oShow.innerHTML=currentYear+'-'+currentMonth+'-1~'+currentYear+'-'+currentMonth+'-'+currentDate;
+// oBtn.innerHTML='本月';
+// oShow.innerHTML=currentYear+'-'+currentMonth+'-1~'+currentYear+'-'+currentMonth+'-'+currentDate;
 var pieChart = document.getElementById("categoryPie");
 var categoryPie = echarts.init(pieChart);
 var classifyName = localStorage.categoryPieName || '饮料';
@@ -31,7 +31,7 @@ ajax('GET','../goodscount_2/','classify=' + classifyName + '&lyear=' + currentYe
 });
 
 
-oBtn.onclick = function() {
+/*oBtn.onclick = function() {
 	chooseCreate(function(con, res) {
         console.log(res);
         oBtn.innerHTML=con;
@@ -56,7 +56,7 @@ oBtn.onclick = function() {
 			init(sum, datas);
 		})
     })
-}
+}*/
 
 function init(sum, data) {
 	categoryPieEcharts(sum, data); // 绘制echarts饼图
