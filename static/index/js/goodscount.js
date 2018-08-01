@@ -78,7 +78,7 @@ function categoryPieEcharts(sum, data) {
 		},
 		 tooltip: {
 		     trigger: 'item',
-		     formatter: "{b}:<br /> {c}"
+		     formatter: "{b}: {c}"
 		 },
 		legend: {
 			type: 'scroll',

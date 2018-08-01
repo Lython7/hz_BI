@@ -1,19 +1,16 @@
 var index = sessionStorage.tabIndex || 0;
 navIndex(index);
-// var oBtn = document.getElementById("time-btn"),
-// 	oShow = document.getElementById("time-show");
 var oCategoryName = document.getElementById("categoryName");
 var dataValue = new Date();
 var currentYear = dataValue.getFullYear();
 var currentMonth = dataValue.getMonth()+1;
 var currentDate = dataValue.getDate();
-// oBtn.innerHTML='本月';
-// oShow.innerHTML=currentYear+'-'+currentMonth+'-1~'+currentYear+'-'+currentMonth+'-'+currentDate;
 var pieChart = document.getElementById("categoryPie");
 var categoryPie = echarts.init(pieChart);
 var classifyName = localStorage.categoryPieName || '饮料';
 oCategoryName.innerHTML=classifyName;
-ajax('GET','../goodscount_2/','classify=' + classifyName + '&lyear=' + currentYear + '&lmonth=' + currentMonth + '&lday=1&ryear=' + currentYear + '&rmonth=' + currentMonth + '&rday=' + currentDate,function (res) {
+var params = location.href.split('?')[1];
+ajax('GET','../goodscount_2/',params,function (res) {
     var data = JSON.parse(res);
 	var sum = data.amount;
 	var datas = [];
@@ -49,7 +46,7 @@ function categoryPieEcharts(sum, data) {
 		},
 		 tooltip: {
 		     trigger: 'item',
-		     formatter: "{b}:<br /> {c}"
+		     formatter: "{b}: {c}"
 		 },
 		legend: {
 			type: 'scroll',
