@@ -294,6 +294,7 @@ function categoryPieEcharts(dom, datas, sum, legends) {
 	categoryPie.on('click', function (params) {
 		sessionStorage.tabIndex=1;
 		localStorage.categoryPieName = params.name;
-		location.href="goodscount/";
+		var params = '?classify=' + params.name + '&lyear=' + lyear + '&lmonth=' + lmonth + '&lday=' + lday + '&ryear=' + ryear + '&rmonth=' + rmonth + '&rday=' + rday;
+		location.href="goodscount/" + params;
 	});
 }
