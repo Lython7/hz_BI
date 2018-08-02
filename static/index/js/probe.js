@@ -320,7 +320,8 @@ function categoryPieEcharts(dom, datas, sum, legends) {
 	categoryPie.on('click', function(params) {
 		sessionStorage.tabIndex = 1;
 		localStorage.categoryPieName = params.name;
-		var params = '?classify=' + params.name + '&lyear=' + lyear + '&lmonth=' + lmonth + '&lday=' + lday + '&ryear=' + ryear + '&rmonth=' + rmonth + '&rday=' + rday;
+		var params = '?lyear=' + encodeURI(lyear) + '&lmonth=' + encodeURI(lmonth) + '&lday=' + encodeURI(lday) + '&ryear=' + encodeURI(ryear) + '&rmonth=' + encodeURI(rmonth) + '&rday=' + encodeURI(rday) + '&channal=' + encodeURI(channal) + '&region=' + encodeURI(region) + '&depot=' + encodeURI(depot) + '&classify=' + encodeURI(params.name);
+// 		var params = '?lyear=' + lyear + '&lmonth=' + lmonth + '&lday=' + lday + '&ryear=' + ryear + '&rmonth=' + rmonth + '&rday=' + rday + '&channal=' + channal + '&region=' + region + '&depot=' + depot + '&classify=' + params.name;
 		location.href = "goodscount/" + params;
 	});
 }

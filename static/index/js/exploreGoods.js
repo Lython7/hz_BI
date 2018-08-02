@@ -6,21 +6,30 @@ var categoryPie = echarts.init(pieChart);
 var classifyName = localStorage.categoryPieName || '饮料';
 oCategoryName.innerHTML=classifyName;
 var params = location.href.split('?')[1];
-ajax('GET','../goodscount_2/',params,function (res) {
+var paramsArr = params.split('&');
+var res=[];
+for (var i=0; i<paramsArr.length; i++){
+	var tem = paramsArr[i].split('=');
+	res.push(tem[0] + '=' +decodeURI(tem[1]))
+}
+var params_=res.join('&');
+ajax('GET','../goodscount_2/',params_,function (res) {
     var data = JSON.parse(res);
-	var sum = data.amount;
-	var datas = [];
-	for(var item in data.data){
-		datas.push({
-			name: item,
-			value: data.data[item]
-		})
+    if (data.data&&data.amount){
+    	var sum = data.amount;
+		var datas = [];
+		for(var item in data.data){
+			datas.push({
+				name: item,
+				value: data.data[item]
+			})
+		}
+		datas.sort(function (a, b) {
+			return b.value - a.value;
+		});
+		console.log(datas);
+		init(sum, datas);
 	}
-	datas.sort(function (a, b) {
-		return b.value - a.value;
-    });
-	console.log(datas);
-	init(sum, datas);
 });
 
 
