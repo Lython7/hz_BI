@@ -712,7 +712,7 @@ def explore_API(request):
     return JsonResponse(res)
 
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 def goodscount_2(request):
     if request.method == 'GET':
