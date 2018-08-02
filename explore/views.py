@@ -7,6 +7,9 @@ from django.contrib.auth.decorators import login_required
 from django.db.models import Q, Sum
 from django.http import JsonResponse
 from django.shortcuts import render
+from django.views.decorators.cache import cache_page
+
+from hz_BI.settings import CACHE_TIME
 from hzyg.models import *
 
 
@@ -42,12 +45,13 @@ def getEveryDay(begin_date,end_date):
 # Create your views here.
 from overview.assistant import incomeDay
 
-
+@login_required(login_url='/login/')
 def explore(request):
     return render(request, 'explore/explore.html', context={})
 
 
-
+@cache_page(CACHE_TIME)
+@login_required(login_url='/login/')
 def explore_API(request):
     res = {}
     try:
@@ -708,7 +712,8 @@ def explore_API(request):
     return JsonResponse(res)
 
 
-# @cache_page(CACHE_TIME)
+@cache_page(CACHE_TIME)
+@login_required(login_url='/login/')
 def goodscount_2(request):
     if request.method == 'GET':
         res = {}
