@@ -1,10 +1,6 @@
 var index = sessionStorage.tabIndex || 0;
 navIndex(index);
 var oCategoryName = document.getElementById("categoryName");
-var dataValue = new Date();
-var currentYear = dataValue.getFullYear();
-var currentMonth = dataValue.getMonth()+1;
-var currentDate = dataValue.getDate();
 var pieChart = document.getElementById("categoryPie");
 var categoryPie = echarts.init(pieChart);
 var classifyName = localStorage.categoryPieName || '饮料';
