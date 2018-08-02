@@ -50,7 +50,7 @@ def explore(request):
     return render(request, 'explore/explore.html', context={})
 
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 def explore_API(request):
     res = {}
@@ -430,25 +430,25 @@ def explore_API(request):
             queryset_order = queryset_1.filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单'))
             queryset_goods = queryset_4.filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单'))
             queryset_pos = None
-            queryset_store = queryset_3.filter(Q(orderStoreName='禾中农业仓库') | Q(orderStoreName='农业订单'))
+            queryset_store = queryset_3.filter(Q(storeName='禾中农业仓库') | Q(storeName='农业订单'))
 
         elif channal == '禾中农业' and region == '总部机构' and depot == '禾中农业仓库':
             queryset_order = queryset_1.filter(orderStoreName='禾中农业仓库')
             queryset_goods = queryset_4.filter(orderStoreName='禾中农业仓库')
             queryset_pos = None
-            queryset_store = queryset_3.filter(orderStoreName='禾中农业仓库')
+            queryset_store = queryset_3.filter(storeName='禾中农业仓库')
 
         elif channal == '禾中农业' and region == '总部机构' and depot == '农业订单':
             queryset_order = queryset_1.filter(orderStoreName='农业订单')
             queryset_goods = queryset_4.filter(orderStoreName='农业订单')
             queryset_pos = None
-            queryset_store = queryset_3.filter(orderStoreName='农业订单')
+            queryset_store = queryset_3.filter(storeName='农业订单')
 
         elif channal == '产品部' and region == '总部机构' and depot == '产品部仓库':
             queryset_order = queryset_1.filter(orderStoreName='产品部仓库')
             queryset_goods = queryset_4.filter(orderStoreName='产品部仓库')
             queryset_pos = None
-            queryset_store = queryset_3.filter(orderStoreName='产品部仓库')
+            queryset_store = queryset_3.filter(storeName='产品部仓库')
 
         try:
             order_orderamount = 0 if queryset_order == None else queryset_order.aggregate(Sum('amount'))['amount__sum']
