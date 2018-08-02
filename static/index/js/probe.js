@@ -1,52 +1,71 @@
 navIndex(1);
 
+function formatter(params) {
+	var temRes = params.split('&');
+	var res = {}
+	for(var i = 0; i < temRes.length; i++) {
+		var tems = temRes[i].split('=');
+		res[tems[0]] = tems[1];
+	}
+	return res;
+}
 var oBtn = document.getElementById("time-btn"),
 	oShow = document.getElementById("time-show");
-var dataValue = new Date();
-var currentYear = dataValue.getFullYear();
-var currentMonth = dataValue.getMonth() + 1;
-var currentDate = dataValue.getDate();
-oBtn.innerHTML = '本月';
-oShow.innerHTML = currentYear + '-' + currentMonth + '-1~' + currentYear + '-' + currentMonth + '-' + currentDate;
+var $target = $('#J_flilters'); // 筛选
+var dates, lyear, lmonth, lday, ryear, rmonth, rday, channal, region, depot;
+var params = location.href.split("?")[1];
 
-var lyear = ryear = currentYear,
-	lmonth = rmonth = currentMonth,
-	lday = 1,
-	rday = currentDate;
-var channal = '全部渠道', // 渠道
-	region = '全部区域', // 区域
+function trueOn(params) {
+	var temRes = formatter(params);
+	dates = decodeURI(temRes.dates);
+	lyear = decodeURI(temRes.lyear);
+	lmonth = decodeURI(temRes.lmonth);
+	lday = decodeURI(temRes.lday);
+	ryear = decodeURI(temRes.ryear);
+	rmonth = decodeURI(temRes.rmonth);
+	rday = decodeURI(temRes.rday);
+	channal = decodeURI(temRes.channal);
+	region = decodeURI(temRes.region);
+	depot = decodeURI(temRes.depot);
+}
+
+function falseOff() {
+	dates = '本月';
+	lyear = ryear = new Date().getFullYear();
+	lmonth = rmonth = new Date().getMonth() + 1;
+	lday = 1;
+	rday = new Date().getDate();
+	channal = '全部渠道'; // 渠道
+	region = '全部区域'; // 区域
 	depot = '全部配送中心'; // 配送中心
-! function() {
-	var $target = $('#J_flilters');
-	$target.citySelect({
-		country: '本月',
-		provance: '全部渠道',
-		city: '全部区域',
-		area: '全部配送中心'
-	});
-	$target.on('click', function(event) {
-		event.stopPropagation();
-		$target.citySelect('open');
-	});
-	$target.on('done.ydui.cityselect', function(ret) {
-		console.log(ret);
-		$(this).val(ret.country + ' ' + ret.provance + ' ' + ret.city + ' ' + ret.area);
-		channal=ret.provance;
-		region=ret.city;
-		depot=ret.area;
-		init({
-			lyear: lyear,
-			lmonth: lmonth,
-			lday: lday,
-			ryear: ryear,
-			rmonth: rmonth,
-			rday: rday,
-			channal: channal,
-			region: region,
-			depot: depot
-		})
-	});
-}();
+}
+if(params) {
+	trueOn(params);
+} else {
+	falseOff();
+}
+
+oBtn.innerHTML = dates;
+YDUI_CITYS[0].CountryName = dates;
+oShow.innerHTML = lyear + '-' + lmonth + '-' + lday + '~' + ryear + '-' + rmonth + '-' + rday;
+$target.val(dates + ' ' + channal + ' ' + region + ' ' + depot);
+
+$target.citySelect({
+	country: dates,
+	provance: channal,
+	city: region,
+	area: depot
+});
+$target.on('click', function(event) {
+	event.stopPropagation();
+	$target.citySelect('open');
+});
+$target.on('done.ydui.cityselect', function(ret) {
+	channal = ret.provance;
+	region = ret.city;
+	depot = ret.area;
+	initLink();
+});
 
 
 var orderAmount = document.getElementById("order-amount"), // 订单金额
@@ -71,15 +90,21 @@ init({
 
 oBtn.onclick = function() {
 	chooseCreate(function(con, res) {
-		oBtn.innerHTML = con;
-		oShow.innerHTML = res.start + '~' + res.end;
-		lyear=res.start.split('-')[0];
-		lmonth=res.start.split('-')[1];
-		lday=res.start.split('-')[2];
-		ryear=res.end.split('-')[0];
-		rmonth=res.end.split('-')[1];
-		rday=res.end.split('-')[2];
-		init({
+		/*oBtn.innerHTML = con;
+		YDUI_CITYS[0].CountryName = con;
+		var temValue = $target.val().split(' ');
+		temValue[0] = con;
+		$target.val(temValue.join(' '));
+		oShow.innerHTML = res.start + '~' + res.end;*/
+		dates=con;
+		lyear = res.start.split('-')[0];
+		lmonth = res.start.split('-')[1];
+		lday = res.start.split('-')[2];
+		ryear = res.end.split('-')[0];
+		rmonth = res.end.split('-')[1];
+		rday = res.end.split('-')[2];
+		initLink();
+		/*init({
 			lyear: lyear,
 			lmonth: lmonth,
 			lday: lday,
@@ -89,10 +114,12 @@ oBtn.onclick = function() {
 			channal: channal,
 			region: region,
 			depot: depot
-		})
+		})*/
 	})
 }
-
+function initLink() {
+	location.href='../explore/?'+'lyear=' + encodeURI(lyear) + '&lmonth=' + encodeURI(lmonth) + '&lday=' + encodeURI(lday) + '&ryear=' + encodeURI(ryear) + '&rmonth=' + encodeURI(rmonth) + '&rday=' + encodeURI(rday) + '&dates=' + encodeURI(dates) + '&channal=' + encodeURI(channal) + '&region=' + encodeURI(region) + '&depot=' + encodeURI(depot);
+}
 function init(data, callback) {
 	$.ajax({
 		type: "get",
@@ -128,13 +155,13 @@ function init(data, callback) {
 			/*销售趋势*/
 			var data2 = res.part3['销售趋势'];
 			var endFilter = switchs(res.part3['类型']);
-			var echartsData={
-				x:[],
-				y:[]
+			var echartsData = {
+				x: [],
+				y: []
 			}
-			for (var i=0; i<data2.length; i++) {
-				for(var attr in data2[i]){
-					var xData= endFilter==='h'?attr.split('-')[2]:attr;
+			for(var i = 0; i < data2.length; i++) {
+				for(var attr in data2[i]) {
+					var xData = endFilter === 'h' ? attr.split('-')[2] : attr;
 					echartsData.x.push(xData + endFilter);
 					echartsData.y.push(data2[i][attr]);
 				}
@@ -143,10 +170,10 @@ function init(data, callback) {
 			/*商品统计*/
 			var data3 = res.part4['商品分类销售额'];
 			var categoryPieData = [],
-				legends=[],
-				sum=0;
-			for (var attr in data3) {
-				sum+=data3[attr];
+				legends = [],
+				sum = 0;
+			for(var attr in data3) {
+				sum += data3[attr];
 				legends.push(attr);
 				categoryPieData.push({
 					name: attr,
@@ -208,11 +235,11 @@ function channelSaleroom(dom, data, dataZoomData) {
 }
 
 function lineChart(dom, data, col) {
-//	var lineChart = echarts.init(dom);
+	//	var lineChart = echarts.init(dom);
 	var lineChart = dom;
-	var dataZoom=[];
-	if (data.x.length>=10) {
-		dataZoom=[{ // 滑动
+	var dataZoom = [];
+	if(data.x.length >= 10) {
+		dataZoom = [{ // 滑动
 			type: 'inside',
 			zoomLock: true,
 			startValue: data.x[0],
@@ -228,10 +255,10 @@ function lineChart(dom, data, col) {
 			boundaryGap: false,
 			data: data.x
 		},
-		tooltip:{
+		tooltip: {
 			show: true,
 			trigger: 'axis'
-	    },
+		},
 		yAxis: {
 			type: 'value',
 			axisLabel: {
@@ -258,9 +285,8 @@ function lineChart(dom, data, col) {
 	})
 }
 
-
 function categoryPieEcharts(dom, datas, sum, legends) {
-//	var categoryPie = echarts.init(dom);
+	//	var categoryPie = echarts.init(dom);
 	var categoryPie = dom;
 	categoryPie.setOption({
 		title: {
@@ -273,7 +299,7 @@ function categoryPieEcharts(dom, datas, sum, legends) {
 			type: 'scroll',
 			orient: 'vertical',
 			x: 'left',
-			data:legends
+			data: legends
 		},
 		series: [{
 			name: '本月商品分类销售额',
@@ -282,19 +308,19 @@ function categoryPieEcharts(dom, datas, sum, legends) {
 			avoidLabelOverlap: false,
 			hoverAnimation: false, // 悬浮动画效果
 			label: {
-               show: false,
-               formatter: "{b}：{c}({d}%)"
-            },
+				show: false,
+				formatter: "{b}：{c}({d}%)"
+			},
 			labelLine: {
-                show: false
-            },
+				show: false
+			},
 			data: datas
 		}]
 	});
-	categoryPie.on('click', function (params) {
-		sessionStorage.tabIndex=1;
+	categoryPie.on('click', function(params) {
+		sessionStorage.tabIndex = 1;
 		localStorage.categoryPieName = params.name;
 		var params = '?classify=' + params.name + '&lyear=' + lyear + '&lmonth=' + lmonth + '&lday=' + lday + '&ryear=' + ryear + '&rmonth=' + rmonth + '&rday=' + rday;
-		location.href="goodscount/" + params;
+		location.href = "goodscount/" + params;
 	});
 }

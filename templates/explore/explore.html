@@ -5,7 +5,6 @@
 	<head>
 		<meta charset="UTF-8">
 		<title>探索</title>
-		{% include 'index/head.html' %}
 		<link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/LCalendar.css' %}/>
 		<link rel="stylesheet" type="text/css" href={% static 'index/lcalendar/lcalendars.css' %}/>
 		<script src={% static 'index/lcalendar/LCalendar.js' %} type="text/javascript" charset="utf-8"></script>
@@ -19,6 +18,7 @@
         <script src={% static 'index/choose-dist/jquery.js' %}></script>
 		<script src={% static 'index/choose-dist/ydui.citys.js' %}></script>
 
+		{% include 'index/head.html' %}
 		<link rel="stylesheet" type="text/css" href={% static 'index/css/probe.css' %}/>
 	</head>
 
