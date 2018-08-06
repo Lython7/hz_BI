@@ -60,7 +60,7 @@ def today_income(request):
 
     return JsonResponse(res)
 
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @sales_amount_which
 def sales_amount(request):
@@ -241,7 +241,7 @@ def orderstore_count(request):
 
 
     # 订单数量
-@cache_page(CACHE_TIME)
+# @cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 @order_count_which
 def order_count(request):
@@ -255,27 +255,43 @@ def order_count(request):
         return JsonResponse({'res': '没有权限'})
 
     queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
+
     if __date[1] == '01':
         queryset_list_lastmonth = incometd._get_queryset_list(request, str(int(__date[0])-1), '12', None, _settings)
     else:
         queryset_list_lastmonth = incometd._get_queryset_list(request, __date[0], str(int(__date[1])-1), None, _settings)
 
     queryset_list_year = incometd._get_queryset_list(request, __date[0],None , None, _settings)
+
     queryset_list_lastyear = incometd._get_queryset_list(request, str(int(__date[0])-1), __date[1], None, _settings)
 
-    res['order_month'] = str(len(queryset_list_month[0]))
-    res['order_lastmonth'] = str(len(queryset_list_lastmonth[0]))
+    qm_order = queryset_list_month[0].filter(amount__gt=0)
+    qm_pos = queryset_list_month[1].filter(amount__gt=0)
 
+    qlm_order = queryset_list_lastmonth[0].filter(amount__gt=0)
+    qlm_pos = queryset_list_lastmonth[1].filter(amount__gt=0)
 
+    qy_order = queryset_list_year[0].filter(amount__gt=0)
+    qy_pos = queryset_list_year[1].filter(amount__gt=0)
+
+    qly_order = queryset_list_lastyear[0].filter(amount__gt=0)
+    qly_pos = queryset_list_lastyear[1].filter(amount__gt=0)
+
+    res['order_month'] = str(len(qm_order)+len(qm_pos.values('orderNo').distinct()))
+    res['order_lastmonth'] = str(len(qlm_order)+len(qlm_pos.values('orderNo').distinct()))
     try:
-        res['order_lastmonth_part'] = str(len(queryset_list_lastmonth[0].filter(createDate__day__gte='01', createDate__day__lte=__date[2])))########
+        a = queryset_list_lastmonth[0].filter(createDate__day__gte='01', createDate__day__lte=__date[2],
+                                              amount__gt=0)
+        b= queryset_list_lastmonth[1].filter(createDate__day__gte='01', createDate__day__lte=__date[2],
+                                                  amount__gt=0).values('orderNo').distinct()
+
+        res['order_lastmonth_part'] = str(len(list(a))+ len(list(b)))########
     except:
         res['order_lastmonth_part'] = '0'
 
-
-    res['order_year'] = str(len(queryset_list_year[0]))
+    res['order_year'] = str(len(qy_order)+len(qy_pos.values('orderNo').distinct()))
     try:
-        order_lastyear = len(queryset_list_lastyear[0])
+        order_lastyear = str(len(qly_order)+len(qly_pos.values('orderNo').distinct()))
     except:
         order_lastyear = 0
 
@@ -290,9 +306,11 @@ def order_count(request):
     if order_lastyear == 0:
         res['year_ratio'] = 'N/A'
     else:
-        res['year_ratio'] = str(int((int(res['order_month'])-order_lastyear)/order_lastyear*100))+'%'
+        try:
+            res['year_ratio'] = str(int((int(res['order_month'])-order_lastyear)/order_lastyear*100))+'%'
+        except:
+            res['year_ratio'] = 'N/A'
     return JsonResponse(res)
-
 
 
 # 本月各渠道销售额
@@ -310,9 +328,8 @@ def channal_salesamount_month(request):
 
     queryset_list_month = incometd._get_queryset_list(request, __date[0], __date[1], None, _settings)
 
-    b2b_1 = queryset_list_month[0].aggregate(Sum('amount'))['amount__sum']# all
-    b2b_2 = queryset_list_month[1].aggregate(Sum('amount'))['amount__sum'] # pos
-
+    b2b_1 = queryset_list_month[0].filter(~Q(orderStoreName='产品部仓库')).aggregate(Sum('amount'))['amount__sum']# all
+    b2b_2 = queryset_list_month[1].filter(~Q(orderStoreName='产品部仓库')).aggregate(Sum('amount'))['amount__sum'] # pos
 
     b2c = b2b_posgoods.objects.using('hzyg').filter(createDate__year=__date[0], createDate__month=__date[1],).aggregate(Sum('amount'))['amount__sum']
 
@@ -335,16 +352,17 @@ def channal_salesamount_month(request):
         chanpinbu = 0
     if b2b_1 == None:
         b2b_1 = 0
-    if b2b_2 == None:
-        b2b_2 = 0
+    # if b2b_2 == None:
+    #     b2b_2 = 0
 
     # if taste == None:
     #     taste = 0
     if direct_store == None:
         direct_store =0
 
+    # print(b2b_1+b2b_2)
 
-    b2b_all = b2b_1 - (agriculture + online + television  + direct_store) + b2b_2
+    b2b_all = b2b_1 - (agriculture + online + television  + direct_store) + b2b_2 - b2c
     res['b2b'] = str(int(b2b_all))
     res['b2c'] = str(int(b2c))
     res['agriculture'] = str(int(agriculture))

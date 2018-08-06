@@ -50,7 +50,7 @@ def explore(request):
     return render(request, 'explore/explore.html', context={})
 
 
-# @cache_page(CACHE_TIME)
+@cache_page(CACHE_TIME)
 @login_required(login_url='/login/')
 def explore_API(request):
     res = {}
@@ -68,7 +68,7 @@ def explore_API(request):
         ryear = int(request.GET.get('ryear', date_list[0]))
         rmonth = int(request.GET.get('rmonth', date_list[1]))
         rday = int(request.GET.get('rday', date_list[2]))
-        # print(rday)
+        # print(lyear, lmonth, lday, ryear, rmonth, rday)
 
         queryset_1 = b2b_ordertable.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday), createDate__lte=datetime(ryear, rmonth, rday, 23, 59 ,59))
         queryset_2 = b2b_posgoods.objects.using('hzyg').filter(createDate__gte=datetime(lyear, lmonth, lday), createDate__lte=datetime(ryear, rmonth, rday, 23, 59 ,59))
@@ -463,7 +463,7 @@ def explore_API(request):
         except:
             order_count = 0
         try:
-            pos_count = 0 if queryset_pos == None else len(queryset_pos.filter(amount__gt=0))
+            pos_count = 0 if queryset_pos == None else len(queryset_pos.filter(amount__gt=0).values('orderNo').distinct())
         except:
             pos_count = 0
         try:
@@ -476,6 +476,8 @@ def explore_API(request):
             store_reg_count = len(queryset_store)
         except:
             store_reg_count = 0
+
+        # print(order_count, pos_count)
 
         # res['订单金额'] = int(order_orderamount + pos_orderamount)
         # res['订单数量'] = int(order_count + pos_count)
@@ -983,14 +985,12 @@ def goodscount_2(request):
                 queryset_goods = queryset_4.filter(orderStoreName='产品部仓库')
                 queryset_pos = None
 
-
-            queryset_pos1 =  queryset_pos.filter(secondIcatName=classify)
-            queryset_goodstb = queryset_goods.filter(secondIcatName=classify)
-
-
-            data_pos = queryset_pos1.values('skuName').annotate(Sum('amount'))
-
-            data_goodstb = queryset_goodstb.values('skuName').annotate(Sum('amount'))
+            if queryset_pos:
+                queryset_pos1 =  queryset_pos.filter(secondIcatName=classify)
+                data_pos = queryset_pos1.values('skuName').annotate(Sum('amount'))
+            if queryset_goods:
+                queryset_goodstb = queryset_goods.filter(secondIcatName=classify)
+                data_goodstb = queryset_goodstb.values('skuName').annotate(Sum('amount'))
 
             # count_pos = queryset_pos.aggregate(Sum('skuNum'))
             # count_goodstb = queryset_goodstb.aggregate(Sum('skuNum'))
@@ -1003,18 +1003,16 @@ def goodscount_2(request):
                     # goodstb_ls.append({data['skuName'] : int(data['amount__sum'])})
                     goodstb_dic[data['skuName']] = data['amount__sum']
             except:
-                pass
+                goodstb_dic = {}
             try:
                 for data1 in list(data_pos):
                     pos_dic[data1['skuName']] = data1['amount__sum']
             except:
-                pass
+                pos_dic = {}
 
             X, Y = Counter(goodstb_dic), Counter(pos_dic)
             Z = dict(X + Y)
             ret = sorted(Z.items(),key = lambda x:x[1],reverse = True)
-
-            # print(ret)
 
             recvs = {}
             for i in range(len(ret[0:5])):
