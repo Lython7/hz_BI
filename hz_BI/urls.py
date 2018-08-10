@@ -15,7 +15,10 @@ Including another URLconf
 """
 from django.conf.urls import url
 from django.contrib import admin
+from django.templatetags.static import static
 from django.urls import path, include
+from . import settings
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -33,4 +36,4 @@ urlpatterns = [
 
     # path(r'^', include('index.urls')),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

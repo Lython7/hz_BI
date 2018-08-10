@@ -1,5 +1,7 @@
 from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
+from django.templatetags.static import static
+from hz_BI import settings
 from . import views
 
 urlpatterns = [
@@ -24,4 +26,4 @@ urlpatterns = [
 
     # url(r'sendsms/(?P<cellphone>\d{11})$', demo_sms_send.send_sms, name='sendsms'),
 
-]
+] + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
